@@ -1,0 +1,65 @@
+<div class="mat-elevation-z8">
+    &nbsp;<mat-form-field appearance="outline">
+        <input matInput type="text"  placeholder="Filter">
+      </mat-form-field>
+    <mat-table [dataSource]="menteesubscription"  matSort>
+      <ng-container matColumnDef="finYear">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>FinYear</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.finYear}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="division">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Division</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.division}}</mat-cell>
+      </ng-container>      
+      <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Duration</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.duration}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="startDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Start date</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.startDate | date}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="finishDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Finish date</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.finishDate | date}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mentor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Mentor</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.mentorFirstname}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="shareProfile">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Share profile</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-checkbox [(checked)]="element.shareProfile" [disabled]="true"></mat-checkbox>
+          </mat-cell>
+      </ng-container>     
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" matTooltip="View current profile" (click)="onOpenDialog('view', 'View profile', row['id'])"><mat-icon appearance="outline">launch</mat-icon></button>
+          <button mat-button color="primary" matTooltip="Edit" (click)="onOpenDialog('edit', 'Edit profile', row['id'])"><mat-icon appearance="outline">edit</mat-icon></button>
+         
+          <button mat-icon-button matTooltip="Launch saved results"><mat-icon appearance="outline">delete_outline</mat-icon></button>
+          <!-- <button mat-icon-button color="warn" matTooltip="Delete all assigned mentor"><mat-icon>delete_outline</mat-icon></button> -->
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Loading data...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          No data.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <!-- <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row> -->
+    </mat-table>
+<mat-paginator [pageSize]="2" [length]="8" [pageSizeOptions]="[2, 5, 10, 20]" (page)="pageChanged($event)" showFirstLastButtons>
+</mat-paginator>
+    <!-- <mat-paginator [length]="8" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator> -->
+  </div>
+

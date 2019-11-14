@@ -1,0 +1,10 @@
+
+<mat-form-field appearance="outline" class="custom-full-width">
+    <mat-select [placeholder]="defaultText" >
+        <mat-option *ngFor="let item of items" [value]="item['name']" (click)="selectItem(item)">
+            {{item['name']}}
+        </mat-option>
+    </mat-select>
+    <mat-label>{{defaultText}}</mat-label>
+    <mat-error>This is required.</mat-error>
+</mat-form-field>

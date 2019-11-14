@@ -1,0 +1,11 @@
+
+<!-- <mat-list>
+  <mat-list-item *ngFor="let item of items">
+    <mat-checkbox [labelPosition]="labelPosition" >
+      Learn how to navigate the system
+    </mat-checkbox>
+  </mat-list-item>
+</mat-list> -->
+<mat-checkbox [labelPosition]="labelPosition"  [value]="value"  (click)="selectItem(value)" [attr.checked]="value" [id]="id">
+       {{labelText}}
+</mat-checkbox>

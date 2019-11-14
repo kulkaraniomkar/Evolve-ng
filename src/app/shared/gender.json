@@ -1,0 +1,8 @@
+[
+    { "name": "male", "value": "Male"
+    },
+    { "name": "female", "value": "Female"
+    },
+    { "name": "other", "value": "Prefer not to answer"
+    }
+]

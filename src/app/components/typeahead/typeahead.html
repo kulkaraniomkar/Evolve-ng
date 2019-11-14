@@ -1,0 +1,17 @@
+<!-- <ng-template #template let-model="item" >
+    {{model.name}}
+  </ng-template>
+  <input 
+    class="form-control" [(ngModel)]="selected" [typeahead]="data"
+    typeaheadOptionField="name" [typeaheadItemTemplate]="template" [typeaheadMinLength]="0" 
+     (typeaheadOnSelect)="onSelect($event)" (blur)="onBlur($event)" > -->
+
+
+<mat-form-field appearance="outline" class="typeahead-full-width">
+    <input matInput placeholder={{placeholder}}   type="text" [matAutocomplete]="auto" (blur)="onBlur($event)"  />
+    <mat-label>{{label}}</mat-label>
+    <mat-icon matSuffix>{{icon}}</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of data"  [value]="option['name']" (click)="onSelect(option)">{{option['name']}}</mat-option>
+    </mat-autocomplete>
+</mat-form-field>

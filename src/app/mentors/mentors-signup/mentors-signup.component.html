@@ -1,0 +1,176 @@
+<!-- <div class="container">
+	<br /> -->
+<div class="card">
+	<div class="card-header">
+		<h4>Mentor Sign-up</h4>
+	</div>
+	<div class="card-body">
+		<form [formGroup]="mentorForm" (ngSubmit)="save()">
+			<br />
+			<!--interests or passion-->
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-8 col-sm-12">
+					<app-textarea formControlName="interests" placeholder="Interests/Passion">
+					</app-textarea>
+
+				</div>
+			</div>
+			<!--professional background-->
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-8 col-sm-12">
+					<app-textarea formControlName="interests" placeholder="Professional background">
+					</app-textarea>
+
+				</div>
+			</div>
+			<!--mentor interests-->
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-8 col-sm-12">
+					<app-textarea formControlName="interests" placeholder="My interests in being a mentor">
+					</app-textarea>
+
+				</div>
+			</div>
+			<!-- commitment and prior roles-->
+			<div class="row justify-content-center">
+				<div class="col-lg-6 col-md-8 col-sm-12">
+					<app-select formControlName="divisionPreference" defaultText="Mentor commitment (1 hr/month)"
+						[items]="divisions">
+					</app-select>
+				</div>
+				<div class="col-lg-6 col-md-8 col-sm-12">
+					<app-select formControlName="mentoringPeriod" defaultText="Prior roles in RMB"
+						[items]="mentorTimes">
+					</app-select>
+				</div>
+			</div>
+
+			<!-- mentor value-->
+		
+			<br />
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-10 col-sm-12" style="padding-left: 1em; padding-right: 1em;">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<!-- value added areas-->
+								<div class="col-lg-6 col-md-12 col-sm-12">
+									<h5 class="card-title">Areas which I can add value as a mentor</h5>
+									<app-checkbox labelText="Learn how to navigate the system">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Career guidance"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Better integrate into a team/business unit">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Enhance my impact and influence in my role/team">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Relationship building and networking">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Manage a career transaction">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Hone my leadership skills">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Deal with diversity and inclusion">
+									</app-checkbox>
+									<br />
+									<app-checkbox
+										labelText="Broaden my organizational knowledge (please specify in comments)">
+									</app-checkbox>
+									<br/>
+									<app-checkbox
+										labelText="Other">
+									</app-checkbox>
+
+									<app-textarea formControlName="interests" placeholder="My interests in being a mentor">
+									</app-textarea>
+					
+								</div>
+								<!-- Experience-->
+								<div class="col-lg-6 col-md-12 col-sm-12">
+									<h5 class="card-title">I have experience in the following areas</h5>
+									<app-checkbox labelText="Business technology"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Client service"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Credit"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Finance"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Human Capital"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Legal Risk and Compliance">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Marketing and Communication">
+									</app-checkbox>
+									<br />
+									<app-checkbox labelText="Operations/Process/Admin"></app-checkbox>
+									<br />
+									<app-checkbox labelText="Support Service"></app-checkbox>
+									<br/>
+									<app-checkbox
+										labelText="Other">
+									</app-checkbox>
+									<app-textarea formControlName="interests" placeholder="My interests in being a mentor">
+									</app-textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Comments-->
+			<br />
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<app-textarea formControlName="comment" placeholder="Comments">
+					</app-textarea>
+				</div>
+			</div>
+			<!--Terms and agreements-->
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-8 col-sm-12">
+					<app-checkbox formControlName="shareProfile"
+						labelText="I am comfortable that you share the above profile with a prospective/assigned mentor">
+					</app-checkbox>
+					<br />
+					<app-checkbox formControlName="readTerms"
+						labelText="I have read and understand the criteria to become a Mentor">
+					</app-checkbox>
+				</div>
+			</div>
+
+			<br />
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-8 col-sm-12">
+					<button mat-raised-button color="primary">Submit</button>
+					&nbsp;&nbsp;&nbsp;
+					<button mat-raised-button color="warn">Cancel</button>
+
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- </div> -->
+
+<!-- <mat-form-field>
+		<input placeholder="age" matInput formControlName="age">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input placeholder="Class" matInput formControlName="className">
+
+	</mat-form-field>
+
+
+
+<div>
+	{{form.value | json}}
+</div> -->

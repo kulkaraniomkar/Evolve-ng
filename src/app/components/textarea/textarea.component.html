@@ -1,0 +1,7 @@
+
+  <mat-form-field appearance="outline" class="textarea-full-width">
+    <mat-label>{{placeholder}}</mat-label>
+    <textarea matInput placeholder={{placeholder}} cdkTextareaAutosize cdkAutosizeMinRows="4" cdkAutosizeMaxRows="5"
+      #autosize="cdkTextareaAutosize" (change)="onCommentChange($event)">
+  </textarea>
+  </mat-form-field>
