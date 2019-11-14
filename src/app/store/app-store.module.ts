@@ -13,6 +13,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
   entityHttpResourceUrls: {
     Mentor: { entityResourceUrl: apiRoot + 'mentors/', collectionResourceUrl: apiRoot + 'mentors/' },
     Mentee: { entityResourceUrl: apiRoot + 'mentees/', collectionResourceUrl: apiRoot + 'mentees/' },
+    DisplayData: { entityResourceUrl: apiRoot + 'mentor/', collectionResourceUrl: apiRoot + 'mentees/' },
   }
 };
 

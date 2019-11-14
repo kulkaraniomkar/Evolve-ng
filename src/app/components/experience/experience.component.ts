@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 
 export interface ExperienceValues {
-  businessTechnology: boolean;
+  businessTechnology: string;
   confirmPassword: string;
 }
 @Component({

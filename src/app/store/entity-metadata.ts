@@ -7,6 +7,7 @@ const entityMetadata: EntityMetadataMap = {
   Division: {},
   Mentortime: {},
   MenteeMatch: {},
+  DisplayData: {}
 };
 
 const pluralNames = { };

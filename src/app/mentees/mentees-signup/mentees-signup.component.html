@@ -1,1 +1,7 @@
+<div *ngIf="displayData$ | async as displayData">
 <app-mentee-edit></app-mentee-edit>
+
+<pre>
+    {{displayData | json}}
+    </pre>
+</div>

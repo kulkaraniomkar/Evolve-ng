@@ -7,13 +7,14 @@ import { MenteesService } from '../mentees.service';
 import { Division } from '../../core/model/division';
 
 import { Mentortime } from '../../core/model/mentor-time';
-import { MentorTimesService, DivisionsService } from '../../shared/shared.service';
+import { MentorTimesService, DivisionsService, DisplayDataService } from '../../shared/shared.service';
 import gender from '../../shared/gender.json';
 import age from '../../shared/age.json';
 import { MentorsService } from '../mentors.service';
 import { Mentor } from 'src/app/core/model/mentor';
 import {map, startWith, debounceTime, tap, switchMap, finalize} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
+import { Result, DisplayData } from 'src/app/core/model/display-data';
 
 @Component({
   selector: 'app-mentees-signup',
@@ -44,11 +45,13 @@ export class MenteesSignupComponent implements OnInit {
   divisions$: Observable<Division[]>;
   mentorTimes$: Observable<Mentortime[]>;
   mentors$: Observable<Mentor[]>;
+  displayData$: Observable<DisplayData[]>;
   filteredOptions: Mentor[] = [];
   divisions: [];
   mentorTimes: [];
   sub: Subscription;
   constructor(
+    private displayDataService: DisplayDataService,
     private menteesService: MenteesService,
     private divisionsService: DivisionsService,
     private mentorTimesService: MentorTimesService,
@@ -62,12 +65,16 @@ export class MenteesSignupComponent implements OnInit {
   // age 
   public age: Array<{ name: string, value: string }> = age;
   ngOnInit() {
-    this.geMentorTimes();
+    this.getMentorTimes();
     this.getDivisions();
     this.getMentors();
+    this.getDisplayData();
     // this.getMentors();
     
     //this.geMentorTimes();
+  }
+  getDisplayData() {
+    this.displayData$ = this.displayDataService.getAll();
   }
   getDivisions() {
     this.divisions$ = this.divisionsService.getAll();
@@ -76,7 +83,7 @@ export class MenteesSignupComponent implements OnInit {
       this.menteeForm.controls.divisions.patchValue(0);
     })
   }
-  geMentorTimes() {
+  getMentorTimes() {
     this.mentorTimes$ = this.mentorTimesService.getAll();
     this.mentorTimes$.subscribe((mentorTimes: any) => {
       this.mentorTimes = (mentorTimes.length > 0) ? mentorTimes : [{ id: 1, name: '1 month' }];
