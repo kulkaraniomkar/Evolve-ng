@@ -1,36 +1,34 @@
-declare module namespace {
-
-    export interface UnitOfTime {
+export class UnitOfTime {
         Name: string;
         Text: string;
         Value: string;
     }
 
-    export interface Experience {
+    export class Experience {
         Name: string;
         Text: string;
         Value: string;
     }
 
-    export interface DomainArea {
+    export class DomainArea {
         Name: string;
         Text: string;
         Value: string;
     }
 
-    export interface Gender {
+    export class Gender {
         Name: string;
         Text: string;
         Value: string;
     }
 
-    export interface AgePreference {
+    export class AgePreference {
         Name: string;
         Text: string;
         Value: string;
     }
 
-    export interface Result {
+    export class Result {
         MenteeId: number;
         EmployeeId: string;
         InDivision: boolean;
@@ -58,7 +56,7 @@ declare module namespace {
         AgePreferences: AgePreference[];
     }
 
-    export interface RootObject {
+    export class MenteeDisplayData {
         results: Result[];
         errors: any[];
         TotalItems: number;
@@ -66,6 +64,4 @@ declare module namespace {
         PageSize: number;
         PageCount: number;
     }
-
-}
 

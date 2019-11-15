@@ -8,8 +8,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { MetaReducer, StoreModule } from '@ngrx/store';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppStoreModule } from './store/app-store.module';
+import { AuthenticationInterceptor } from './shared/authentication.interceptor.service';
 
 export const metaReducers: MetaReducer<any>[] = environment.production ? [] : [];
 @NgModule({
@@ -32,7 +33,12 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     }),
     !environment.production ? StoreDevtoolsModule.instrument(): []
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptor,
+    multi: true
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

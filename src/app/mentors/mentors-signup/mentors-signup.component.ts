@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { Mentortime } from '../../core/model/mentor-time';
-import { MentorTimesService, DivisionsService } from '../../shared/shared.service';
+
 import { Mentor } from 'src/app/core/model/mentor';
 import { Division } from 'src/app/core/model/division';
 
@@ -42,8 +42,8 @@ export class MentorsSignupComponent implements OnInit {
   sub: Subscription;
   constructor(
    // private menteesService: MentorsService,
-    private divisionsService: DivisionsService,
-    private mentorTimesService: MentorTimesService,
+    // private divisionsService: DivisionsService,
+    // private mentorTimesService: MentorTimesService,
    // private menteeListService: MenteesListService,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -62,23 +62,23 @@ export class MentorsSignupComponent implements OnInit {
     { name: '55-64', value: '55-64' }
   ];
   ngOnInit() {
-    this.geMentorTimes();
-    this.getDivisions();
+    //this.geMentorTimes();
+    //this.getDivisions();
     //this.geMentorTimes();
   }
   getDivisions() {
-    this.divisions$ = this.divisionsService.getAll();
+   // this.divisions$ = this.divisionsService.getAll();
     this.divisions$.subscribe((divisions: any) => {
       this.divisions = (divisions.length > 0) ? divisions : [{ id: 0, name: 'First national Bank' }];
       this.mentorForm.controls.divisions.patchValue(0);
     })
   }
   geMentorTimes() {
-    this.mentorTimes$ = this.mentorTimesService.getAll();
-    this.mentorTimes$.subscribe((mentorTimes: any) => {
-      this.mentorTimes = (mentorTimes.length > 0) ? mentorTimes : [{ id: 1, name: '1 month' }];
-      this.mentorForm.controls.mentorTimes.patchValue(1);
-    })
+    // this.mentorTimes$ = this.mentorTimesService.getAll();
+    // this.mentorTimes$.subscribe((mentorTimes: any) => {
+    //   this.mentorTimes = (mentorTimes.length > 0) ? mentorTimes : [{ id: 1, name: '1 month' }];
+    //   this.mentorForm.controls.mentorTimes.patchValue(1);
+    // })
   }
 
   save() {
