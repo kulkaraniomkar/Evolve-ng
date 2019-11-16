@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
     selector: 'app-typeahead',
-    templateUrl: 'typeahead.html',
+    templateUrl: 'typeahead.component.html',
     styleUrls: ['./typeahead.component.scss'],
     providers: [
         {

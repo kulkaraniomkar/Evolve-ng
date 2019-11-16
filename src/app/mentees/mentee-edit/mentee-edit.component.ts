@@ -34,6 +34,7 @@ export class MenteeEditComponent implements OnInit {
     private route: ActivatedRoute) {
     
       this.sub = this.menteeDisplayDataSelectors.menteeDisplayData$.subscribe(menteeDisplay => {
+        console.log(menteeDisplay);
         if (menteeDisplay) {
           this.menteeDisplayData = menteeDisplay;
          // this.customerForm.patchValue(this.customer);

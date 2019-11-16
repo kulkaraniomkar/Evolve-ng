@@ -6,8 +6,6 @@ import { Subscription } from 'rxjs';
 
 export interface InterestValues {
   passion: string;
-  division: string;
-  mentoringPeriod: string
 }
 @Component({
   selector: 'app-interest',
@@ -28,7 +26,7 @@ export interface InterestValues {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InterestComponent implements ControlValueAccessor {
-  
+
   @ViewChild('autosize', { static: false })
   autosize: CdkTextareaAutosize;
 
@@ -49,16 +47,12 @@ export class InterestComponent implements ControlValueAccessor {
     return this.form.controls.passion;
   }
 
-  get confirmPasswordControl() {
-    return this.form.controls.confirmPassword;
-  }
+  
   constructor(
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      passion: ['', Validators.required],
-      division: ['', Validators.required],
-      mentoringPeriod: ['', Validators.required],
+      passion: ['', Validators.required]
     });
 
     this.subscriptions.push(
@@ -89,7 +83,7 @@ export class InterestComponent implements ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  
+
   validate(_: FormControl) {
     return this.form.valid ? null : { interest: { valid: false, }, };
   }

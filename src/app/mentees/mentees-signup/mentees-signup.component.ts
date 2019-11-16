@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { EntityState, MenteeDisplayDataSelectors } from '../../store';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Mentee } from 'src/app/core/model/mentee';
-import { Observable, Subscription } from 'rxjs';
-import { Division } from '../../core/model/division';
+import { MenteeDisplayData } from 'src/app/core/model/mentee-display-data';
+import { Observable } from 'rxjs';
+import * as MenteeDisplayDataAction from '../../store/actions';
+import { Mentee } from '../../core/model/mentee';
 
-import { Mentortime } from '../../core/model/mentor-time';import gender from '../../shared/gender.json';
-import age from '../../shared/age.json';
-import { Mentor } from 'src/app/core/model/mentor';
-import {map, startWith, debounceTime, tap, switchMap, finalize} from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
-import { Result, DisplayData } from 'src/app/core/model/display-data';
+
 
 @Component({
   selector: 'app-mentees-signup',
@@ -18,11 +15,32 @@ import { Result, DisplayData } from 'src/app/core/model/display-data';
   styleUrls: ['./mentees-signup.component.scss']
 })
 export class MenteesSignupComponent implements OnInit {
-
-  
+  menteeForm = this.formBuilder.group({
+    id: [],
+    interest: [],
+    experience: [],
+    achievement: [],
+    gender:[]
+  });
+  title = 'New Mentee Signup';
+  menteeDisplayData$: Observable<MenteeDisplayData>;
+  loading$: Observable<boolean>;
+  constructor(
+    private store: Store<EntityState>,
+    private menteeDisplayDataSelectors: MenteeDisplayDataSelectors,
+    private formBuilder: FormBuilder,
+  ) {
+    this.menteeDisplayData$ = this.menteeDisplayDataSelectors.menteeDisplayData$;
+    this.loading$ = this.menteeDisplayDataSelectors.loading$;
+  }
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+    this.getMenteeDisplayData();
   }
 
- 
+  getMenteeDisplayData() {
+    this.store.dispatch(new MenteeDisplayDataAction.GetMenteeDisplayData(0));
+  }
+  // add(mentee: Mentee) {
+  //   this.store.dispatch(new MenteeAction.AddMentee(mentee));
+  // }
 }

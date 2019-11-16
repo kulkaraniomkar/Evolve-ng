@@ -3,55 +3,53 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, ControlValueAccessor, Form
 import { Subscription } from 'rxjs';
 
 
-export interface ExperienceValues {
-  businessTechnology: string;
-  clientService: string;
-  credit: string;
-  finance: string;
-  humanCapital: string;
-  legalRiskCompliance: string;
-  marketingCommunication: string;
-  operationProcess: string;
-  supportService: string;
-  trading: string;
-  transacting: string;
-  nonSpecific: string;
+export interface AchievementValues {
+  betterIntergrateBusiness: string;
+  broadenKnowledge: string;
+  careerGuidance: string;
+  dealDiversity: string;
+  enhanceImpact: string;
+  enhanceTechnical: string;
+  honeLeadership: string;
+  learnToNavigate: string;
+  managingCareer: string;
+  relationshipBuilding: string;
 }
 @Component({
-  selector: 'app-experience',
-  templateUrl: './experience.component.html',
-  styleUrls: ['./experience.component.scss'],
+  selector: 'app-achievement',
+  templateUrl: './achievement.component.html',
+  styleUrls: ['./achievement.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ExperienceComponent),
+      useExisting: forwardRef(() => AchievementComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => ExperienceComponent),
+      useExisting: forwardRef(() => AchievementComponent),
       multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExperienceComponent implements ControlValueAccessor {
+export class AchievementComponent implements ControlValueAccessor {
 
-@Input() experienceData : [];
+  @Input() achievementData: [];
   form: FormGroup;
   subscriptions: Subscription[] = [];
 
-  get value(): ExperienceValues {
+  get value(): AchievementValues {
     return this.form.value;
   }
 
-  set value(value: ExperienceValues) {
+  set value(value: AchievementValues) {
     this.form.setValue(value);
     this.onChange(value);
     this.onTouched();
   }
 
-  get experienceControl() {
+  get achievementControl() {
     return this.form.controls.password;
   }
 
@@ -62,18 +60,16 @@ export class ExperienceComponent implements ControlValueAccessor {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      businessTechnology: [],
-      clientService: [],
-      credit: [],
-      finance: [],
-      humanCapital: [],
-      legalRiskCompliance: [],
-      marketingCommunication: [],
-      operationProcess: [],
-      supportService: [],
-      trading: [],
-      transacting: [],
-      nonSpecific: []
+      betterIntergrateBusiness: [],
+      broadenKnowledge: [],
+      careerGuidance: [],
+      dealDiversity: [],
+      enhanceImpact: [],
+      enhanceTechnical: [],
+      honeLeadership: [],
+      learnToNavigate: [],
+      managingCareer: [],
+      relationshipBuilding: [],
     });
 
     this.subscriptions.push(
@@ -104,9 +100,9 @@ export class ExperienceComponent implements ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  
+
   validate(_: FormControl) {
-    return this.form.valid ? null : { experience: { valid: false, }, };
+    return this.form.valid ? null : { Achievement: { valid: false, }, };
   }
 
 }

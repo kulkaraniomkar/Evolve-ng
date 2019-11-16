@@ -1,7 +1,46 @@
-<!-- <div *ngIf="displayData$ | async as displayData"> -->
-<app-mentee-edit ></app-mentee-edit>
+<div *ngIf="menteeDisplayData$ | async as displayData">
+    <div class="card">
+        <div class="card-header">
+            <h4>{{title}}</h4>
+        </div>
 
-<!-- <pre>
+        <div class="card-body">
+            <form [formGroup]="menteeForm" (ngSubmit)="save()">
+                <!--Interest-->
+                <app-interest formControlName="interest"></app-interest>
+                <app-preference formControlName="gender"  [achievementData]="displayData['results'][0]['Gender']"></app-preference>
+                <!-- Experience and Achievement-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-md-10 col-sm-12" style="padding-left: 1em; padding-right: 1em;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <app-achievement formControlName="experience"
+                                        [achievementData]="displayData['results'][0]['DomainAreas']">
+                                    </app-achievement>
+                                    <app-experience formControlName="achievement"
+                                        [experienceData]="displayData['results'][0]['Experiences']">
+                                    </app-experience>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Save, Submit and Cancel buttons-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-md-8 col-sm-12">
+                        <button mat-raised-button color="primary" type="submit"
+                            [disabled]="!menteeForm.valid">&nbsp;Save&nbsp;</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button mat-raised-button color="warn">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <pre>
     {{displayData | json}}
     </pre>
-</div> -->
+</div>

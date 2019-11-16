@@ -16,10 +16,10 @@
 								<textarea matInput placeholder="Interests/Passion" cdkTextareaAutosize cdkAutosizeMinRows="4" cdkAutosizeMaxRows="5"
 								  #autosize="cdkTextareaAutosize"formControlName="interests">
 							  </textarea>
-							  <mat-error
+							  <!-- <mat-error
 						*ngIf="menteeForm.get('interests').hasError('required') && (menteeForm.get('interests').dirty || menteeForm.get('interests').touched)">
 						Required
-					</mat-error>
+					</mat-error> -->
 							  </mat-form-field>
 					<!-- <app-textarea formControlName="interests" placeholder="Interests/Passion">
 					</app-textarea> -->
@@ -30,7 +30,7 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-8 col-sm-12">
 					<app-select formControlName="divisionPreference" defaultText="Select a division"
-						[items]="divisions">
+						>
 					</app-select>
 				</div>
 				<div class="col-lg-6 col-md-8 col-sm-12">

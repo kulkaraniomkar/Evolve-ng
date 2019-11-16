@@ -9,14 +9,18 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SelectComponent } from './select/select.component';
 import { TableComponent } from './table/table.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
-import { TypeaheadComponent } from './typeahead/typeahead';
+import { TypeaheadComponent } from './typeahead/typeahead.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { SharedModule } from '../shared/shared.module';
 import { InterestComponent } from './interest/interest.component';
+import { AchievementComponent } from './achievement/achievement.component';
+import { PreferenceComponent } from './preference/preference.component';
 
 const components = [
     ExperienceComponent,
+    AchievementComponent,
     InterestComponent,
+    PreferenceComponent,
     TextareaComponent,
     InputComponent,
     RadioComponent,

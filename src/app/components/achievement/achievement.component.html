@@ -1,6 +1,6 @@
 <div [formGroup]="form" class="col-lg-6 col-md-12 col-sm-12">
-    <h5 class="card-title">Experience</h5>
-    <div *ngFor="let item of experienceData; let i = index">
+    <h5 class="card-title">Achievement</h5>
+    <div *ngFor="let item of achievementData; let i = index">
         <mat-checkbox [formControlName]="item['Name']" [value]="item['Value']">
            {{item['Text']}}
         </mat-checkbox>
