@@ -3,49 +3,51 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, ControlValueAccessor, Form
 import { Subscription } from 'rxjs';
 
 
-export interface AchievementValues {
-  doesntMatter: string;
-  male: string;
-  female: string;
+export interface MenteePreferenceValues {
+  gender: string;
+  age: string;
+  inDivision: string;
+  unitOfTimes: string;
 }
 @Component({
-  selector: 'app-preference',
-  templateUrl: './preference.component.html',
-  styleUrls: ['./preference.component.scss'],
+  selector: 'app-mentee-preference',
+  templateUrl: './mentee-preference.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PreferenceComponent),
+      useExisting: forwardRef(() => MenteePreferenceComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => PreferenceComponent),
+      useExisting: forwardRef(() => MenteePreferenceComponent),
       multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreferenceComponent implements ControlValueAccessor {
+export class MenteePreferenceComponent implements ControlValueAccessor {
 
-  @Input() achievementData: [];
+  @Input() genderData: [];
+  @Input() ageData: [];
+  @Input() mentoringTimeData: [];
   form: FormGroup;
   subscriptions: Subscription[] = [];
 
-  get value(): AchievementValues {
+  get value(): MenteePreferenceValues {
     return this.form.value;
   }
 
-  set value(value: AchievementValues) {
+  set value(value: MenteePreferenceValues) {
     this.form.setValue(value);
     this.onChange(value);
     this.onTouched();
   }
-  get doesntControl() {
-    return this.form.controls.doesntMatter;
+  get genderControl() {
+    return this.form.controls.gender;
   }
-  get maleControl() {
-    return this.form.controls.male;
+  get ageControl() {
+    return this.form.controls.age;
   }
 
   get femaleControl() {
@@ -55,9 +57,10 @@ export class PreferenceComponent implements ControlValueAccessor {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      doesntMatter: [],
-      female: [],
-      male: [],
+      gender: [],
+      age: [],
+      inDivision: [],
+      unitOfTimes: []
     });
 
     this.subscriptions.push(

@@ -1,0 +1,29 @@
+<!-- <div [formGroup]="form" class="col-lg-6 col-md-12 col-sm-12">
+    <h5 class="card-title">Gender</h5>
+    <mat-radio-group aria-label="Select an option" >
+        <mat-radio-button *ngFor="let item of genderAgeData; let i = index" [formControlName]="item['Name']" [value]="item['Value']">
+           {{item['Text']}}
+        </mat-radio-button>
+        <br />
+    </mat-radio-group>
+</div> -->
+
+<div [formGroup]="form" class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <h5 class="card-title">Mentor gender preference</h5>
+        <mat-radio-group aria-labelledby="gender radio group" [formControlName]="'gender'" class="custom-radio-group">
+            <mat-radio-button *ngFor="let item of genderData; let i = index" [value]="item['Value']">
+                {{item['Text']}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <h5 class="card-title">Mentor age preference</h5>
+        <mat-radio-group aria-labelledby="gender radio group" [formControlName]="'age'" class="custom-radio-group">
+            <mat-radio-button *ngFor="let item of ageData; let i = index" [value]="item['Value']">
+                {{item['Text']}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+</div>

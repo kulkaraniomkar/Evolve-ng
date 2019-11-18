@@ -7,27 +7,24 @@
         <div class="card-body">
             <form [formGroup]="menteeForm" (ngSubmit)="save()">
                 <!--Interest-->
-                <app-interest formControlName="interest"></app-interest>
-                <app-preference formControlName="gender"  [achievementData]="displayData['results'][0]['Gender']"></app-preference>
+                <app-interest formControlName="interest" [displayText]="'Interests/passion'"></app-interest>
+                <!-- <app-gender formControlName="gender" [genderData]="displayData['results'][0]['Gender']"
+                    [ageData]="displayData['results'][0]['AgePreferences']">
+                </app-gender> -->
+                <!--Preferences-->
+                <app-mentee-preference formControlName="gender" [genderData]="displayData['results'][0]['Gender']"
+                    [ageData]="displayData['results'][0]['AgePreferences']"
+                    [mentoringTimeData]="displayData['results'][0]['UnitOfTimes']"></app-mentee-preference>
+                <br />
                 <!-- Experience and Achievement-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-12 col-md-10 col-sm-12" style="padding-left: 1em; padding-right: 1em;">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <app-achievement formControlName="experience"
-                                        [achievementData]="displayData['results'][0]['DomainAreas']">
-                                    </app-achievement>
-                                    <app-experience formControlName="achievement"
-                                        [experienceData]="displayData['results'][0]['Experiences']">
-                                    </app-experience>
+                <app-achievement-experience [achievementData]="displayData['results'][0]['DomainAreas']"
+                    [experienceData]="displayData['results'][0]['Experiences']"></app-achievement-experience>
 
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Comments-->
+                <app-interest formControlName="comments" [displayText]="'Comments'"></app-interest>
+                <!--Terms and conditions-->
+                <app-terms-conditions formControlName="conditions"></app-terms-conditions>
+                <br/>
                 <!--Save, Submit and Cancel buttons-->
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-md-8 col-sm-12">

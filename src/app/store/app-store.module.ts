@@ -5,19 +5,22 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { reducers } from './reducers';
-import { MenteeDisplayDataService, MenteeDisplayDataSelectors } from './services';
+import { MenteeDisplayDataService, MenteeDisplayDataSelectors, MenteeDataService, MenteeSelectors } from './services';
 import { MenteeDisplayDataEffects } from './effects/mentee-display-data.effects';
+import { MenteeEffects } from './effects/mentee.effects';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     StoreModule.forFeature('entityCache', reducers),
-    EffectsModule.forFeature([ MenteeDisplayDataEffects])
+    EffectsModule.forFeature([ MenteeDisplayDataEffects, MenteeEffects])
   ],
   providers: [
     MenteeDisplayDataService,
-    MenteeDisplayDataSelectors
+    MenteeDisplayDataSelectors,
+    MenteeDataService,
+    MenteeSelectors,
   ],
   exports: [StoreModule, EffectsModule]
 })

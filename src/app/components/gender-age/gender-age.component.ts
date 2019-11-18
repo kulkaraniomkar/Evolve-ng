@@ -1,58 +1,56 @@
-import { Component, forwardRef, ChangeDetectionStrategy, ViewChild, Input } from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormGroup, ControlValueAccessor, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 
-export interface InterestValues {
-  passion: string;
+export interface GenderAgeValues {
+    gender: string;
+    age: string;
 }
 @Component({
-  selector: 'app-interest',
-  templateUrl: './interest.component.html',
-  styleUrls: ['./interest.component.scss'],
+  selector: 'app-gender',
+  templateUrl: './gender-age.component.html',
+  styleUrls: ['./gender-age.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InterestComponent),
+      useExisting: forwardRef(() => GenderAgeComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => InterestComponent),
+      useExisting: forwardRef(() => GenderAgeComponent),
       multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InterestComponent implements ControlValueAccessor {
-  @Input() displayText: string;
-  @ViewChild('autosize', { static: false })
-  autosize: CdkTextareaAutosize;
+export class GenderAgeComponent implements ControlValueAccessor {
 
+  @Input() genderData: [];
+  @Input() ageData: [];
   form: FormGroup;
   subscriptions: Subscription[] = [];
 
-  get value(): InterestValues {
+  get value(): GenderAgeValues {
     return this.form.value;
   }
 
-  set value(value: InterestValues) {
+  set value(value: GenderAgeValues) {
     this.form.setValue(value);
     this.onChange(value);
     this.onTouched();
   }
-
-  get passionControl() {
-    return this.form.controls.passion;
+  get genderControl() {
+    return this.form.controls.gender;
   }
-
-
+  
   constructor(
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      passion: ['', Validators.required]
+        gender: [],
+        age: []
     });
 
     this.subscriptions.push(
@@ -85,7 +83,7 @@ export class InterestComponent implements ControlValueAccessor {
   }
 
   validate(_: FormControl) {
-    return this.form.valid ? null : { interest: { valid: false, }, };
+    return this.form.valid ? null : { gender: { valid: false, }, };
   }
 
 }

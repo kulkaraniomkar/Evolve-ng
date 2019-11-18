@@ -1,9 +1,0 @@
-<div [formGroup]="form" class="col-lg-6 col-md-12 col-sm-12">
-    <h5 class="card-title">Gender</h5>
-    <mat-radio-group aria-label="Select an option" *ngFor="let item of achievementData; let i = index">
-        <mat-radio-button [formControlName]="item['Name']" [value]="item['Value']">
-           {{item['Text']}}
-        </mat-radio-button>
-        <br />
-    </mat-radio-group>
-</div>

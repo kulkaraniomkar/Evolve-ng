@@ -1,0 +1,80 @@
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="mentees$ | async">
+
+    <ng-container matColumnDef="division">
+
+        <mat-header-cell *matHeaderCellDef>Division</mat-header-cell>
+
+        <mat-cell *matCellDef="let mentee">{{mentee.Division}}</mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="duration">
+
+        <mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>
+
+        <mat-cell class="description-cell" *matCellDef="let mentee">{{mentee.Duration}}</mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+
+        <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+
+        <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.CreatedDate | date}}</mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="finishDate">
+
+        <mat-header-cell *matHeaderCellDef>Finish Date</mat-header-cell>
+
+        <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.CreatedDate | date}}</mat-cell>
+
+    </ng-container>
+    <!-- <ng-container matColumnDef="finishDate">
+
+            <mat-header-cell *matHeaderCellDef>Finish Date</mat-header-cell>
+
+            <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.CreatedDate | date}}</mat-cell>
+
+        </ng-container> -->
+    <ng-container matColumnDef="mentor">
+
+        <mat-header-cell *matHeaderCellDef>Mentor</mat-header-cell>
+
+        <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.PreferredMentorId}}</mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="shareProfile">
+
+        <mat-header-cell *matHeaderCellDef>Share profile</mat-header-cell>
+
+        <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.ShareProfile}}</mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="finYear">
+
+        <mat-header-cell *matHeaderCellDef>Financial year</mat-header-cell>
+
+        <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.CreatedDate | date: 'yyyy' }}</mat-cell>
+
+    </ng-container>
+    <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let mentee">
+                <button mat-icon-button color="primary" matTooltip="View current profile" (click)="onOpenDialog('view', 'View profile', mentee['id'])"><mat-icon appearance="outline">launch</mat-icon></button>
+                <button mat-button color="primary" matTooltip="Edit" (click)="onOpenDialog('edit', 'Edit profile', mentee['id'])"><mat-icon appearance="outline">edit</mat-icon></button>
+             
+              <button mat-icon-button matTooltip="Delete current profile"><mat-icon appearance="outline">delete_outline</mat-icon></button>
+              <!-- <button mat-icon-button color="warn" matTooltip="Delete all assigned mentor"><mat-icon>delete_outline</mat-icon></button> -->
+            </mat-cell>
+          </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<mat-paginator [pageSize]="1" [pageSizeOptions]="[1, 5, 10, 20]">
+</mat-paginator>
+
+{{menteeList | json}}

@@ -5,7 +5,7 @@ import { RequestInfo, InMemoryDbService } from 'angular-in-memory-web-api';
 import { Division } from './model/division';
 
 import { Mentortime } from './model/mentor-time';
-import { Mentee } from './model/mentee';
+import { Mentee } from './model/mentee_old';
 import { MenteeMatch } from './model/menteematch';
 import { MenteeSubscription } from './model/mentee-subscription';
 import { Mentor } from './model/mentor';
@@ -23,7 +23,7 @@ export class InMemoryDataService implements InMemoryDbService {
   maxId = 0;
 
   createDb(reqInfo?: RequestInfo) {
-    return { mentortimes, divisions, mentees, menteematches, menteesubscriptions, mentors };
+    return { mentortimes, divisions, menteematches, menteesubscriptions, mentees, mentors };
   }
   /**
      * Simulate generating new Id on the server

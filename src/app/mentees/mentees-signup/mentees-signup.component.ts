@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EntityState, MenteeDisplayDataSelectors } from '../../store';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenteeDisplayData } from 'src/app/core/model/mentee-display-data';
 import { Observable } from 'rxjs';
 import * as MenteeDisplayDataAction from '../../store/actions';
-import { Mentee } from '../../core/model/mentee';
+import { Mentee } from '../../core/model/mentee_old';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 
 
@@ -20,12 +21,16 @@ export class MenteesSignupComponent implements OnInit {
     interest: [],
     experience: [],
     achievement: [],
-    gender:[]
+    gender:[],
+    comments: [],
+    conditions: []
   });
   title = 'New Mentee Signup';
   menteeDisplayData$: Observable<MenteeDisplayData>;
   loading$: Observable<boolean>;
   constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<MenteesSignupComponent>,
     private store: Store<EntityState>,
     private menteeDisplayDataSelectors: MenteeDisplayDataSelectors,
     private formBuilder: FormBuilder,

@@ -14,13 +14,19 @@ import { ExperienceComponent } from './experience/experience.component';
 import { SharedModule } from '../shared/shared.module';
 import { InterestComponent } from './interest/interest.component';
 import { AchievementComponent } from './achievement/achievement.component';
-import { PreferenceComponent } from './preference/preference.component';
+import { MenteePreferenceComponent } from './mentee-preference/mentee-preference.component';
+import { GenderAgeComponent } from './gender-age/gender-age.component';
+import { AchievementExperienceComponent } from './achievement-experience/achievement-experience.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 const components = [
+    TermsConditionsComponent,
+    AchievementExperienceComponent,
     ExperienceComponent,
+    GenderAgeComponent,
     AchievementComponent,
     InterestComponent,
-    PreferenceComponent,
+    MenteePreferenceComponent,
     TextareaComponent,
     InputComponent,
     RadioComponent,

@@ -5,12 +5,11 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { PresentationComponentsModule } from '../components/presentation-components.module';
 import { MenteesListComponent } from './mentees-list/mentees-list.component';
-import { MenteesSubcriptionsComponent } from './mentees-subcriptions/mentees-subcriptions.component';
 
 
 
 @NgModule({
-  declarations: [MenteesRoutingModule.components, MenteesListComponent, MenteesSubcriptionsComponent],
+  declarations: [MenteesRoutingModule.components, MenteesListComponent],
   imports: [
     CommonModule,
     SharedModule,
