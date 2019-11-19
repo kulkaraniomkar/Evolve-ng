@@ -61,8 +61,8 @@ export class AchievementExperienceComponent implements ControlValueAccessor {
         this.onTouched();
     }
 
-    get achievementControl() {
-        return this.form.controls.password;
+    get betterIntergrateBusinessControl() {
+        return this.form.controls.betterIntergrateBusiness;
     }
 
     get confirmPasswordControl() {
@@ -110,6 +110,7 @@ export class AchievementExperienceComponent implements ControlValueAccessor {
     onTouched: any = () => { };
 
     writeValue(value) {
+        console.log('Checkbox :', value);
         if (value) {
             this.value = value;
         }
@@ -128,5 +129,13 @@ export class AchievementExperienceComponent implements ControlValueAccessor {
     validate(_: FormControl) {
         return this.form.valid ? null : { AchievementExperience: { valid: false, }, };
     }
-
+    addEvent(ev){
+        //this.propagateChange(ev['source']['value']);
+        //this.onChange(ev['source']['value']);
+        console.log(ev['source']['value']);
+        // console.log('Checked :', ev['checked']);
+        // console.log(this.form.get('betterIntergrateBusiness'));
+        // console.log(ev.target)
+    }
+   
 }

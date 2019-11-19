@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {BreadcrumbModule} from 'angular-crumbs';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +21,7 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    BreadcrumbModule,
     HttpClientModule,
     AppRoutingModule,
     AppStoreModule,

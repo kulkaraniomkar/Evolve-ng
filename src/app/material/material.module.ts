@@ -26,7 +26,8 @@ const modules = [
   Material.MatFormFieldModule,
   Material.MatCardModule,
   Material.MatListModule,
-  Material.MatTooltipModule
+  Material.MatTooltipModule,
+  Material.MatProgressSpinnerModule
 
 ];
 
