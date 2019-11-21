@@ -6,12 +6,15 @@ import { Subscription } from 'rxjs';
 export interface MenteePreferenceValues {
   gender: string;
   age: string;
-  inDivision: string;
+  durationUnit: number;
+  inDivision: boolean;
   unitOfTimes: string;
+  mentorName: string;
 }
 @Component({
   selector: 'app-mentee-preference',
   templateUrl: './mentee-preference.component.html',
+  styleUrls: ['./mentee-preference.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -60,7 +63,9 @@ export class MenteePreferenceComponent implements ControlValueAccessor {
       gender: [],
       age: [],
       inDivision: [],
-      unitOfTimes: []
+      durationUnit: [],
+      unitOfTimes: [],
+      mentorName: []
     });
 
     this.subscriptions.push(

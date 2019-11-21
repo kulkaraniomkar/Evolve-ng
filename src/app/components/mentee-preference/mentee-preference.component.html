@@ -6,20 +6,26 @@
                     <!-- Period requiring mentoring-->
                     <div class="col-lg-6 col-md-12 col-sm-12">
                         <h5 class="card-title">Mentoring period</h5>
-                        <mat-radio-group aria-labelledby="gender radio group" [formControlName]="'unitOfTimes'"
-                            class="custom-radio-group">
-                            <mat-radio-button *ngFor="let item of mentoringTimeData; let i = index"
-                                [value]="item['Value']">
-                                {{item['Value']}} &nbsp; {{item['Name']}} &nbsp;
-                            </mat-radio-button>
-                        </mat-radio-group>
+                        <mat-form-field appearance="outline" class="input-width">
+                            <!-- <mat-label>Duration</mat-label> -->
+                            <input matInput placeholder="Time" type="number" formControlName="durationUnit" />
+                            <!-- <mat-icon matSuffix>watch_later</mat-icon> -->
+                          </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select</mat-label>
+                            <mat-select [formControlName]="unitOfTimes">
+                              <mat-option   *ngFor="let item of mentoringTimeData" [value]="item['Value']">
+                                {{item['Text']}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         <br />
                     </div>
                 </div>
                 <br/>
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-sm-12">
-                        <mat-checkbox>
+                        <mat-checkbox  formControlName="inDivision">
                             I prefer a mentor from my division
                         </mat-checkbox>
                         <br />
@@ -32,7 +38,7 @@
                             <mat-label>Preference</mat-label>
                             <mat-icon matSuffix>search</mat-icon>
                             <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option *ngFor="let option of data" [value]="option['name']"
+                                <mat-option *ngFor="let option of data" formControlName="mentorName" [value]="option['name']"
                                     (click)="onSelect(option)">{{option['name']}}</mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
@@ -42,7 +48,7 @@
 
                     <div class="col-lg-6 col-md-12 col-sm-12">
                         <h5 class="card-title">Mentor gender </h5>
-                        <mat-radio-group aria-labelledby="gender radio group" [formControlName]="'gender'"
+                        <mat-radio-group aria-labelledby="gender radio group" formControlName="gender"
                             class="custom-radio-group">
                             <mat-radio-button *ngFor="let item of genderData; let i = index" [value]="item['Value']">
                                 {{item['Text']}} &nbsp;
@@ -51,7 +57,7 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12">
                         <h5 class="card-title">Mentor age </h5>
-                        <mat-radio-group aria-labelledby="gender radio group" [formControlName]="'age'"
+                        <mat-radio-group aria-labelledby="gender radio group" formControlName="age"
                             class="custom-radio-group">
                             <mat-radio-button *ngFor="let item of ageData; let i = index" [value]="item['Value']">
                                 {{item['Text']}} &nbsp;

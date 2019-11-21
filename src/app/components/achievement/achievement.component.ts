@@ -33,10 +33,38 @@ export interface AchievementValues {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AchievementComponent implements ControlValueAccessor {
-
+export class AchievementComponent implements ControlValueAccessor, OnInit {
+  ngOnInit(): void {
+    const fm =  [
+      { OrderId: "11",Name: "learnToNavigate", Text: "Learn how to ‘navigate’ the system",  Value: "11"}, 
+    {OrderId: "12", Name: "careerGuidance", Text: "Career guidance", Value: "12"},
+     {OrderId: "13", Name: "betterIntergrateBusiness", Text: "Better integrate into a team/Business Unit", Value: "13"}, 
+     {OrderId: "14", Name: "enhanceImpact", Text: "Enhance my impact and influence in my role/team", Value: "14"}, 
+     {OrderId: "15", Name: "relationshipBuilding", Text: "Relationship building and networking", Value: "15"}, 
+     
+     {OrderId: "16", Name: "managingCareer", Text: "Manage a career transition", Value: "16"}, 
+     {OrderId: "17", Name: "dealDiversity", Text: "Deal with diversity and inclusion challenges", Value: "17"}, 
+     {OrderId: "18", Name: "enhanceTechnical", Text: "Enhance my technical skills", Value: "18"}, 
+    {OrderId: "19", Name: "broadenKnowledge", Text: "Broaden my organizational knowledge", Value: "19"},
+    {OrderId: "20", Name: "honeLeadership", Text: "Hone my leadership skills", Value: "20"}];
+    const newFM = fm.map((obj) => Object.values(obj)[1]);
+    console.log(newFM);
+    const formData = this.achievementData.slice().sort((a,b) =>
+    { console.log(a);
+      return a['OrderId'] - b['OrderId']
+    });
+    console.log(formData);
+  }
+  
+  //  objectFlip(obj) {
+  //   return Object.keys(obj).reduce((ret, key) => {
+  //     ret[obj[key]] = key;
+  //     return ret;
+  //   }, {});
+  //}
   @Input() achievementData: [];
-  form: FormGroup;
+  @Input() achievementTitle: string;
+  //form: FormGroup;
   subscriptions: Subscription[] = [];
 
   get value(): AchievementValues {
@@ -56,22 +84,21 @@ export class AchievementComponent implements ControlValueAccessor {
   get confirmPasswordControl() {
     return this.form.controls.confirmPassword;
   }
+  form = this.formBuilder.group({
+    betterIntergrateBusiness: [],
+    broadenKnowledge: [],
+    careerGuidance: [],
+    dealDiversity: [],
+    enhanceImpact: [],
+    enhanceTechnical: [],
+    honeLeadership: [],
+    learnToNavigate: [],
+    managingCareer: [],
+    relationshipBuilding: [],
+  });
   constructor(
     private formBuilder: FormBuilder
   ) {
-    this.form = this.formBuilder.group({
-      betterIntergrateBusiness: [],
-      broadenKnowledge: [],
-      careerGuidance: [],
-      dealDiversity: [],
-      enhanceImpact: [],
-      enhanceTechnical: [],
-      honeLeadership: [],
-      learnToNavigate: [],
-      managingCareer: [],
-      relationshipBuilding: [],
-    });
-
     this.subscriptions.push(
       this.form.valueChanges.subscribe(value => {
         this.onChange(value);
@@ -79,6 +106,7 @@ export class AchievementComponent implements ControlValueAccessor {
       })
     );
   }
+ 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }

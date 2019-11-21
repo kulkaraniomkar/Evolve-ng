@@ -131,8 +131,8 @@ export class AchievementExperienceComponent implements ControlValueAccessor {
     }
     addEvent(ev){
         //this.propagateChange(ev['source']['value']);
-        //this.onChange(ev['source']['value']);
-        console.log(ev['source']['value']);
+        this.onChange(ev['source']['value']);
+        console.log(ev['source']);
         // console.log('Checked :', ev['checked']);
         // console.log(this.form.get('betterIntergrateBusiness'));
         // console.log(ev.target)

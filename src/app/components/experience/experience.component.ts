@@ -38,6 +38,7 @@ export interface ExperienceValues {
 export class ExperienceComponent implements ControlValueAccessor {
 
 @Input() experienceData : [];
+@Input() experienceTitle : string;
   form: FormGroup;
   subscriptions: Subscription[] = [];
 

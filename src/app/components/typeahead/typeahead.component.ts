@@ -1,6 +1,6 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-typeahead',
     templateUrl: 'typeahead.component.html',
@@ -21,7 +21,20 @@ export class TypeaheadComponent implements ControlValueAccessor {
   @Input() icon;
   public selected;
   public value;
-  constructor() { }
+  form: FormGroup;
+  subscriptions: Subscription[] = [];
+  constructor(private formBuilder: FormBuilder) { 
+    this.form = this.formBuilder.group({
+      mentorName: ['', Validators.required]
+  });
+
+  this.subscriptions.push(
+    this.form.valueChanges.subscribe(value => {
+      this.onChange(value);
+      this.onTouched();
+    })
+  );
+  }
 
   onChange: any = () => { };
   onTouched: any = () => { };

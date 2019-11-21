@@ -2,13 +2,13 @@ import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-radio',
-  templateUrl: './radio.component.html',
-  styleUrls: ['./radio.component.scss'],
+  selector: 'app-mentor-division-form',
+  templateUrl: './mentor-division-form.component.html',
+  styleUrls: ['./mentor-division-form.component.scss'],
   providers: [
     {
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => RadioComponent),
+        useExisting: forwardRef(() => MentorDivisionComponent),
         multi: true
       }
     //   {
@@ -19,7 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 ],
 changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioComponent implements ControlValueAccessor {
+export class MentorDivisionComponent implements ControlValueAccessor {
 
 
   constructor() { }
