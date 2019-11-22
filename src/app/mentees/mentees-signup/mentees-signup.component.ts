@@ -89,11 +89,11 @@ export class MenteesSignupComponent implements OnInit {
     this.filteredMentors$ = this.menteeForm.get('mentorName').valueChanges.pipe(
       startWith(''),
       // delay emits
-      debounceTime(300),
+      debounceTime(500),
       // use switch map so as to cancel previous subscribed events, before creating new once
       switchMap(value => {
         if (value !== '') {
-          // lookup from github
+          // lookup from mentor
           return this.lookup(value);
         } else {
           // if no value is pressent, return null
@@ -104,7 +104,7 @@ export class MenteesSignupComponent implements OnInit {
   }
   lookup(value: string): Observable<MentorSearchName> {
     return this.githubService.search(value.toLowerCase()).pipe(
-      // map the item property of the github results as our return object
+      // map the item property of the mentor search results as our return object
       map(results => results.items),
       // catch errors
       catchError(_ => {

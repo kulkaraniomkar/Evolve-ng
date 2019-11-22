@@ -27,6 +27,7 @@ export interface InterestValues {
 })
 export class InterestComponent implements ControlValueAccessor {
   @Input() displayText: string;
+  @Input() placeholderText: string;
   @ViewChild('autosize', { static: false })
   autosize: CdkTextareaAutosize;
 

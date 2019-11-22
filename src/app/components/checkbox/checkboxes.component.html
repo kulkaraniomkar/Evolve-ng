@@ -1,0 +1,29 @@
+<ng-container *ngFor="let item of data">
+    <div >
+      <ng-container *ngIf="_value && _value.includes(item.Value)">
+          <mat-checkbox  value="item['Value']" checked (click)=removeCheckbox(item.Value)>
+              {{item['Text']}}
+           </mat-checkbox>
+     </ng-container>
+      
+      <ng-container *ngIf="!_value || !_value.includes(item.Value)">
+          <mat-checkbox  value="item['Value']" (click)=selectCheckbox(item.Value)>
+              {{item['Text']}}
+           </mat-checkbox>
+        <!-- <input matCheckbox type="checkbox" value="{{item.id}}" (click)=selectCheckbox(item.id)> -->
+      </ng-container>
+      <br/>
+      <!-- <label class="form-check-label" >{{item['Text']}}</label> -->
+    </div>
+  </ng-container>
+<!-- <mat-list>
+  <mat-list-item *ngFor="let item of items">
+    <mat-checkbox [labelPosition]="labelPosition" >
+      Learn how to navigate the system
+    </mat-checkbox>
+  </mat-list-item>
+</mat-list> -->
+<!-- <mat-checkbox [labelPosition]="labelPosition"  [value]="value"  (click)="selectItem(value)" [attr.checked]="value" [id]="id">
+       {{labelText}}
+</mat-checkbox> -->
+{{data | json}}

@@ -2,7 +2,7 @@
     <!--Duration of type number-->
     <h5 class="card-title">Mentoring period</h5>
     <mat-form-field appearance="outline" class="input-width">
-        <mat-label>Duration</mat-label>
+        <mat-label>Duration  <span style="color: red;">*</span></mat-label>
         <input matInput placeholder="Duration" type="number" formControlName="daysWeeksMnthsYears" />
         <mat-icon matSuffix>watch_later</mat-icon>
         <mat-error *ngIf="daysWeeksMnthsYearsControl.hasError('required')  && daysWeeksMnthsYearsControl.touched">
@@ -17,7 +17,7 @@
     </mat-form-field>
     <!--Duration unit of measurement -->
     <mat-form-field appearance="outline">
-        <mat-label>Select</mat-label>
+        <mat-label>Select <span style="color: red;">*</span></mat-label>
         <mat-select formControlName="mnthOrYear">
             <mat-option *ngFor="let item of mentoringTimeDropdown" [value]="item['Value']">
                 {{item['Text']}}

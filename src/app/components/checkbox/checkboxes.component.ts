@@ -2,31 +2,23 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'my-checkboxes',
+  selector: 'app-checkboxes',
   templateUrl: './checkboxes.component.html',
-  styleUrls: ['./checkboxes.component.less'],
+  styleUrls: ['./checkboxes.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MentorDivisionComponent),
+      useExisting: forwardRef(() => CheckboxesComponent),
       multi: true
     }
   ]
 })
-export class MentorDivisionComponent implements ControlValueAccessor {
+export class CheckboxesComponent implements ControlValueAccessor {
   @Input() data: any[];
   public _value;
   onChange: any = () => { };
   onTouched: any = () => { };
-  get value() {
-    return this._value;
-  }
 
-  set value(value) {
-    this._value = value;
-    this.onChange(value);
-    this.onTouched();
-  }
 
   //this is our "change" function
   //marks formControl as touched
@@ -43,13 +35,20 @@ export class MentorDivisionComponent implements ControlValueAccessor {
 
   //this is how we write the value we want to the formControl
   writeValue(value:any) {
+    console.log("Write the value: ", value);
     this._value = value;
+    console.log("Write the _value: ", this._value);
   }
 
   selectCheckbox(checkboxId) {
-    const updatedArray = this._value;
-    updatedArray.push(checkboxId);
-    this.writeValue(updatedArray);
+   
+    console.log("Checking value: ", checkboxId);
+    console.log("Value for _value: ", this._value);
+    this.onChange(checkboxId);
+    this.writeValue(checkboxId);
+    // const updatedArray = this._value;
+    // updatedArray.push(checkboxId);
+    // this.writeValue(updatedArray);
   }
 
   removeCheckbox(checkboxId) {

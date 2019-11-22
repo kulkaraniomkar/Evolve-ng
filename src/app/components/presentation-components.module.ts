@@ -5,7 +5,7 @@ import { MaterialModule } from '../material/material.module';
 import { TextareaComponent } from './textarea/textarea.component';  
 import { InputComponent } from './input/input.component';
 //import { RadioComponent } from './radio/radio.component';
-import { CheckboxComponent } from './checkbox/checkbox.component';
+import { CheckboxesComponent } from './checkbox/checkboxes.component';
 import { SelectComponent } from './select/select.component';
 import { TableComponent } from './table/table.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
@@ -33,7 +33,7 @@ const components = [
     TextareaComponent,
     InputComponent,
     //RadioComponent,
-    CheckboxComponent,
+    CheckboxesComponent,
     SelectComponent,
     TableComponent,
     ProfileCardComponent,
