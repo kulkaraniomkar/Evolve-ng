@@ -21,8 +21,12 @@ export class MenteeDataService {
   }
 
   getMentee(id: number): Observable<Mentee> {
-    return this.http.get<Mentee>(`${this.apiUrlBase}/entee/getAll/${id}`)
+    return this.http.get<Mentee>(`${this.apiUrlBase}/mentee/get/${id}`)
     .pipe(
+      map(res => {
+        console.log(res['results'][0]);
+        return res['results'][0];
+      }),
       catchError(this.handleError())
     );
   }

@@ -4,10 +4,6 @@ import * as MenteeActions from '../actions';
 export interface MenteeState {
   mentees: Mentee[];
   mentee: Mentee;
-  totalItems: number;
-  pageNumber: number;
-  pageSize: number;
-  pageCount: number;
   loading: boolean;
   error: boolean;
 }
@@ -15,10 +11,6 @@ export interface MenteeState {
 export const initialState: MenteeState = {
   mentees: [],
   mentee: null,
-  totalItems: 0,
-  pageNumber: 0,
-  pageSize: 0,
-  pageCount: 0,
   loading: false,
   error: false
 };
@@ -29,31 +21,13 @@ export function reducer(
 ): MenteeState {
 
   switch (action.type) {
-    case MenteeActions.GET_MENTEES: {
-      return { ...state, loading: true };
-    }
-
-    case MenteeActions.GET_MENTEES_ERROR: {
-      return {
-        ...state,
-        loading: false
-      };
-    }
-
-    case MenteeActions.GET_MENTEES_SUCCESS: {
-      console.log("Reducer GET_MENTEES_SUCCESS:", action.payload);
-      return {
-        ...state,
-        mentees: action.payload['results'],
-        totalItems: action.payload['TotalItems'],
-        pageNumber: action.payload['PageNumber'],
-        pageSize: action.payload['PageSize'],
-        pageCount:action.payload['PageCount'],
-        loading: false
-      };
-    }
+    
 
     case MenteeActions.GET_MENTEE: {
+      console.log({...state});
+      if(state['mentee']){
+        console.log({...state['mentee']['mentee']});
+      }
       return { ...state, loading: true };
     }
 
@@ -65,37 +39,16 @@ export function reducer(
     }
 
     case MenteeActions.GET_MENTEE_SUCCESS: {
+      console.log('Mentee values:', {...state} );
+      console.log('Action payload values:',  action.payload );
       return {
         ...state,
-        mentee: action.payload['result'],
+        mentee: action.payload,
         loading: false
       };
     }
 
-   
 
-    case MenteeActions.SET_MENTEE_LOADING: {
-      return {
-        ...state,
-        loading: action.payload == null ? true : action.payload
-      };
-    }
-  }
   return state;
-}
-
-function modifyCustomerState(menteeState: MenteeState, menteeChanges: Partial<Mentee>): MenteeState {
-
-  return {
-    ...menteeState,
-    loading: false,
-    mentees: menteeState.mentees.map(h => {
-      if (h.MenteeId === menteeChanges.MenteeId) {
-        return { ...h, ...menteeChanges };
-      } else {
-        return h;
-      }
-    })
-  };
-
+  }
 }

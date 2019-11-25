@@ -15,7 +15,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class CheckboxesComponent implements ControlValueAccessor {
   @Input() data: any[];
-  public _value;
+  @Input() checkboxesTitle: string;
+  public _value: any[] = [];
+
   onChange: any = () => { };
   onTouched: any = () => { };
 
@@ -23,32 +25,40 @@ export class CheckboxesComponent implements ControlValueAccessor {
   //this is our "change" function
   //marks formControl as touched
   //marks formControl as valid/invalid
-  registerOnChange( fn : any ) : void {
+  registerOnChange(fn: any): void {
+
     this.onChange = fn;
   }
 
   //this is our "touch/blur" function
   //marks formControl as touched
-  registerOnTouched( fn : any ) : void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   //this is how we write the value we want to the formControl
-  writeValue(value:any) {
-    console.log("Write the value: ", value);
-    this._value = value;
-    console.log("Write the _value: ", this._value);
+  writeValue(value: any) {
+    if (value !== null) {
+      this._value = value;
+
+      console.log("Write the _value not null: ", this._value);
+    } else {
+      this._value = [];
+      console.log("Write the _value null: ", this._value);
+    }
   }
 
   selectCheckbox(checkboxId) {
-   
+
     console.log("Checking value: ", checkboxId);
     console.log("Value for _value: ", this._value);
-    this.onChange(checkboxId);
-    this.writeValue(checkboxId);
-    // const updatedArray = this._value;
-    // updatedArray.push(checkboxId);
-    // this.writeValue(updatedArray);
+    // this.onChange(checkboxId);
+    // this.writeValue(checkboxId);
+    const updatedArray = this._value;
+    updatedArray.push(checkboxId);
+    this.writeValue(updatedArray);
+    this.onChange(updatedArray);
+    this.onTouched();
   }
 
   removeCheckbox(checkboxId) {

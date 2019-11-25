@@ -10,8 +10,10 @@ import { GithubResponse, Items } from './interface';
 export class GithubService {
   constructor(private http: HttpClient) {}
 
-  search(query: string): Observable<GithubResponse> {
+  search(query: string, inDiv: number, limit: number, division: string): Observable<GithubResponse> {
     const url = 'https://api.github.com/search/repositories';
+    const urlSearch = `http://rmb-vdv-aspn01/Evolve/ReflectWebAPI/api/mentor/search/${query}/${inDiv}/${limit}/${division}`;
+    console.log(urlSearch);
     return this.http
       .get<GithubResponse>(url, {
         observe: 'response',

@@ -12,6 +12,7 @@ import { MetaReducer, StoreModule } from '@ngrx/store';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppStoreModule } from './store/app-store.module';
 import { AuthenticationInterceptor } from './shared/authentication.interceptor.service';
+import { CoreModule } from './core/core.module';
 
 export const metaReducers: MetaReducer<any>[] = environment.production ? [] : [];
 @NgModule({
@@ -22,10 +23,10 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     BrowserModule,
     BrowserAnimationsModule,
     BreadcrumbModule,
+    CoreModule,
     HttpClientModule,
     AppRoutingModule,
     AppStoreModule,
-    EffectsModule.forRoot([]),
     StoreModule.forRoot({}, {
       metaReducers,
       runtimeChecks: {
@@ -33,6 +34,7 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
         strictActionImmutability: true
       }
     }),
+    EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument(): []
   ],
   providers: [{

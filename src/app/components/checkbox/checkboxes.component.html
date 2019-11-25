@@ -1,7 +1,9 @@
+<h5 class="card-title">{{checkboxesTitle}} <span style="color:red">*</span></h5>
 <ng-container *ngFor="let item of data">
     <div >
+     
       <ng-container *ngIf="_value && _value.includes(item.Value)">
-          <mat-checkbox  value="item['Value']" checked (click)=removeCheckbox(item.Value)>
+          <mat-checkbox  value="item['Value']" checked="true"  (click)=removeCheckbox(item.Value)>
               {{item['Text']}}
            </mat-checkbox>
      </ng-container>
@@ -10,6 +12,7 @@
           <mat-checkbox  value="item['Value']" (click)=selectCheckbox(item.Value)>
               {{item['Text']}}
            </mat-checkbox>
+           <!-- {{_value| json}} -->
         <!-- <input matCheckbox type="checkbox" value="{{item.id}}" (click)=selectCheckbox(item.id)> -->
       </ng-container>
       <br/>
@@ -26,4 +29,4 @@
 <!-- <mat-checkbox [labelPosition]="labelPosition"  [value]="value"  (click)="selectItem(value)" [attr.checked]="value" [id]="id">
        {{labelText}}
 </mat-checkbox> -->
-{{data | json}}
+<!-- {{data | json}} -->

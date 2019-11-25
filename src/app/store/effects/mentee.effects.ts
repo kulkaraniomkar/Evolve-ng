@@ -28,7 +28,7 @@ export class MenteeEffects {
     );
 
     @Effect()
-    getCustomer$: Observable<Action> = this.actions$
+    getMentee$: Observable<Action> = this.actions$
       .pipe(
         ofType(MenteeActions.GET_MENTEE),
         switchMap((action: GetMenteeAction) =>

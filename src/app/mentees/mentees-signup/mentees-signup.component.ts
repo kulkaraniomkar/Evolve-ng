@@ -1,11 +1,11 @@
-import { Component, OnInit, Optional, Inject } from '@angular/core';
+import { Component, OnInit, Optional, Inject, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EntityState, MenteeDisplayDataSelectors } from '../../store';
+import { EntityState,  MenteeSelectors } from '../../store';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MenteeDisplayData } from 'src/app/core/model/mentee-display-data';
-import { Observable, of } from 'rxjs';
+import { MenteeDisplayData, Result } from 'src/app/core/model/mentee-display-data';
+import { Observable, of, Subscription } from 'rxjs';
 import { startWith, map, debounceTime, mergeMapTo, mergeMap, switchMap, catchError } from 'rxjs/operators';
-import * as MenteeDisplayDataAction from '../../store/actions';
+import * as MenteeAction from '../../store/actions';
 import { Mentee } from '../../core/model/mentee';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GithubService } from 'src/app/shared/mentor-search.service';
@@ -21,11 +21,11 @@ export interface MentorSearchName {
   styleUrls: ['./mentees-signup.component.scss']
 })
 
-export class MenteesSignupComponent implements OnInit {
+export class MenteesSignupComponent implements OnInit, OnDestroy {
   menteeForm = this.formBuilder.group({
     GenderPeriodAge: [],
     // id: [],
-    // Interest: [],
+    achievements: [],
     experience: [],
     InDivision: [null, Validators.required],
     mentorName: [],
@@ -61,29 +61,40 @@ export class MenteesSignupComponent implements OnInit {
     AgePreferences:[],
   });
   title = 'New Mentee Signup';
-  menteeDisplayData$: Observable<MenteeDisplayData>;
+  menteeData$: Observable<Mentee>;
   filteredMentors$: Observable<MentorSearchName[]>;
+
   loading$: Observable<boolean>;
+  mentee: Result;
+  sub: Subscription;
+  experienceData: Array<{OrderId: number, Name: string, Text: string, Value: number}>;
   divisions: Array<{id: number, name: string}> = [{ id: 1, name: 'Yes'}, { id: 2, name: 'No'}, { id: 3, name: 'Does not matter'}]
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) private data: any,
     @Optional() private dialogRef: MatDialogRef<MenteesSignupComponent>,
     private store: Store<EntityState>,
-    private menteeDisplayDataSelectors: MenteeDisplayDataSelectors,
+    private menteeSelectors: MenteeSelectors,
     private githubService: GithubService,
     private formBuilder: FormBuilder,
   ) {
-    this.menteeDisplayData$ = this.menteeDisplayDataSelectors.menteeDisplayData$;
-    this.loading$ = this.menteeDisplayDataSelectors.loading$;
+    //this.menteeDisplayData$ = this.menteeDisplayDataSelectors.menteeDisplayData$;
+    this.sub = this.menteeSelectors.mentee$.subscribe(menteeResult => {
+       console.log(menteeResult);
+      // if (menteeResult) {
+      //  this.mentee = menteeResult['Result'];
+      //  console.log(menteeResult);
+      // }
+    });
+    this.loading$ = this.menteeSelectors.loading$;
   }
   ngOnInit(): void {
-    this.getMenteeDisplayData();
+    this.getMenteeData();
     this.getFilteredMentors();
     this.filteredMentors$
   }
 
-  getMenteeDisplayData() {
-    this.store.dispatch(new MenteeDisplayDataAction.GetMenteeDisplayData(0));
+  getMenteeData() {
+    this.store.dispatch(new MenteeAction.GetMentee(0));
   }
   getFilteredMentors(){
     this.filteredMentors$ = this.menteeForm.get('mentorName').valueChanges.pipe(
@@ -103,7 +114,7 @@ export class MenteesSignupComponent implements OnInit {
     )
   }
   lookup(value: string): Observable<MentorSearchName> {
-    return this.githubService.search(value.toLowerCase()).pipe(
+    return this.githubService.search(value.toLowerCase(), this.menteeForm.get('inDivision').value, 5,  this.mentee['Division']).pipe(
       // map the item property of the mentor search results as our return object
       map(results => results.items),
       // catch errors
@@ -112,9 +123,15 @@ export class MenteesSignupComponent implements OnInit {
       })
     );
   }
+  // 
+  sortFn(data: Array<{OrderId: number, Name: string, Text: string, Value: number}>){
+    console.log("Data to be sorted: ", data);
+    this.experienceData = data.slice().sort((a, b) => a.OrderId - b.OrderId);
+    return true;
+  }
   save(){
     // const
-    this.menteeDisplayData$.subscribe(r => console.log(r));
+    //this.menteeDisplayData$.subscribe(r => console.log(r));
     const newFormValues:Mentee = {
       MenteeId: 0,
       EmployeeId: null,
@@ -147,6 +164,11 @@ export class MenteesSignupComponent implements OnInit {
   }
   onClose() {
     this.dialogRef.close();
+  }
+  ngOnDestroy(){
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
   // add(mentee: Mentee) {
   //   this.store.dispatch(new MenteeAction.AddMentee(mentee));

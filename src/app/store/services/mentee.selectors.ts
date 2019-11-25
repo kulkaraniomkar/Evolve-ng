@@ -18,7 +18,10 @@ const getAllMentees = createSelector(
 
 const getMentee = createSelector(
   getMenteeState,
-  (state: MenteeState) => state.mentee
+  (state: MenteeState) => {
+    console.log(state);
+    return state.mentee;
+  }
 );
 
 const getMenteesLoading = createSelector(
