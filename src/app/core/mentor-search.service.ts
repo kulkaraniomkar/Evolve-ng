@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { MentorSearchName, Items } from './model/mentor-search';
+import {  Items } from './model/mentor-search';
 
 @Injectable({
   providedIn: 'root'
