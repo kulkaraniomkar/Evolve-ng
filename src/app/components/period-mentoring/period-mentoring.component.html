@@ -1,0 +1,29 @@
+<div [formGroup]="form" class="col-lg-6 col-md-12 col-sm-12">
+    <!--Duration of type number-->
+    <h5 class="card-title">Mentoring period</h5>
+    <mat-form-field appearance="outline" class="input-width">
+        <mat-label>Duration  <span style="color: red;">*</span></mat-label>
+        <input matInput placeholder="Duration" type="number" formControlName="daysWeeksMnthsYears" />
+        <mat-icon matSuffix>watch_later</mat-icon>
+        <mat-error *ngIf="daysWeeksMnthsYearsControl.hasError('required')  && daysWeeksMnthsYearsControl.touched">
+            Required
+        </mat-error>
+        <mat-error *ngIf="daysWeeksMnthsYearsControl.hasError('min') && daysWeeksMnthsYearsControl.touched">
+            Minimum value must be 1
+        </mat-error>
+        <mat-error *ngIf="daysWeeksMnthsYearsControl.hasError('max') && daysWeeksMnthsYearsControl.touched">
+            Maximum value must be 12
+        </mat-error>
+    </mat-form-field>
+    <!--Duration unit of measurement -->
+    <mat-form-field appearance="outline">
+        <mat-label>Select <span style="color: red;">*</span></mat-label>
+        <mat-select formControlName="mnthOrYear">
+            <mat-option *ngFor="let item of mentoringTimeDropdown" [value]="item['Value']">
+                {{item['Text']}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="mnthOrYearControl.hasError('required')">Please choose a unit of time</mat-error>
+       </mat-form-field>
+</div>
+<!-- {{mentoringTimeDropdown | json}} -->

@@ -68,6 +68,7 @@ export function reducer(
     }
 
     case MenteeActions.GET_MENTEE_SUCCESS: {
+      console.log(action.payload);
       return {
         ...state,
         mentee: action.payload,
@@ -100,7 +101,7 @@ export function reducer(
       return {
         ...state,
         mentees: state.mentees.map(h => {
-          if (h.id === action.payload.id) {
+          if (h.MenteeId === action.payload.MenteeId) {
             state.loading = true;
           }
           return h;
@@ -117,7 +118,7 @@ export function reducer(
         ...state,
         loading: false,
         mentees: state.mentees.map(h => {
-          if (h.id === action.payload.requestData.id) {
+          if (h.MenteeId === action.payload.requestData.MenteeId) {
             // Huh? No idea what the error is!
             state.error = true;
           }
@@ -142,7 +143,7 @@ function modifyMenteeState(menteeState: MenteeState, menteeChanges: Partial<Ment
     ...menteeState,
     loading: false,
     mentees: menteeState.mentees.map(h => {
-      if (h.id === menteeChanges.id) {
+      if (h.MenteeId === menteeChanges.MenteeId) {
         return { ...h, ...menteeChanges };
       } else {
         return h;

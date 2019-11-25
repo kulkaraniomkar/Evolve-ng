@@ -21,7 +21,7 @@ export class MenteeDataService {
   }
 
   getMentee(id: number): Observable<Mentee> {
-    return this.http.get<Mentee>(`${this.apiUrlBase}/mentees/${id}`)
+    return this.http.get<Mentee>(`${this.apiUrlBase}/mentee/get/${id}`)
     .pipe(
       catchError(this.handleError())
     );
@@ -35,7 +35,7 @@ export class MenteeDataService {
   }
 
   deleteMentee(mentee: Mentee): Observable<Mentee> {
-    return this.http.delete(`${this.apiUrlBase}/mentees/${mentee.id}`)
+    return this.http.delete(`${this.apiUrlBase}/mentees/${mentee.MenteeId}`)
     .pipe(
       map(() => mentee),
       catchError(this.handleError(mentee))
@@ -43,7 +43,7 @@ export class MenteeDataService {
   }
 
   updateMentee(mentee: Mentee): Observable<Mentee> {
-    return this.http.put<Mentee>(`${this.apiUrlBase}/mentees/${mentee.id}`, mentee)
+    return this.http.put<Mentee>(`${this.apiUrlBase}/mentees/${mentee.MenteeId}`, mentee)
     .pipe(
       map(() => mentee),
       catchError(this.handleError(mentee))

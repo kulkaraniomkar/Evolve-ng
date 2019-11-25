@@ -1,0 +1,80 @@
+<div class="spinner-container" *ngIf="(loading$ | async )">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="mentee" class="card">
+    <div class="card-header">
+        <h4>{{title}}</h4>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="menteeForm" (ngSubmit)="save()">
+            <!--Interest-->
+            <app-interest formControlName="interest" [displayText]="'Interests/passion'"
+                [placeholderText]="'Enter your interests here'">
+            </app-interest>
+            <!--mentoring period-->
+            <app-periodmentoring-form  formControlName="mentorPeriod" [mentoringTimeDropdown]="mentee['UnitOfTimes']">
+            </app-periodmentoring-form>
+            <div class="row">
+                    <!--Choose a division-->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h5 class="card-title">Would you prefer a mentor from within your division? <span
+                                style="color:red">*</span></h5>
+                        <!-- <mat-radio-group labelPosition="after" aria-labelledby="custom-radio-group-label"
+                            class="custom-radio-group" formControlName="inDivision">
+                            <mat-radio-button class="custom-radio-button" value="1">
+                                Yes
+                            </mat-radio-button>
+                            <mat-radio-button class="custom-radio-button" value="2">
+                                No
+                            </mat-radio-button>
+                            <mat-radio-button class="custom-radio-button" value="3">
+                                Doesn't matter
+                            </mat-radio-button>
+
+                        </mat-radio-group>                         -->
+                    </div>
+                    <!--Choose a mentor from any division :: Typeahead-->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <!-- <mat-form-field class="typeahead-full-width" appearance="outline">
+                            <input matInput placeholder="Enter your preferred mentor name" aria-label="Mentor"
+                                [matAutocomplete]="auto" formControlName="mentorName">
+                            <mat-label>Mentor autocomplete search <span style="color: red;">*</span></mat-label>
+                            <mat-icon matSuffix>search</mat-icon>
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let mentor of filteredMentors$ | async" [value]="mentor.name">
+                                    {{mentor.name | titlecase}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field> -->
+                    </div>
+                    <!-- Achievement and experience-->
+                    <div class="row">
+                            <!-- Achievement -->
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <!-- <app-achievement [achievementTitle]="'What I would like to achieve from mentoring (Choose 3)'"
+                                    [achievementData]="displayData['results'][0]['DomainAreas']" formControlName="experience">
+                                </app-achievement> -->
+                                <app-checkboxes  [checkboxesTitle]="'What I would like to achieve from mentoring (Choose 3)'" [data]="displayData['results'][0]['DomainAreas']"
+                                    formControlName="achievements">
+                                </app-checkboxes>
+                            </div>
+                            <!-- Experience -->
+                            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="mentee['Experiences'] ? sortFn(mentee['Experiences']): [{ OrderId: 0, Name: 'Error', Text: 'error on experience', Value: 0 }]">
+                               
+                                <h5 class="card-title">Type of experience I seek in a mentor <span style="color:red">*</span></h5>
+                                <mat-radio-group labelPosition="after" aria-labelledby="custom-radio-group-label"
+                                    class="custom-radio-group" formControlName="experience">
+                                    <!-- sort out the sortFn call -->
+                                    <mat-radio-button class="custom-radio-button" *ngFor="let item of experienceData; let i = index"
+                                    [value]="item.Value">
+                                       {{item['Text']}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                </div>
+
+        </form>
+
+    </div>
+</div>
