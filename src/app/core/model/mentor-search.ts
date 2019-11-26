@@ -1,5 +1,5 @@
 export class SearchParams {
-    PreferenceId: number;
+    SearchId: number;
     SearchString: string;
     Limit: number;
     Division: string;

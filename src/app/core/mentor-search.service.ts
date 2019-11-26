@@ -13,10 +13,10 @@ export class MentorSearchService {
   constructor(private http: HttpClient) { }
 
   search(searchParams: SearchParams): Observable<SearchResults> {
-    return this.http.put<SearchParams>(`${this.apiUrlBase}/mentor/search`, searchParams)
+    return this.http.put<SearchResults>(`${this.apiUrlBase}/mentor/search`, searchParams)
       .pipe(
         tap(s => console.log(s)),
-        map(res => res['results'])
+        map(res => res)
       );
   }
 }

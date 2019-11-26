@@ -41,15 +41,20 @@
                 </div>
                 <!--Choose a mentor from any division :: Typeahead-->
                 <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h5 class="card-title">Search for preferred mentor <span
+                            style="color:red">*</span></h5>
                     <mat-form-field class="typeahead-full-width" appearance="outline">
                         <input matInput placeholder="Enter your preferred mentor name" aria-label="Mentor"
                             [matAutocomplete]="auto" formControlName="mentorName">
                         <mat-label>Mentor autocomplete search <span style="color: red;">*</span></mat-label>
                         <mat-icon matSuffix>search</mat-icon>
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let mentor of filteredMentors$ | async" [value]="mentor.FullName">
+                            <mat-option *ngIf="'isLoading'" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+                            <ng-container *ngIf="'!isLoading'" >
+                            <mat-option *ngFor="let mentor of filteredMentors$ | async" [value]="mentor.FullName" (click)="selectedEmployee(mentor.EmployeeId)">
                                 {{mentor.FullName | titlecase}}
                             </mat-option>
+                        </ng-container>
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
@@ -92,7 +97,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12 col-md-8 col-sm-12">
                     <button mat-raised-button color="primary" type="submit"
-                        [disabled]="!menteeForm.valid">&nbsp;Save&nbsp;</button>
+                        [disabled]="!menteeForm.valid">&nbsp;Submit&nbsp;</button>
                     &nbsp;&nbsp;&nbsp;
                     <button mat-raised-button color="warn">Cancel</button>
                 </div>
