@@ -6,42 +6,42 @@ export class MenteeDomianArea {
   TrackDatetime: Date;
 }
 export interface AgePreference {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 export class DomainArea {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 export class Gender {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 
 export class SearchParam {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 export interface UnitOfTime {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 
 export interface Experience {
-  OrderId: string;
+  OrderId: number;
   Name: string;
   Text: string;
-  Value: string;
+  Value: number;
 }
 export class MenteeExperience {
   MenteeExperienceId: number;
@@ -52,8 +52,9 @@ export class MenteeExperience {
 }
 
 export class Mentee {
+  // id: number;
   MenteeId: number;
-  EmployeeId: string;
+  EmployeeId: number;
   InDivision: boolean;
   Division: string;
   TenantId?: any;

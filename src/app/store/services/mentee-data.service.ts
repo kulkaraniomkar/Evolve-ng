@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
-import { catchError, delay, map } from 'rxjs/operators';
+import { catchError, delay, map, tap } from 'rxjs/operators';
 import { Mentee } from '../../core/model/mentee';
 import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
@@ -20,8 +20,8 @@ export class MenteeDataService {
     );
   }
 
-  getMentee(id: number): Observable<Mentee> {
-    return this.http.get<Mentee>(`${this.apiUrlBase}/mentee/get/${id}`)
+  getMentee(MenteeId: number): Observable<Mentee> {
+    return this.http.get<Mentee>(`${this.apiUrlBase}/mentee/get/${MenteeId}`)
     .pipe(
       catchError(this.handleError())
     );

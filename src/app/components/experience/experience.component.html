@@ -1,0 +1,10 @@
+<div [formGroup]="form" class="col-lg-6 col-md-12 col-sm-12">
+    <h5 class="card-title">{{experienceTitle}} <span style="color:red">*</span></h5>
+    <mat-radio-group aria-labelledby="custom-radio-group-label" class="custom-radio-group"  formControlName="selectedExperienceId">
+        <mat-radio-button class="custom-radio-button" *ngFor="let item of experienceData; let i = index"
+        [value]="item['Value']">
+            {{item['Text']}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <!-- {{experienceData | json}} -->
+</div>

@@ -2,31 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import {  Items } from './model/mentor-search';
+import { SearchParams, SearchResults } from './model/mentor-search';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MentorSearchService {
-  constructor(private http: HttpClient) {}
+  apiUrlBase = environment.apiUrlBase;
+  constructor(private http: HttpClient) { }
 
-  search(query: string, inDiv: number, limit: number, division: string): Observable<Items> {
-    const url = 'https://api.github.com/search/repositories';
-    const urlSearch = `http://rmb-vdv-aspn01/Evolve/ReflectWebAPI/api/mentor/search/${query}/${inDiv}/${limit}/${division}`;
-    console.log(urlSearch);
-    return this.http
-      .get<Items>(url, {
-        observe: 'response',
-        params: {
-          q: query,
-          sort: 'stars',
-          order: 'desc'
-        }
-      })
+  search(searchParams: SearchParams): Observable<SearchResults> {
+    return this.http.put<SearchParams>(`${this.apiUrlBase}/mentor/search`, searchParams)
       .pipe(
-        map(res => {
-          return res.body;
-        })
+        tap(s => console.log(s)),
+        map(res => res['results'])
       );
   }
 }

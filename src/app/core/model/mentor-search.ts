@@ -1,12 +1,11 @@
-export class Item {
-    results: [];
-    errors: [];
-    name: string;
-    TotalItems: number;
-    PageNumber: number;
-    PageSize: number;
-    PageCount: number;
+export class SearchParams {
+    PreferenceId: number;
+    SearchString: string;
+    Limit: number;
+    Division: string;
   }
-  export class Items{
-      items : Item[]
+  export class SearchResults{
+      EmployeeId: number;
+      FullName: string;
   }
+ 
