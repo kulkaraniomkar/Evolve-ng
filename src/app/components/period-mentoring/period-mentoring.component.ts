@@ -50,7 +50,7 @@ export class PeriodMentoringComponent implements ControlValueAccessor, OnDestroy
 
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
-        daysWeeksMnthsYears: ['', [Validators.required, Validators.min(1), Validators.max(12)]],
+        daysWeeksMnthsYears: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
         mnthOrYear: ['', Validators.required]
     });
 

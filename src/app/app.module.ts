@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {BreadcrumbModule} from 'angular-crumbs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
 @NgModule({
   imports: [
     BrowserModule,
+    BreadcrumbModule,
     BrowserAnimationsModule,
     CoreModule,
     HttpClientModule,

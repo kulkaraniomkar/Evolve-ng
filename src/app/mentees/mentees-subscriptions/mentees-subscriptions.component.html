@@ -29,14 +29,18 @@
         </ng-container>
         <ng-container matColumnDef="shareProfile">
             <mat-header-cell *matHeaderCellDef>Share Profile</mat-header-cell>
-            <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.shareProfile}}</mat-cell>
+            <mat-cell class="duration-cell" *matCellDef="let mentee">{{mentee.ShareProfile}}</mat-cell>
         </ng-container>
         <!-- Action Column -->
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
         <td mat-cell *matCellDef="let mentee" class="action-link"> 
-          <a (click)="openDialog('Update',element)">Edit</a> | 
-          <a (click)="openDialog('Delete',element)">Delete</a>  
+                <button mat-icon-button color="warn" (click)="openDialog('Update',mentee)">
+                        <mat-icon class="mat-18">edit</mat-icon>
+                </button>   
+                <button mat-icon-button color="warn" (click)="openDialog('Update',element)">
+                        <mat-icon class="mat-18">delete</mat-icon>
+                </button>
         </td>
       </ng-container>
 

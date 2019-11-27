@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription, of } from 'rxjs';
 import { startWith, map, debounceTime, switchMap, catchError, tap, finalize } from 'rxjs/operators';
@@ -10,6 +10,8 @@ import { Store } from '@ngrx/store';
 import { MentorSearchService } from '../../core/mentor-search.service';
 import { Router } from '@angular/router';
 import { SearchParams, SearchResults } from '../../core/model/mentor-search';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { MSubscription } from '../../core/model/m-subscriptions';
 
 export interface MentorSearchName {
     id: number
@@ -33,10 +35,11 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         conditions: [],
         genderAge: []
     });
-    title = 'New Mentee Signup';
+    title = 'Mentee Signup';
     EmployeeId: number;
     isLoading = false;
     mentee: Mentee;
+    localFormData: any;
     mentorResult: SearchResults[];
     loading$: Observable<boolean>;
     filteredMentors$: Observable<SearchResults[]>;
@@ -47,14 +50,18 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         private menteeSelectors: MenteeSelectors,
         private searchMentorSelectors: SearchMentorSelectors,
         private router: Router,
-        private mentorSearchService: MentorSearchService
+        private mentorSearchService: MentorSearchService,
+        //@Optional() is used to prevent error if no data is passed
+        @Optional() @Inject(MAT_DIALOG_DATA) public data: MSubscription
     ) {
         this.sub = this.menteeSelectors.mentee$.subscribe(menteeResult => {
             console.log(menteeResult);
             if (menteeResult) {
                 this.mentee = menteeResult;
+                this.menteeForm.patchValue(this.mentee);
             }
         });
+        this.localFormData = { ...data}
         this.loading$ = this.menteeSelectors.loading$;
         // this.sub = this.searchMentorSelectors.searchResults$.subscribe(empl => {
         //     if (empl) {
@@ -102,7 +109,7 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
             ReadTerms: this.menteeForm.get('conditions').value['readTerms'],
             Comment: this.menteeForm.get('comment').value['passion'],
             CreatedDate: new Date,
-            MenteeDomianArea: [{DomainId: this.menteeForm.get('achievements').value[0]}],
+            MenteeDomianArea: [{ DomainId: this.menteeForm.get('achievements').value[0] }],
             MenteeExperience: [{ ExperienceId: this.menteeForm.get('experience').value['selectedExperienceId'] }],
             UnitOfTimes: [],
             Experiences: [],
@@ -115,14 +122,20 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         if (this.menteeForm.valid) {
             //const menteerValue = { ...this.customer, ...this.customerForm.value };
             this.store.dispatch(new MenteeAction.AddMentee(saveMentee));
-            this.menteeForm.reset;
-            //this.router.navigate(['/customers']);
-          }
-      
+            this.menteeForm.reset();
+            this.router.navigate(['mentees/subscriptions']);
+        }
+
         console.log(saveMentee);
     }
     getMentee() {
-        this.store.dispatch(new MenteeAction.GetMentee(0));
+        if(this.localFormData['MenteeId'] > 0){
+            console.log(this.localFormData);
+            this.store.dispatch(new MenteeAction.GetMentee(this.localFormData['MenteeId']));
+        }else{
+            this.store.dispatch(new MenteeAction.GetMentee(0));
+        }
+       
     }
 
 

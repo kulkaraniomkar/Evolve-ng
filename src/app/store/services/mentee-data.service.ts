@@ -15,7 +15,7 @@ export class MenteeDataService {
   constructor(private http: HttpClient) {}
 
   getMentees(): Observable<MSubscription[]> {
-    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee//GetMenteeSubscriptions`)
+    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
     .pipe(
       map(res =>res['results']),
       catchError(this.handleError())

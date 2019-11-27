@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import { Mentee } from '../../core/model/mentee';
 import * as MenteeAction from '../../store/actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
+import { MatDialog } from '@angular/material';
+import { MenteesSignupComponent } from '../mentees-signup/mentees-signup.component';
 
 @Component({
     selector: 'app-mentees-subscriptions',
@@ -18,7 +20,8 @@ export class MenteesSubscriptionsComponent implements OnInit {
     displayedColumns = ['division', 'status', 'duration', 'startDate', 'finishDate', 'mentor', 'shareProfile', 'actions'];
     constructor(
         private store: Store<EntityState>,
-        private menteeSelectors: MenteeSelectors) {
+        private menteeSelectors: MenteeSelectors,
+        public dialog: MatDialog) {
         this.mentees$ = this.menteeSelectors.mentees$;
         this.loading$ = this.menteeSelectors.loading$;
     }
@@ -30,4 +33,14 @@ export class MenteesSubscriptionsComponent implements OnInit {
     getMentees() {
         this.store.dispatch(new MenteeAction.GetMentees());
     }
+    openDialog(action, obj) {
+        // obj.action = action;
+        const dialogRef = this.dialog.open(MenteesSignupComponent, {
+          width: '800px',
+          height: '700px',
+          data:obj
+        });
+     
+        dialogRef.afterClosed();
+      }
 }
