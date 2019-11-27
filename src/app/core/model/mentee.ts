@@ -57,13 +57,13 @@ export class Mentee {
   EmployeeId: number;
   InDivision: boolean;
   Division: string;
-  TenantId?: any;
+  //TenantId?: any;
   Interest?: any;
   ServicePeriod?: any;
   Duration?: any;
   UnitOfTimeId: number;
   YearsOfExperience: number;
-  PreferredMentorId?: any;
+  //PreferredMentorId?: any;
   PreferredMentorEmpId?: any;
   PreferredMentorGenderId?: any;
   PreferredMentorAgeId?: any;
@@ -73,12 +73,12 @@ export class Mentee {
   CreatedDate: Date;
   MenteeDomianArea: any[];
   MenteeExperience: any[];
-  UnitOfTimes: UnitOfTime[];
-  Experiences: Experience[];
-  DomainAreas: DomainArea[];
-  AgePreference: AgePreference[];
-  SearchParams: SearchParam[];
-  Gender: Gender[];
+  UnitOfTimes?: UnitOfTime[];
+  Experiences?: Experience[];
+  DomainAreas?: DomainArea[];
+  AgePreference?: AgePreference[];
+  SearchParams?: SearchParam[];
+  Gender?: Gender[];
 }
 
 export class MenteeList {

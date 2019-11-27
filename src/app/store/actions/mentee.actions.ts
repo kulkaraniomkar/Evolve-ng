@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { Mentee } from '../../core/model/mentee';
 import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
+import { MSubscription } from '../../core/model/m-subscriptions';
 
 export const ADD_MENTEE = '[Mentee] ADD_MENTEE';
 export const ADD_MENTEE_ERROR = '[Mentee] ADD_MENTEE_ERROR';
@@ -16,9 +17,9 @@ export const UPDATE_MENTEE = '[Mentee] UPDATE_MENTEE';
 export const UPDATE_MENTEE_SUCCESS = '[Mentee] UPDATE_MENTEE_SUCCESS';
 export const UPDATE_MENTEE_ERROR = '[Mentee] UPDATE_MENTEE_ERROR';
 
-export const GET_MENTEES = '[Mentee] GET_MENTEEES';
-export const GET_MENTEES_SUCCESS = '[Mentee] GET_MENTEEES_SUCCESS';
-export const GET_MENTEES_ERROR = '[Mentee] GET_MENTEEES_ERROR';
+export const GET_MENTEES = '[Mentee Subcriptions] GET_MENTEEES';
+export const GET_MENTEES_SUCCESS = '[Mentee Subcriptions] GET_MENTEEES_SUCCESS';
+export const GET_MENTEES_ERROR = '[Mentee Subcriptions] GET_MENTEEES_ERROR';
 
 export const DELETE_MENTEE = '[Mentee] DELETE_MENTEE';
 export const DELETE_MENTEE_SUCCESS = '[Mentee] DELETE_MENTEE_SUCCESS';
@@ -42,7 +43,7 @@ export class GetMentees implements Action {
 
 export class GetMenteesSuccess implements Action {
   readonly type = GET_MENTEES_SUCCESS;
-  constructor(public readonly payload: Mentee[]) {}
+  constructor(public readonly payload: MSubscription[]) {}
 }
 
 export class GetMenteesError implements Action {

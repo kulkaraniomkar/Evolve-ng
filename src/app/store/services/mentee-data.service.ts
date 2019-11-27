@@ -5,6 +5,7 @@ import { catchError, delay, map, tap } from 'rxjs/operators';
 import { Mentee } from '../../core/model/mentee';
 import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
+import { MSubscription } from '../../core/model/m-subscriptions';
 
 @Injectable()
 export class MenteeDataService {
@@ -13,9 +14,10 @@ export class MenteeDataService {
 
   constructor(private http: HttpClient) {}
 
-  getMentees(): Observable<Mentee[]> {
-    return this.http.get<Mentee[]>(`${this.apiUrlBase}/mentees`)
+  getMentees(): Observable<MSubscription[]> {
+    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee//GetMenteeSubscriptions`)
     .pipe(
+      map(res =>res['results']),
       catchError(this.handleError())
     );
   }
@@ -28,7 +30,7 @@ export class MenteeDataService {
   }
 
   addMentee(mentee: Mentee): Observable<Mentee> {
-    return this.http.post<Mentee>(`${this.apiUrlBase}/mentees/`, mentee)
+    return this.http.post<Mentee>(`${this.apiUrlBase}/mentee/create`, mentee)
     .pipe(
       catchError(this.handleError(mentee))
     );

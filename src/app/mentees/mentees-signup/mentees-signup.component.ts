@@ -26,7 +26,7 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         interest: [],
         mentorPeriod: [],
         inDivision: ['', Validators.required],
-        mentorName: [{value: null, disabled: false}],
+        mentorName: [{ value: null, disabled: false }],
         achievements: [],
         experience: [],
         comment: [],
@@ -34,6 +34,7 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         genderAge: []
     });
     title = 'New Mentee Signup';
+    EmployeeId: number;
     isLoading = false;
     mentee: Mentee;
     mentorResult: SearchResults[];
@@ -80,30 +81,60 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         this.store.dispatch(new MenteeAction.AddMentee(mentee));
     }
     save() {
-        // const saveMentee: Mentee = {
-        //     //MenteeId:0,
-        //     EmployeeId: this.mentee['EmployeeId'],
-        //     InDivision: this.menteeForm.get('inDivision').value,
-        //     Division: this.mentee['Division'],
-        //     UnitOfTimeId: this.menteeForm.get('mentorPeriod').value['daysWeeksMnthsYears'],
-        //     YearsOfExperience: this.menteeForm.get('mentorPeriod').value['mnthOrYear'],
-        //     PreferredMentorId: 
-        // }
         console.log(this.menteeForm.value);
+
+        const saveMentee: Mentee = {
+            MenteeId: 0,
+            EmployeeId: this.mentee['EmployeeId'],
+            InDivision: this.menteeForm.get('inDivision').value,
+            Division: this.mentee['Division'],
+            //TenantId: 0,
+            Interest: this.menteeForm.get('interest').value['passion'],
+            ServicePeriod: 0,
+            Duration: 0,
+            UnitOfTimeId: this.menteeForm.get('mentorPeriod').value['mnthOrYear'],
+            YearsOfExperience: this.menteeForm.get('mentorPeriod').value['daysWeeksMnthsYears'],
+            //PreferredMentorId: this.EmployeeId,
+            PreferredMentorEmpId: this.EmployeeId,
+            PreferredMentorGenderId: this.menteeForm.get('genderAge').value['gender'],
+            PreferredMentorAgeId: this.menteeForm.get('genderAge').value['age'],
+            ShareProfile: this.menteeForm.get('conditions').value['shareProfile'],
+            ReadTerms: this.menteeForm.get('conditions').value['readTerms'],
+            Comment: this.menteeForm.get('comment').value['passion'],
+            CreatedDate: new Date,
+            MenteeDomianArea: [{DomainId: this.menteeForm.get('achievements').value[0]}],
+            MenteeExperience: [{ ExperienceId: this.menteeForm.get('experience').value['selectedExperienceId'] }],
+            UnitOfTimes: [],
+            Experiences: [],
+            DomainAreas: [],
+            AgePreference: [],
+            SearchParams: [],
+            Gender: []
+
+        }
+        if (this.menteeForm.valid) {
+            //const menteerValue = { ...this.customer, ...this.customerForm.value };
+            this.store.dispatch(new MenteeAction.AddMentee(saveMentee));
+            this.menteeForm.reset;
+            //this.router.navigate(['/customers']);
+          }
+      
+        console.log(saveMentee);
     }
     getMentee() {
         this.store.dispatch(new MenteeAction.GetMentee(0));
     }
-  
-  
+
+
     getFilteredMentors() {
         this.filteredMentors$ = this.menteeForm.get('mentorName').valueChanges.pipe(
             startWith(''),
             // delay emits
             debounceTime(500),
-            tap(()  => { 
+            tap(() => {
                 console.log("tap");
-                this.isLoading = true;}),
+                this.isLoading = true;
+            }),
             // use switch map so as to cancel previous subscribed events, before creating new once
             switchMap(value => {
                 if (value !== '') {
@@ -128,8 +159,8 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
         return this.mentorSearchService.search(searchParams).pipe(
             // map the item property of the mentor search results as our return object
             map(results => {
-                console.log("Mentor search observeable :",results);
-               return results;
+                console.log("Mentor search observeable :", results);
+                return results;
             }),
             // catch errors
             catchError(_ => {
@@ -142,7 +173,8 @@ export class MenteesSignupComponent implements OnInit, OnDestroy {
             this.sub.unsubscribe();
         }
     }
-    selectedEmployee(ev){
-        console.log(ev);
+    selectedEmployee(employeeId) {
+        this.EmployeeId = employeeId;
+        console.log(employeeId);
     }
 }

@@ -1,8 +1,9 @@
 import { Mentee } from '../../core/model/mentee';
 import * as MenteeActions from '../actions';
+import { MSubscription } from '../../core/model/m-subscriptions';
 
 export interface MenteeState {
-  mentees: Mentee[];
+  mentees: MSubscription[];
   mentee: Mentee;
   loading: boolean;
   error: boolean;
@@ -29,7 +30,7 @@ export function reducer(
       return {
         ...state,
         loading: false,
-        mentees: [...state.mentees, { ...action.payload }]
+       // mentees: [...state.mentees, { ...action.payload }]
       };
     }
 
@@ -80,7 +81,7 @@ export function reducer(
       return {
         ...state,
         loading: true,
-        mentees: state.mentees.filter(h => h !== action.payload)
+      //  mentees: state.mentees.filter(h => h !== action.payload)
       };
     }
 
@@ -92,7 +93,7 @@ export function reducer(
     case MenteeActions.DELETE_MENTEE_ERROR: {
       return {
         ...state,
-        mentees: [...state.mentees, action.payload.requestData],
+       // mentees: [...state.mentees, action.payload.requestData],
         loading: false
       };
     }
