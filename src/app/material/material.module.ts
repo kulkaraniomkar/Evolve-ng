@@ -27,7 +27,8 @@ const modules = [
   Material.MatCardModule,
   Material.MatListModule,
   Material.MatTooltipModule,
-  Material.MatProgressSpinnerModule
+  Material.MatProgressSpinnerModule,
+  Material.MatSnackBarModule
 
 ];
 

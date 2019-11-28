@@ -5,9 +5,9 @@ import { MenteesSignupComponent } from './mentees-signup/mentees-signup.componen
 import { MenteesSubscriptionsComponent } from './mentees-subscriptions/mentees-subscriptions.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'signup'},
-  { path: 'subscriptions', component: MenteesSubscriptionsComponent,  data: { breadcrumb: 'Subscription'} },
-  { path: 'signup', component: MenteesSignupComponent,  data: { breadcrumb: 'Signup'} },
+  { path: '', component: MenteesSignupComponent,  data: { breadcrumb: 'Signup'} },
+  { path: 'subscriptions', component: MenteesSubscriptionsComponent,  data: { breadcrumb: 'Subscriptions'} },
+
 ];
 
 @NgModule({

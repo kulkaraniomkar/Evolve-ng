@@ -6,20 +6,23 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { reducers } from './reducers';
 import { MenteeEffects} from './effects/mentee.effects';
+import { MentorEffects} from './effects/mentor.effects';
 import { SearchMentorEffects } from './effects/search-mentor.effects';
-import { MenteeDataService, MenteeSelectors, SearchMentorSelectors, SearchMentorDataService } from './services';
+import { MenteeDataService, MenteeSelectors, SearchMentorSelectors, SearchMentorDataService, MentorSelectors, MentorDataService } from './services';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     StoreModule.forFeature('entityCache', reducers),
-    EffectsModule.forFeature([ MenteeEffects, SearchMentorEffects ])
+    EffectsModule.forFeature([ MenteeEffects, MentorEffects, SearchMentorEffects ])
   ],
   providers: [
     MenteeDataService,
+    MentorDataService,
     SearchMentorDataService,
     MenteeSelectors,
+    MentorSelectors,
     SearchMentorSelectors
   ],
   exports: [StoreModule, EffectsModule]
