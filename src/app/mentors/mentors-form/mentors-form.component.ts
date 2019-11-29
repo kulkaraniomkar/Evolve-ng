@@ -62,6 +62,7 @@ export class MentorsFormComponent implements OnInit {
   // submit the mentor form
   submit() {
     const saveMentor: Mentor = {
+      id: 0,
       MentorId: 0,
       EmployeeId: this.mentor_meta['EmployeeId'],
       ProfessionalBackground: this.mentorForm.get('ProfessionalBackground').value,
