@@ -18,8 +18,11 @@ export class MentorDataService {
     private toastService: ToastService) {}
 
   getMentors(): Observable<MSubscription[]> {
-    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetMentorSubscriptions`)
+   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetMentorSubscriptions`)
+   const msg = 'Mentor subscription retrieved successfully!';
+   return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetAll`)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET ALL')),
       map(res =>res['results']),
       catchError(this.handleError())
     );
@@ -35,8 +38,10 @@ export class MentorDataService {
   }
 
   addMentor(mentor: Mentor): Observable<Mentor> {
+    const msg = 'Mentor signed up successfully!';
     return this.http.post<Mentor>(`${this.apiUrlBase}/mentor/create`, mentor)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(mentor))
     );
   }
@@ -61,6 +66,8 @@ export class MentorDataService {
     return (res: HttpErrorResponse) => {
       const error = new DataServiceError(res.error, requestData);
       console.error(error);
+      
+      this.toastService.openSnackBar(`${res.error['Message']}`, 'ERROR')
       // return new ErrorObservable(error);
       return throwError(error);
     };

@@ -1,4 +1,3 @@
-
 <div class="card card-body">
     <form [formGroup]="mentorForm" (ngSubmit)="submit()">
         <!--Interests or passions-->
@@ -16,7 +15,6 @@
                 </span>
             </mat-error>
         </mat-form-field>
-
         <!-- professional background-->
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Professional background (if applicable): eg. CA <span style="color: red;">*</span></mat-label>
@@ -99,32 +97,33 @@
                 Oops, maximum characters exceed
             </mat-error>
         </mat-form-field>
-        <!--Experience and areas of value-->
         <div class="row">
             <div class="col-lg-6">
                 <h6 class="card-title">I have experience in the following areas (tick as appropriate)&nbsp;<span
                         style="color:red">*</span></h6>
-                <!-- <ng-container *ngFor="let item of mentorExperiences">
-                    <mat-checkbox value="item['Value']">
-                        {{item['Text']}}
-                    </mat-checkbox>
-                    <br />
-                </ng-container> -->
-            </div>
-            {{mentorForm.controls.PriorRoles.controls | json}}
-            <div class="col-lg-6">
-                <h6 class="card-title">Areas in which I can add value to a mentee (tick as appropriate)<span
-                        style="color:red">*</span></h6>
-                <ng-container >
-                    <div formArrayName="MentorDomianArea" *ngFor="let item of mentorForm.get('MentorDomianArea'); let index">
-                        <mat-checkbox value="item['Value']" [formControlName]="i">
-                            {{item['Text']}}
+                <ng-container>
+                    <div formArrayName="Experiences"
+                        *ngFor="let item of mentorForm.controls.Experiences['controls']; let i=index">
+                        <mat-checkbox value="item[i]['Value']" [formControlName]="i">
+                            {{_mentor['Experiences'][i]['Text']}}
                         </mat-checkbox>
                         <br />
                     </div>
                 </ng-container>
             </div>
+            <div class="col-lg-6">
+                <h6 class="card-title">Areas in which I can add value to a mentee (tick as appropriate) <span
+                        style="color:red">*</span></h6>
+                <ng-container formArrayName="MentorDomianArea"
+                    *ngFor="let item of mentorForm.controls.MentorDomianArea['controls']; let i=index">
+                    <mat-checkbox value="item['Value']" [formControlName]="i">
+                        {{_mentor['DomainAreas'][i]['Text']}}
+                    </mat-checkbox>
+                    <br />
+                </ng-container>
+            </div>
         </div>
+        <!-- Comments -->
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Comments<span style="color:red">*</span></mat-label>
             <textarea matInput placeholder="Enter your comments" cdkTextareaAutosize cdkAutosizeMinRows="4"
@@ -140,9 +139,8 @@
                 <button mat-raised-button color="warn">Cancel</button>
             </div>
         </div>
-
     </form>
-    <pre>
+    <!-- <pre>
         {{mentor | json}}
-    </pre>
+    </pre> -->
 </div>

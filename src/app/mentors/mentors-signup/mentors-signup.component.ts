@@ -80,6 +80,7 @@ export class MentorsSignupComponent implements OnInit {
   }
   // submit the mentor form
   submit() {
+    
     console.log(this.mentorForm.value);
   }
 }

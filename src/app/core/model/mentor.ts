@@ -25,7 +25,7 @@
         EmployeeId: string;
         ProfessionalBackground?: any;
         Interest?: any;
-        Division: string;
+        Division?: string;
         Passion?: any;
         PriorRoles?: any;
         Available: boolean;
@@ -38,9 +38,9 @@
         CreatedDateTime?: any;
         MentorDomianArea: any[];
         MentorExperience: any[];
-        UnitOfTimes: UnitOfTime[];
-        Experiences: Experience[];
-        DomainAreas: DomainArea[];
+        UnitOfTimes?: UnitOfTime[];
+        Experiences?: Experience[];
+        DomainAreas?: DomainArea[];
     }
 
 
