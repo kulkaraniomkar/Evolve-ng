@@ -21,6 +21,7 @@
     }
 
     export interface Mentor {
+        id: number;
         MentorId: number;
         EmployeeId: string;
         ProfessionalBackground?: any;
