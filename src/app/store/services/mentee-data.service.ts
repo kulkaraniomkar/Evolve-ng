@@ -6,25 +6,31 @@ import { Mentee } from '../../core/model/mentee';
 import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
+import { ToastService } from '../../core/toast.service';
 
 @Injectable()
 export class MenteeDataService {
 
   apiUrlBase = environment.apiUrlBase;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private toastService: ToastService) {}
 
   getMentees(): Observable<MSubscription[]> {
+    const msg = 'Mentee subscriptions retrieved successfully!';
     return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),
       catchError(this.handleError())
     );
   }
 
   getMentee(MenteeId: number): Observable<Mentee> {
+    const msg = 'Mentee retrieved successfully!';
     return this.http.get<Mentee>(`${this.apiUrlBase}/mentee/get/${MenteeId}`)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError())
     );
   }
