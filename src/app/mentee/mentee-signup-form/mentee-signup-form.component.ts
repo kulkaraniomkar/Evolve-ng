@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Mentee } from '../../core/model/mentee';
+import { Mentee, DomainArea, Experience, Gender, AgePreference } from '../../core/model/mentee';
 import { startWith, debounceTime, tap, switchMap, map, catchError, count, filter } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { SearchResults, SearchParams } from '../../core/model/mentor-search';
@@ -27,6 +27,10 @@ export class MenteeSignupFormComponent implements OnInit {
   isLoading = false;
   filteredMentors$: Observable<SearchResults[]>;
   menteeForm: FormGroup;
+  sortedArrayDomainAreas: DomainArea[];
+  sortedArrayExperiences: Experience[];
+  sortedArrayGender: Gender[];
+  sortedArrayAge: AgePreference[];
 
 
   @ViewChild('autosize', { static: false })
@@ -39,21 +43,27 @@ export class MenteeSignupFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    const formControlsDomainArea = this._mentee['DomainAreas'].map(control => new FormControl({value: false, disabled: false}));
-    const formControlsExperience = this._mentee['Experiences'].map(control => new FormControl(false));
-
+    this.sortedArrayDomainAreas = this._mentee['DomainAreas'].sort((a, b) => a.OrderId - b.OrderId);
+    this.sortedArrayExperiences = this._mentee['Experiences'].sort((a, b) => a.OrderId - b.OrderId);
+    this.sortedArrayGender = this._mentee['Gender'].sort((a, b) => a.OrderId - b.OrderId);
+    this.sortedArrayAge = this._mentee['AgePreference'].sort((a, b) => a.OrderId - b.OrderId);
+    const formControlsDomainArea = this.sortedArrayDomainAreas.map(control => new FormControl({ value: false, disabled: false }));
+    const formControlsExperience = this.sortedArrayExperiences.map(control => new FormControl(false));
+    console.log(this._mentee['DomainAreas'].sort((a, b) => a.OrderId - b.OrderId));
     this.menteeForm = this.formBuilder.group({
-      id: [],
+      MenteeId: [],
       Interest: ['', Validators.required],
       UnitOfTimeId: ['', Validators.required],
       InDivision: ['', Validators.required],
       YearsOfExperience: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
+      Gender: [],
+      Age: [],
       PreferredMentorEmpId: [''],
       ExperienceId: [],
       Comments: [],
       ShareProfile: [],
       ReadTerms: [],
+      MenteeDomianArea: [],
       Experiences: this.formBuilder.array(formControlsExperience),
       MentorDomianArea: this.formBuilder.array(formControlsDomainArea)
     });
@@ -63,10 +73,10 @@ export class MenteeSignupFormComponent implements OnInit {
   }
   onMentorDomianAreaChange() {
     this.menteeForm.get('ExperienceId')
-    .valueChanges
-    .subscribe(
-      s => console.log(s)
-    )
+      .valueChanges
+      .subscribe(
+        s => console.log(s)
+      )
   }
   getAtuoCompleteMentors() {
     this.filteredMentors$ = this.menteeForm
@@ -137,22 +147,22 @@ export class MenteeSignupFormComponent implements OnInit {
     });
   }
   onExperienceChange() {
-  const exp = this.menteeForm.get('Experiences')
-    .valueChanges
-    .pipe(
-      tap(s => console.log("before ", s[0])),
-      //count(i => i[i] === true),
-      //filter((val, index) => { console.log(index]);return val } ),
-      tap(s => console.log(s))
-    );
+    const exp = this.menteeForm.get('MentorDomianArea')
+      .valueChanges
+      .pipe(
+        tap(s => console.log("before ", s[0])),
+        //count(i => i[i] === true),
+        //filter((val, index) => { console.log(index]);return val } ),
+        tap(s => console.log(s))
+      );
     exp.subscribe(
       res => {
-        const updatedArrayCount  =res.filter( i => i === true).length;
-        if(updatedArrayCount <= 3){
-          this.menteeForm.get('Experiences').valid;
-        }else{
-          this.menteeForm.get('Experiences').touched;
-          this.menteeForm.get('Experiences').setErrors({limit: true});
+        const updatedArrayCount = res.filter(i => i === true).length;
+        if (updatedArrayCount <= 3) {
+          this.menteeForm.get('MentorDomianArea').valid;
+        } else {
+          this.menteeForm.get('MentorDomianArea').touched;
+          this.menteeForm.get('MentorDomianArea').setErrors({ limit: true });
         }
       }
     );
@@ -160,5 +170,33 @@ export class MenteeSignupFormComponent implements OnInit {
 
   submit() {
     console.log('Yes saved', this.menteeForm.value);
+    const saveMentee: Mentee = {
+      MenteeId: 0,
+      EmployeeId: this._mentee['EmployeeId'],
+      InDivision: this.menteeForm.get('InDivision').value,
+      Division: this._mentee['Division'],
+      //TenantId: 0,
+      Interest: this.menteeForm.get('interest').value,
+      ServicePeriod: 0,
+      Duration: 0,
+      UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
+      YearsOfExperience: this.menteeForm.get('YearsOfExperience').value,
+      //PreferredMentorId: this.EmployeeId,
+      PreferredMentorEmpId: 'this.EmployeeId',
+      PreferredMentorGenderId: this.menteeForm.get('genderAge').value['gender'],
+      PreferredMentorAgeId: this.menteeForm.get('genderAge').value['age'],
+      ShareProfile: this.menteeForm.get('conditions').value['shareProfile'],
+      ReadTerms: this.menteeForm.get('conditions').value['readTerms'],
+      Comment: this.menteeForm.get('comment').value['passion'],
+      CreatedDate: new Date,
+      MenteeDomianArea: [{ DomainId: this.menteeForm.get('achievements').value[0] }],
+      MenteeExperience: [{ ExperienceId: this.menteeForm.get('experience').value['selectedExperienceId'] }],
+      UnitOfTimes: [],
+      Experiences: [],
+      DomainAreas: [],
+      AgePreference: [],
+      SearchParams: [],
+      Gender: []
+    }
   }
 }

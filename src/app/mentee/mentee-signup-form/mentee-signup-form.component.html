@@ -96,6 +96,25 @@
                 </div>
             </mat-card>
             <br />
+            <div class="row">
+
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <h5 class="card-title">Select prefered mentor gender <span style="color:red">*</span></h5>
+                    <mat-radio-group aria-labelledby="gender radio group" formControlName="Gender" class="custom-radio-group">
+                        <mat-radio-button *ngFor="let item of sortedArrayGender; let i = index" [value]="item['Value']">
+                            {{item['Text']}} &nbsp;
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <h5 class="card-title">Select prefered mentor age <span style="color:red">*</span> </h5>
+                    <mat-radio-group aria-labelledby="gender radio group" formControlName="Age" class="custom-radio-group">
+                        <mat-radio-button *ngFor="let item of sortedArrayAge; let i = index" [value]="item['Value']">
+                            {{item['Text']}} &nbsp;
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
             <!--Achievement and experience-->
             <div class="row">
                 <!-- achievement -->
@@ -103,15 +122,15 @@
                     <h6 class="card-title">What I would like to achieve from mentoring (Choose 3) &nbsp;<span
                             style="color:red">*</span></h6>
                     <ng-container>
-                        <div formArrayName="Experiences"
-                            *ngFor="let item of menteeForm.controls.Experiences['controls']; let i=index">
+                        <div formArrayName="MentorDomianArea"
+                            *ngFor="let item of menteeForm.controls.MentorDomianArea['controls']; let i=index">
                             <mat-checkbox value="item[i]['Value']" [formControlName]="i" >
-                                {{_mentee['Experiences'][i]['Text']}}
+                                {{sortedArrayDomainAreas[i]['Text']}}&nbsp; 
                             </mat-checkbox>
                            
                             <br />
                         </div>
-                        <mat-error *ngIf="menteeForm.get('Experiences').hasError('limit') && menteeForm.get('Experiences').touched">
+                        <mat-error *ngIf="menteeForm.get('MentorDomianArea').hasError('limit') && menteeForm.get('MentorDomianArea').touched">
                                Choose only 3
                             </mat-error>
                     </ng-container>
@@ -122,7 +141,7 @@
                     <mat-radio-group aria-labelledby="custom-radio-group-label" class="custom-radio-group"
                         formControlName="ExperienceId">
                         <mat-radio-button class="custom-radio-button"
-                            *ngFor="let item of _mentee['Experiences']; let i = index" [value]="item['Value']">
+                            *ngFor="let item of sortedArrayExperiences; let i = index" [value]="item['Value']">
                             {{item['Text']}}
                         </mat-radio-button>
                     </mat-radio-group>
