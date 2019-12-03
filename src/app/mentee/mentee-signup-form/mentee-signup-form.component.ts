@@ -2,12 +2,16 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Mentee, DomainArea, Experience, Gender, AgePreference } from '../../core/model/mentee';
-import { startWith, debounceTime, tap, switchMap, map, catchError, count, filter } from 'rxjs/operators';
+import { startWith, debounceTime, tap, switchMap, map, catchError, count, filter, finalize } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { SearchResults, SearchParams } from '../../core/model/mentor-search';
 import { MentorSearchService } from '../mentor-search.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
+import { Store } from '@ngrx/store';
+import { EntityState, MenteeSelectors } from '../../store';
+import { Router } from '@angular/router';
+import * as MenteeAction from '../../store/actions';
 
 @Component({
   selector: 'app-mentee-signup-form',
@@ -37,6 +41,9 @@ export class MenteeSignupFormComponent implements OnInit {
   autosize: CdkTextareaAutosize;
 
   constructor(
+    private store: Store<EntityState>,
+    private menteeSelectors: MenteeSelectors,
+    private router: Router,
     private formBuilder: FormBuilder,
     private mentorSearchService: MentorSearchService,
     public dialog: MatDialog
@@ -60,9 +67,9 @@ export class MenteeSignupFormComponent implements OnInit {
       Age: [],
       PreferredMentorEmpId: [''],
       ExperienceId: [],
-      Comments: [],
+      Comments: ['', Validators.required],
       ShareProfile: [],
-      ReadTerms: [],
+      ReadTerms: [false, Validators.requiredTrue],
       MenteeDomianArea: [],
       Experiences: this.formBuilder.array(formControlsExperience),
       MentorDomianArea: this.formBuilder.array(formControlsDomainArea)
@@ -70,6 +77,7 @@ export class MenteeSignupFormComponent implements OnInit {
     this.getAtuoCompleteMentors();
     this.onExperienceChange();
     this.onMentorDomianAreaChange();
+    this.menteeForm.get('UnitOfTimeId').setValue(this._mentee['UnitOfTimes'][0]['Value'])
   }
   onMentorDomianAreaChange() {
     this.menteeForm.get('ExperienceId')
@@ -93,16 +101,17 @@ export class MenteeSignupFormComponent implements OnInit {
         // use switch map so as to cancel previous subscribed events, before creating new once
         switchMap(value => {
           if (value !== '') {
-            this.isLoading = false;
             // lookup from mentor
             return this.lookup(value);
           } else {
-            this.isLoading = false;
             // if no value is pressent, return null
             return of(null);
           }
         })
-      )
+      ).pipe(
+        tap(s => console.log(s)),
+        finalize(() => this.isLoading = false),
+        )
   }
   lookup(value): Observable<SearchResults[]> {
     console.log(value);
@@ -119,6 +128,7 @@ export class MenteeSignupFormComponent implements OnInit {
       // map the item property of the mentor search results as our return object
       map(results => {
         console.log("Mentor search observeable :", results);
+        this.isLoading = false;
         return results;
       }),
       // catch errors
@@ -170,27 +180,33 @@ export class MenteeSignupFormComponent implements OnInit {
 
   submit() {
     console.log('Yes saved', this.menteeForm.value);
+    
+    const DomainIdArray = this.menteeForm.get('MentorDomianArea').value.map((val, i) => {
+      if (val) {
+        return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
+      }
+    }).filter(p => p !== undefined);
     const saveMentee: Mentee = {
       MenteeId: 0,
       EmployeeId: this._mentee['EmployeeId'],
       InDivision: this.menteeForm.get('InDivision').value,
       Division: this._mentee['Division'],
       //TenantId: 0,
-      Interest: this.menteeForm.get('interest').value,
+      Interest: this.menteeForm.get('Interest').value,
       ServicePeriod: 0,
       Duration: 0,
       UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
       YearsOfExperience: this.menteeForm.get('YearsOfExperience').value,
       //PreferredMentorId: this.EmployeeId,
-      PreferredMentorEmpId: 'this.EmployeeId',
-      PreferredMentorGenderId: this.menteeForm.get('genderAge').value['gender'],
-      PreferredMentorAgeId: this.menteeForm.get('genderAge').value['age'],
-      ShareProfile: this.menteeForm.get('conditions').value['shareProfile'],
-      ReadTerms: this.menteeForm.get('conditions').value['readTerms'],
-      Comment: this.menteeForm.get('comment').value['passion'],
+      PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
+      PreferredMentorGenderId: this.menteeForm.get('Gender').value,
+      PreferredMentorAgeId: this.menteeForm.get('Age').value,
+      ShareProfile: this.menteeForm.get('ShareProfile').value,
+      ReadTerms: this.menteeForm.get('ReadTerms').value,
+      Comment: this.menteeForm.get('Comments').value,
       CreatedDate: new Date,
-      MenteeDomianArea: [{ DomainId: this.menteeForm.get('achievements').value[0] }],
-      MenteeExperience: [{ ExperienceId: this.menteeForm.get('experience').value['selectedExperienceId'] }],
+      MenteeDomianArea: DomainIdArray,
+      MenteeExperience: [{ ExperienceId: this.menteeForm.get('ExperienceId').value }],
       UnitOfTimes: [],
       Experiences: [],
       DomainAreas: [],
@@ -198,5 +214,12 @@ export class MenteeSignupFormComponent implements OnInit {
       SearchParams: [],
       Gender: []
     }
+    console.log('Yes save', saveMentee);
+    if (this.menteeForm.valid) {
+      //const menteerValue = { ...this.customer, ...this.customerForm.value };
+      this.store.dispatch(new MenteeAction.AddMentee(saveMentee));
+      this.menteeForm.reset();
+      this.router.navigate(['mentees/subscriptions']);
+  }
   }
 }

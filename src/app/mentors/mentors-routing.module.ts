@@ -6,8 +6,8 @@ import { MentorsSubscriptionsComponent } from './mentors-subscriptions/mentors-s
 
 
 const routes: Routes = [
-  { path: '', component: MentorsSignupComponent,  data: { breadcrumb: 'Mentors'} },
-  { path: 'subscriptions', component: MentorsSubscriptionsComponent,  data: { breadcrumb: 'Subscriptions'} }
+    { path: '', component: MentorsSubscriptionsComponent,  data: { breadcrumb: 'Subscriptions'} },
+    { path: 'signup', component: MentorsSignupComponent,  data: { breadcrumb: 'Signup'} }
 ];
 
 @NgModule({

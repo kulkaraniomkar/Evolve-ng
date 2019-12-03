@@ -18,9 +18,9 @@ export class MentorDataService {
     private toastService: ToastService) {}
 
   getMentors(): Observable<MSubscription[]> {
-   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetMentorSubscriptions`)
    const msg = 'Mentor subscription retrieved successfully!';
-   return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetAll`)
+  // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetAll`)
+  return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetMentorSubscriptions`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET ALL')),
       map(res =>res['results']),
