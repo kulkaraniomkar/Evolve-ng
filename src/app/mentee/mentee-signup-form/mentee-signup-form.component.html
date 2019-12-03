@@ -23,7 +23,7 @@
                 <h6 class="card-title">Mentoring period</h6>
                 <!--unit of measurement -->
                 <mat-form-field appearance="outline">
-                    <mat-label>Select <span style="color: red;">*</span></mat-label>
+                    <!-- <mat-label>Select <span style="color: red;">*</span></mat-label> -->
                     <mat-select formControlName="UnitOfTimeId">
                         <mat-option *ngFor="let item of _mentee['UnitOfTimes']" [value]="item['Value']">
                             {{item['Text']}}
@@ -99,7 +99,7 @@
             <div class="row">
 
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                    <h5 class="card-title">Select prefered mentor gender <span style="color:red">*</span></h5>
+                    <h6 class="card-title">Select prefered mentor gender <span style="color:red">*</span></h6>
                     <mat-radio-group aria-labelledby="gender radio group" formControlName="Gender" class="custom-radio-group">
                         <mat-radio-button *ngFor="let item of sortedArrayGender; let i = index" [value]="item['Value']">
                             {{item['Text']}} &nbsp;
@@ -107,7 +107,7 @@
                     </mat-radio-group>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                    <h5 class="card-title">Select prefered mentor age <span style="color:red">*</span> </h5>
+                    <h6 class="card-title">Select prefered mentor age <span style="color:red">*</span> </h6>
                     <mat-radio-group aria-labelledby="gender radio group" formControlName="Age" class="custom-radio-group">
                         <mat-radio-button *ngFor="let item of sortedArrayAge; let i = index" [value]="item['Value']">
                             {{item['Text']}} &nbsp;

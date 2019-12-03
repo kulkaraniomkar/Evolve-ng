@@ -7,7 +7,7 @@ import { MenteeComponent } from './mentee.component';
 
 
 const routes: Routes = [
-  { path: '', component: MenteeSubscriptionsComponent,  data: { breadcrumb: 'Subscriptions'} },
+  { path: '', component: MenteeComponent,  data: { breadcrumb: 'Subscriptions'} },
   { path: 'signup', component: MenteeSignupComponent,  data: { breadcrumb: 'Signup'} },
 ];
 

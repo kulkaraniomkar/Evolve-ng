@@ -18,7 +18,8 @@ export class MenteeDataService {
 
   getMentees(): Observable<MSubscription[]> {
     const msg = 'Mentee subscriptions retrieved successfully!';
-    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
+   return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
+   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),

@@ -1,1 +1,68 @@
-<p>mentee-subscriptions works!</p>
+<mat-form-field>
+        <input matInput placeholder="Search" #input>
+    </mat-form-field>
+<table mat-table [dataSource]="mentees">
+    <ng-container matColumnDef="division">
+        <th mat-header-cell *matHeaderCellDef> Division </th>
+        <td mat-cell *matCellDef="let element"> {{element.Division}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef> Duration </th>
+        <td mat-cell *matCellDef="let element"> {{element.Duration}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef> Start date </th>
+        <td mat-cell *matCellDef="let element">{{element.StartDate | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="finishDate">
+        <th mat-header-cell *matHeaderCellDef> Finish date </th>
+        <td mat-cell *matCellDef="let element">{{element.FinishDate | date}}</td>
+    </ng-container>
+    <ng-container matColumnDef="mentor">
+        <th mat-header-cell *matHeaderCellDef> Mentor </th>
+        <td mat-cell *matCellDef="let element">{{element.FinishDate}}</td>
+    </ng-container>
+    <ng-container matColumnDef="registeredDate">
+        <th mat-header-cell *matHeaderCellDef> Registered date </th>
+        <td mat-cell *matCellDef="let element">{{element.RegisteredDate | date}}</td>
+    </ng-container>
+    <ng-container matColumnDef="shareProfile">
+        <th mat-header-cell *matHeaderCellDef> Share profile </th>
+        <td mat-cell *matCellDef="let element">{{element.shareProfile}}</td>
+    </ng-container>
+    <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="redirectToDetails(element.MenteeId)">
+                <mat-icon class="mat-18">reorder</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef> Update </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="redirectToUpdate(element.MenteeId)">
+                <mat-icon class="mat-18">edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="redirectToDelete(element.MenteeId)">
+                <mat-icon class="mat-18">delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
