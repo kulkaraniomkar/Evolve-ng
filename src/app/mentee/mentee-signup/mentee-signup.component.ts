@@ -6,6 +6,7 @@ import * as MenteeAction from '../../store/actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { Observable } from 'rxjs';
 import { Mentee } from '../../core/model/mentee';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,13 +20,17 @@ export class MenteeSignupComponent implements OnInit {
 
   constructor(
     private store: Store<EntityState>,
-    private menteeSelectors: MenteeSelectors
+    private menteeSelectors: MenteeSelectors,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.mentee_meta$ = this.menteeSelectors.mentee$;
     this.loading$ = this.menteeSelectors.loading$;
    }
 
   ngOnInit() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    console.log(id);
     this.getMenteeMetadata()
   }
   getMenteeMetadata() {

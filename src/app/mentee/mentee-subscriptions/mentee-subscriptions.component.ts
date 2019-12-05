@@ -23,7 +23,7 @@ export class MenteeSubscriptionsComponent implements OnInit {
     this.getAllSubs();
   }
   getAllSubs() {
-    this.dataSource.data = this.mentees as MSubscription[];
+    this.dataSource.data = this._mentees as MSubscription[];
     console.log(this.dataSource.data);
   }
   public redirectToDetails = (id: string) => {
