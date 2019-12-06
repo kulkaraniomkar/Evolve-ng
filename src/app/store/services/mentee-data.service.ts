@@ -52,8 +52,10 @@ export class MenteeDataService {
   }
 
   updateMentee(mentee: Mentee): Observable<Mentee> {
-    return this.http.put<Mentee>(`${this.apiUrlBase}/mentees/${mentee.MenteeId}`, mentee)
+    const msg = 'Mentee updated successfully!';
+    return this.http.put<Mentee>(`${this.apiUrlBase}/mentee/update?id=${mentee.MenteeId}`, mentee)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(() => mentee),
       catchError(this.handleError(mentee))
     );

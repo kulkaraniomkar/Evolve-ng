@@ -40,14 +40,14 @@
                 <!-- duration-->
                 <mat-form-field appearance="outline" class="input-width">
                     <mat-label>Duration <span style="color: red;">*</span></mat-label>
-                    <input matInput placeholder="Duration" type="number" formControlName="YearsOfExperience" />
+                    <input matInput placeholder="Duration" type="number" formControlName="Duration" />
                     <mat-icon matSuffix>watch_later</mat-icon>
                     <mat-error
-                        *ngIf="menteeForm.get('YearsOfExperience').hasError('min') && menteeForm.get('YearsOfExperience').touched">
+                        *ngIf="menteeForm.get('Duration').hasError('min') && menteeForm.get('Duration').touched">
                         Minimum value must be 1
                     </mat-error>
                     <mat-error
-                        *ngIf="menteeForm.get('YearsOfExperience').hasError('max') && menteeForm.get('YearsOfExperience').touched">
+                        *ngIf="menteeForm.get('Duration').hasError('max') && menteeForm.get('Duration').touched">
                         Maximum value must be 18 months
                     </mat-error>
                 </mat-form-field>
@@ -83,9 +83,9 @@
                                 </mat-option>
                                 <ng-container *ngIf="'!isLoading'">
                                     <mat-option *ngFor="let mentor of filteredMentors$ | async" [value]="mentor">
-                                        <span *ngIf='isLoading'><img width="50px"
-                                                src="http://rmb-vdv-aspn01/evolve/user_photos/{{mentor.EmployeeId}}.jpg" /></span>&nbsp;&nbsp;
-                                        {{mentor.FullName | titlecase}}<br />
+                                        <span *ngIf="mentor['EmployeeId']"><img width="50px"
+                                                src="http://rmb-vdv-aspn01/evolve/user_photos/{{mentor.EmployeeId}}.jpg" alt=''/></span>&nbsp;&nbsp;
+                                        {{mentor.FullName }}<br />
                                     </mat-option>
                                 </ng-container>
                             </mat-autocomplete>
@@ -188,17 +188,18 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12 col-md-8 col-sm-12">
                     <span *ngIf="!IsEdit"><button mat-raised-button color="primary" type="submit"
-                            [disabled]="!menteeForm.valid" (click)="saveMentee()">&nbsp;Submit&nbsp;
+                            [disabled]="!menteeForm.valid" (click)="submitMentee()">&nbsp;Submit&nbsp;
                         </button>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span *ngIf="IsEdit"> <button mat-raised-button color="primary" type="button"
-                            [disabled]="!menteeForm.valid && menteeForm.touched" (click)="saveMentee()">&nbsp;Save&nbsp;
+                            [disabled]="!menteeForm.valid" (click)="saveMentee()">&nbsp;Save&nbsp;
                         </button>
                     </span>
-                    <!-- {{ menteeForm.touched}}
-                    {{ IsEdit}}
-                    {{ menteeForm.valid}} -->
+                    <!--
+                    {{ IsEdit}}-->
+                    <!-- {{ menteeForm.valid}} 
+                    {{ menteeForm.touched}} -->
                     &nbsp;&nbsp;&nbsp;
                     <button mat-raised-button color="warn" type="button" (click)="cancelMentee()">Cancel</button>
                 </div>

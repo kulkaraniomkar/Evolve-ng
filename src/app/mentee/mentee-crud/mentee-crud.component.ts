@@ -88,7 +88,7 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           MenteeId: [],
           Interest: ['', Validators.required],
           UnitOfTimeId: ['', Validators.required],
-          YearsOfExperience: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
+          Duration: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
           InDivision: ['', Validators.required],
           PreferredMentorEmpId: ['', Validators.required],
           PreferredMentorGenderId: ['', Validators.required],
@@ -100,6 +100,7 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           ShareProfile: [],
           ReadTerms: [false, Validators.requiredTrue],
         });
+        // set default to months
         this.menteeForm.get('UnitOfTimeId').setValue(this.mentee['UnitOfTimes'][0]['Value'])
         // auto complete
         this.getAutoCompleteMentors();
@@ -123,10 +124,10 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           console.log(this.IsEdit);
           //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
           this.menteeForm.get('Interest').setValue(mentee['Interest']);
-          this.menteeForm.get('YearsOfExperience').setValue(mentee['YearsOfExperience']);
+          this.menteeForm.get('Duration').setValue(mentee['Duration']);
           console.log(mentee['InDivision']);
           this.menteeForm.get('InDivision').setValue(mentee['InDivision'].toString());
-          this.menteeForm.get('PreferredMentorEmpId').setValue({ EmployeeId: 4, FullName: 'Sithelo Ngwenya' });
+          this.menteeForm.get('PreferredMentorEmpId').setValue(mentee['PreferredMentor']);
           this.menteeForm.get('PreferredMentorGenderId').setValue(mentee['PreferredMentorGenderId'].toString());
           this.menteeForm.get('PreferredMentorAgeId').setValue(mentee['PreferredMentorAgeId'].toString());
           this.menteeForm.get('ExperienceId').setValue(mentee['MenteeExperience'][0]['ExperienceId'].toString());
@@ -184,6 +185,7 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           this.menteeForm.get('MentorDomianArea').valid;
         } else {
           this.menteeForm.get('MentorDomianArea').touched;
+          this.menteeForm.invalid;
           this.menteeForm.get('MentorDomianArea').setErrors({ limit: true });
         }
       }
@@ -227,11 +229,51 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
     }).filter(p => p !== undefined);
 console.log(this.menteeForm.get('ExperienceId'));
     const saveMentee: Mentee = {
-      MenteeId: 0, EmployeeId: this.mentee['EmployeeId'],InDivision: this.menteeForm.get('InDivision').value,
+      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'],InDivision: this.menteeForm.get('InDivision').value,
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
-      ServicePeriod: 0,  Duration: this.menteeForm.get('YearsOfExperience').value,  UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
-      YearsOfExperience: this.menteeForm.get('YearsOfExperience').value,
+      ServicePeriod: 0,  Duration: this.menteeForm.get('Duration').value,  UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
+      YearsOfExperience: 0,
+      //PreferredMentorId: this.EmployeeId,
+      PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
+      PreferredMentorGenderId: this.menteeForm.get('PreferredMentorGenderId').value,
+      PreferredMentorAgeId: this.menteeForm.get('PreferredMentorAgeId').value,
+      ShareProfile: this.menteeForm.get('ShareProfile').value,
+      ReadTerms: this.menteeForm.get('ReadTerms').value,
+      Comment: this.menteeForm.get('Comment').value,
+      CreatedDate: new Date,
+      MenteeDomianArea: DomainIdArray,
+      MenteeExperience: [{ ExperienceId: this.menteeForm.get('ExperienceId').value }],
+      UnitOfTimes: [],
+      Experiences: [],
+      DomainAreas: [],
+      AgePreference: [],
+      SearchParams: [],
+      Gender: []
+    }
+    console.log('Yes save', saveMentee);
+    if (this.menteeForm.valid) {
+      //const menteerValue = { ...this.customer, ...this.customerForm.value };
+      this.store.dispatch(new MenteeAction.UpdateMentee(saveMentee));
+      //this.menteeForm.reset();
+      console.log('Yes saved', saveMentee);
+      this.router.navigate(['mentee']);
+    }
+  }
+  // refactor this code here
+  submitMentee() {
+    const DomainIdArray = this.menteeForm.get('MentorDomianArea').value.map((val, i) => {
+      if (val) {
+        return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
+      }
+    }).filter(p => p !== undefined);
+console.log(this.menteeForm.get('ExperienceId'));
+    const saveMentee: Mentee = {
+      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'],InDivision: this.menteeForm.get('InDivision').value,
+      Division: this.mentee['Division'],  //TenantId: 0,
+      Interest: this.menteeForm.get('Interest').value,
+      ServicePeriod: 0,  Duration: this.menteeForm.get('Duration').value,  UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
+      YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
       PreferredMentorGenderId: this.menteeForm.get('PreferredMentorGenderId').value,
@@ -264,7 +306,7 @@ console.log(this.menteeForm.get('ExperienceId'));
     'Cancel new signup' : `Edit mentee ID ${this.mentee['MenteeId']}`;
    
     const msg = this.mentee['MenteeId'] == 0 ? 
-    'Do you want to reset the form?' : `Do you want to cancel mentee with ID ${this.mentee['MenteeId']} and view your list`;
+    'Do you want to reset the form?' : `Do you want to cancel mentee with ID ${this.mentee['MenteeId']} and go back to your list?`;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

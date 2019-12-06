@@ -52,9 +52,9 @@
         <!--Mentoring commitment-->
         <div class="row" style="padding-left: 1em;">
             <mat-form-field appearance="outline">
-                <mat-label>Select days/months/years <span style="color: red;">*</span></mat-label>
+                <!-- <mat-label>Select days/months/years <span style="color: red;">*</span></mat-label> -->
                 <mat-select formControlName="MentoringCommitment">
-                    <mat-option *ngFor="let item of [{Value:1, Text: 'months'}]" [value]="item['Value']">
+                    <mat-option *ngFor="let item of [{Value:'1', Text: 'months'}]" [value]="item['Value']">
                         {{item['Text']}}
                     </mat-option>
                 </mat-select>
