@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'mentee' },
   // { path: 'mentee', loadChildren: () => import('./mentees/mentees.module').then(m => m.MenteesModule), data: { breadcrumb: 'Mentee Signup'} },
   { path: 'mentee', loadChildren: () => import('./mentee/mentee.module').then(m => m.MenteeModule), data: { breadcrumb: 'Mentee'} },
-  { path: 'mentor', loadChildren: () => import('./mentors/mentors.module').then(m => m.MentorsModule), data: { breadcrumb: 'Mentor'}, canActivate: [MentorsGuard] },
+  { path: 'mentor', loadChildren: () => import('./mentor/mentor.module').then(m => m.MentorModule), data: { breadcrumb: 'Mentor'}, canActivate: [MentorsGuard] },
   ];
 
 @NgModule({

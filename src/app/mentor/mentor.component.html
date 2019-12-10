@@ -1,8 +1,8 @@
 
-    <div class="spinner-container" *ngIf="(loading$ | async )">
+    <div class="spinner-container" *ngIf="(loading$ | async)">
         <mat-spinner></mat-spinner>
     </div>
-    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="mentors$ | async">
+    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
         
         <ng-container matColumnDef="fullName">
             <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
@@ -46,3 +46,4 @@
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
   </mat-table>
+
