@@ -16,6 +16,7 @@ export class DomainArea {
   Name: string;
   Text: string;
   Value: string;
+  Selected: boolean;
 }
 export class Gender {
   OrderId: number;

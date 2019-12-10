@@ -201,7 +201,7 @@ export class MenteeSignupFormComponent implements OnInit {
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
       PreferredMentorGenderId: this.menteeForm.get('Gender').value,
       PreferredMentorAgeId: this.menteeForm.get('Age').value,
-      ShareProfile: this.menteeForm.get('ShareProfile').value,
+      ShareProfile: this.menteeForm.get('ShareProfile').value ? false : true,
       ReadTerms: this.menteeForm.get('ReadTerms').value,
       Comment: this.menteeForm.get('Comments').value,
       CreatedDate: new Date,

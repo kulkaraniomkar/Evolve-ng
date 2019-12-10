@@ -27,10 +27,11 @@ export function reducer(
     }
 
     case MenteeActions.ADD_MENTEE_SUCCESS: {
+      console.log('payload ', action.payload['results'][0]);
       return {
         ...state,
         loading: false,
-       // mentees: [...state.mentees, { ...action.payload }]
+        mentees: [...state.mentees, { ...action.payload['results'][0]}]
       };
     }
 
@@ -50,6 +51,7 @@ export function reducer(
     }
 
     case MenteeActions.GET_MENTEES_SUCCESS: {
+      console.log("GET_MENTEES_SUCCESS ", action.payload);
       return {
         ...state,
         mentees: action.payload,

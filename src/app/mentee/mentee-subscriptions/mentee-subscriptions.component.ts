@@ -35,14 +35,17 @@ export class MenteeSubscriptionsComponent implements OnInit, OnChanges {
     
     console.log(this.dataSource.data);
   }
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
     this.dataSource.data = changes.mentees.currentValue as MSubscription[];
     console.log(changes);
     // async data now loaded
     if(!changes.mentees.firstChange){
        // if empty move to signup
-       if(changes.mentees.currentValue.length <= 0){
-        this.router.navigate['/mentees/signup/0'];
+       const arrLength = await changes.mentees.currentValue.length;
+       console.log(" array ", arrLength);
+       if( arrLength <= 0){
+         console.log("empty array");
+        this.router.navigate(['/mentee/signup', 0]);
        }
     }
     console.log(this.dataSource.data);

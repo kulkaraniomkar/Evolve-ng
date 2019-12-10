@@ -34,7 +34,11 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
   filteredMentors$: Observable<SearchResults[]>;
   sub: Subscription;
   sub2: Subscription;
+  sub3: Subscription;
+  sub4: Subscription;
   menteeForm: FormGroup;
+  saveStatus: boolean = false;
+  
   formControlsDomainArea: FormControl[];
   formControlsExperience: FormControl[];
 
@@ -81,7 +85,8 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
         this.searchDivisions = mentee['SearchParams']; // metadata for gender
         this.sortedArrayDomainAreas = this.mentee['DomainAreas'].sort((a, b) => a.OrderId - b.OrderId);
         this.sortedArrayExperiences = this.mentee['Experiences'].sort((a, b) => a.OrderId - b.OrderId);
-        console.log(mentee['PreferredMentorGenderId']);
+        console.log(mentee['InDivision']);
+        console.log("sortd array ",this.sortedArrayDomainAreas);
         this.formControlsDomainArea = this.sortedArrayDomainAreas.map(control => new FormControl(false));
         this.formControlsExperience = this.sortedArrayExperiences.map(control => new FormControl(false));
         this.menteeForm = this.formBuilder.group({
@@ -90,22 +95,26 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           UnitOfTimeId: ['', Validators.required],
           Duration: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
           InDivision: ['', Validators.required],
-          PreferredMentorEmpId: ['', Validators.required],
+          PreferredMentorEmpId: [''],
           PreferredMentorGenderId: ['', Validators.required],
           PreferredMentorAgeId: ['', Validators.required],
           MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea),
-          ExperienceId: ['',Validators.required],
+          ExperienceId: ['', Validators.required],
           Experiences: this.formBuilder.array(this.formControlsExperience),
           Comment: ['', Validators.required],
-          ShareProfile: [],
+          ShareProfile: [false],
           ReadTerms: [false, Validators.requiredTrue],
         });
         // set default to months
-        this.menteeForm.get('UnitOfTimeId').setValue(this.mentee['UnitOfTimes'][0]['Value'])
+        const unitMonths = this.mentee['UnitOfTimes'][0]['Value'] == 1 ? 'Months' : '';
+        this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
+        this.menteeForm.get('UnitOfTimeId').disable();
         // auto complete
         this.getAutoCompleteMentors();
         // validator for checkboxes 
         this.onMentorDomainAreaChange();
+        // indivision changes
+        this.onMenteeInDivisionChanges();
         // mode Edit -> patch values
         if (this.title === 'Edit Mentee') {
           this.IsEdit = true;
@@ -113,25 +122,34 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
           this.sortedArrayDomainAreas.forEach((val) => {
             mentee['MenteeDomianArea'].forEach(
               (val2) => {
-                if (parseInt(val.Value) == val2.DomainId) {
+                if (parseInt(val.Value) == val2.DomainId && checkboxStatus.length < 10) {
                   checkboxStatus.push(true);
-                } else {
+                } else if (parseInt(val.Value) != val2.DomainId && checkboxStatus.length < 10) {
                   checkboxStatus.push(false);
                 }
               })
           });
-
+          const checkboxesValues = this.sortedArrayDomainAreas.map((val) => {
+            if(val.Selected){
+                return true
+            }else{
+              return false
+            }
+          });
+console.log("new checkboxes ", checkboxesValues);
           console.log(this.IsEdit);
           //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
           this.menteeForm.get('Interest').setValue(mentee['Interest']);
           this.menteeForm.get('Duration').setValue(mentee['Duration']);
           console.log(mentee['InDivision']);
-          this.menteeForm.get('InDivision').setValue(mentee['InDivision'].toString());
+          this.menteeForm.get('InDivision').setValue(mentee['InDivision'] ? mentee['InDivision'].toString() : '1');
           this.menteeForm.get('PreferredMentorEmpId').setValue(mentee['PreferredMentor']);
-          this.menteeForm.get('PreferredMentorGenderId').setValue(mentee['PreferredMentorGenderId'].toString());
-          this.menteeForm.get('PreferredMentorAgeId').setValue(mentee['PreferredMentorAgeId'].toString());
+          console.log(mentee['PreferredMentorGenderId']);
+          this.menteeForm.get('PreferredMentorGenderId').setValue(mentee['PreferredMentorGenderId'] ? mentee['PreferredMentorGenderId'].toString() : '20');
+          this.menteeForm.get('PreferredMentorAgeId').setValue(mentee['PreferredMentorAgeId'] ? mentee['PreferredMentorAgeId'].toString() : '1');
           this.menteeForm.get('ExperienceId').setValue(mentee['MenteeExperience'][0]['ExperienceId'].toString());
-          this.menteeForm.get('MentorDomianArea').setValue(checkboxStatus);
+          console.log(checkboxStatus);
+          this.menteeForm.get('MentorDomianArea').setValue(checkboxesValues);
           this.menteeForm.get('Comment').setValue(mentee['Comment']);
           this.menteeForm.get('ShareProfile').setValue(mentee['ShareProfile']);
           this.menteeForm.get('ReadTerms').setValue(mentee['ReadTerms']);
@@ -139,7 +157,16 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
 
       }
     });
-
+// sub 3
+this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
+  {
+    console.log(mentees);
+    if (mentees.length > 0 && false) {
+      console.log("werweer");
+      this.router.navigate(['mentee']);
+    }
+  }
+});
 
   }
   getMenteeAndMetadata(id: number) {
@@ -168,7 +195,25 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
       .pipe(
         finalize(() => this.isLoading = false),
       )
+  }// value addition to mentee division
+  onMenteeInDivisionChanges() {
+    console.log("divi value ", this.menteeForm.get('InDivision').value);
+    this.menteeForm.get('InDivision').value ?
+      this.menteeForm.get('PreferredMentorEmpId').enable() : this.menteeForm.get('PreferredMentorEmpId').disable();
+    this.menteeForm.get('InDivision').valueChanges.subscribe(divi => {
+      console.log("divi value ", divi);
+      if (divi == undefined || divi == null) {
+        console.log("disable ", divi);
+        this.menteeForm.get('PreferredMentorEmpId').disable();
+      } else {
+        console.log("enable ", divi);
+        this.menteeForm.get('PreferredMentorEmpId').enable();
+      }
+
+    }
+    )
   }
+
   onMentorDomainAreaChange() {
     const domainSub = this.menteeForm.get('MentorDomianArea')
       .valueChanges
@@ -182,8 +227,10 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
       res => {
         const updatedArrayCount = res.filter(i => i === true).length;
         if (updatedArrayCount <= 3) {
+          console.log("Checkboxes count ",updatedArrayCount);
           this.menteeForm.get('MentorDomianArea').valid;
         } else {
+          console.log("Checkboxes invalid  ",updatedArrayCount);
           this.menteeForm.get('MentorDomianArea').touched;
           this.menteeForm.invalid;
           this.menteeForm.get('MentorDomianArea').setErrors({ limit: true });
@@ -221,21 +268,23 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
 
   // action buttons
   //save all changes
-  saveMentee() {
+  saveMentee(saveStatus) {
     const DomainIdArray = this.menteeForm.get('MentorDomianArea').value.map((val, i) => {
       if (val) {
         return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
       }
     }).filter(p => p !== undefined);
-console.log(this.menteeForm.get('ExperienceId'));
+    //console.log(this.menteeForm.get('PreferredMentorEmpId'));
+   // console.log(DomainIdArray);
     const saveMentee: Mentee = {
-      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'],InDivision: this.menteeForm.get('InDivision').value,
+      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'], InDivision: this.menteeForm.get('InDivision').value,
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
-      ServicePeriod: 0,  Duration: this.menteeForm.get('Duration').value,  UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
+      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value, UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
       YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
-      PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
+      PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value ?
+        this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'] : '',
       PreferredMentorGenderId: this.menteeForm.get('PreferredMentorGenderId').value,
       PreferredMentorAgeId: this.menteeForm.get('PreferredMentorAgeId').value,
       ShareProfile: this.menteeForm.get('ShareProfile').value,
@@ -256,8 +305,20 @@ console.log(this.menteeForm.get('ExperienceId'));
       //const menteerValue = { ...this.customer, ...this.customerForm.value };
       this.store.dispatch(new MenteeAction.UpdateMentee(saveMentee));
       //this.menteeForm.reset();
-      console.log('Yes saved', saveMentee);
-      this.router.navigate(['mentee']);
+      this.sub4 = this.menteeSelectors.loading$.subscribe(loading => {
+        {
+          console.log("Is it loading ", loading);
+          console.log("Is it save status ", saveStatus);
+          this.saveStatus = saveStatus;
+          if (!loading && this.saveStatus) {
+            this.saveStatus = false;
+            console.log("in routing ", this.saveStatus);
+            this.router.navigate(['mentee']);
+          }
+        }
+      });
+      //console.log('Yes saved', saveMentee);
+      // this.router.navigate(['mentee']);
     }
   }
   // refactor this code here
@@ -267,12 +328,12 @@ console.log(this.menteeForm.get('ExperienceId'));
         return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
       }
     }).filter(p => p !== undefined);
-console.log(this.menteeForm.get('ExperienceId'));
+    console.log(this.menteeForm.get('ExperienceId'));
     const saveMentee: Mentee = {
-      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'],InDivision: this.menteeForm.get('InDivision').value,
+      MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'], InDivision: this.menteeForm.get('InDivision').value,
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
-      ServicePeriod: 0,  Duration: this.menteeForm.get('Duration').value,  UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value,
+      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value, UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
       YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value['EmployeeId'],
@@ -297,16 +358,24 @@ console.log(this.menteeForm.get('ExperienceId'));
       this.store.dispatch(new MenteeAction.AddMentee(saveMentee));
       //this.menteeForm.reset();
       console.log('Yes saved', saveMentee);
-      this.router.navigate(['mentee']);
+      // this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
+      //   {
+      //     console.log(mentees);
+      //     if (mentees.length > 0) {
+      //       this.router.navigate(['mentee']);
+      //     }
+      //   }
+      // });
+      // 
     }
   }
   // cancel all changes
-  cancelMentee(){
-    const title = this.mentee['MenteeId'] == 0 ? 
-    'Cancel new signup' : `Edit mentee ID ${this.mentee['MenteeId']}`;
-   
-    const msg = this.mentee['MenteeId'] == 0 ? 
-    'Do you want to reset the form?' : `Do you want to cancel mentee with ID ${this.mentee['MenteeId']} and go back to your list?`;
+  cancelMentee() {
+    const title = this.mentee['MenteeId'] == 0 ?
+      'Cancel new signup' : `Are you sure?`;
+
+    const msg = this.mentee['MenteeId'] == 0 ?
+      'Do you want to reset the form?' : `This will cancel the edit and go back to your list.`;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -324,10 +393,10 @@ console.log(this.menteeForm.get('ExperienceId'));
         if (this.mentee['MenteeId'] == 0) {
           this.menteeForm.reset();
         } else {
-           // route to subscriptions
-           this.router.navigate(['/mentee']);
+          // route to subscriptions
+          this.router.navigate(['/mentee']);
         }
-       
+
       }
     });
 
@@ -335,6 +404,8 @@ console.log(this.menteeForm.get('ExperienceId'));
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.sub2.unsubscribe();
+    this.sub3.unsubscribe();
+    this.sub4.unsubscribe();
   }
 
 }

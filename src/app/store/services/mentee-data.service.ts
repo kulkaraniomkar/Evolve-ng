@@ -37,8 +37,11 @@ export class MenteeDataService {
   }
 
   addMentee(mentee: Mentee): Observable<Mentee> {
+    const msg = 'Mentee added successfully!';
     return this.http.post<Mentee>(`${this.apiUrlBase}/mentee/create`, mentee)
     .pipe(
+      tap((e) => { console.log(e); return this.toastService.openSnackBar(msg, 'POST')}),
+      //map(r => r),
       catchError(this.handleError(mentee))
     );
   }
@@ -55,7 +58,7 @@ export class MenteeDataService {
     const msg = 'Mentee updated successfully!';
     return this.http.put<Mentee>(`${this.apiUrlBase}/mentee/update?id=${mentee.MenteeId}`, mentee)
     .pipe(
-      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      tap(() => this.toastService.openSnackBar(msg, 'PUT')),
       map(() => mentee),
       catchError(this.handleError(mentee))
     );
