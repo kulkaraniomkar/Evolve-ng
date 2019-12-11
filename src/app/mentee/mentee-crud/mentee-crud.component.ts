@@ -36,6 +36,7 @@ export class MenteeCrudComponent implements OnInit, OnDestroy {
   sub2: Subscription;
   sub3: Subscription;
   sub4: Subscription;
+  sub5: Subscription;
   menteeForm: FormGroup;
   saveStatus: boolean = false;
   
@@ -158,15 +159,15 @@ console.log("new checkboxes ", checkboxesValues);
       }
     });
 // sub 3
-this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
-  {
-    console.log(mentees);
-    if (mentees.length > 0 && false) {
-      console.log("werweer");
-      this.router.navigate(['mentee']);
-    }
-  }
-});
+// this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
+//   {
+//     console.log(mentees);
+//     if (mentees.length > 0 && false) {
+//       console.log("werweer");
+//       this.router.navigate(['mentee']);
+//     }
+//   }
+// });
 
   }
   getMenteeAndMetadata(id: number) {
@@ -226,10 +227,14 @@ this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
     domainSub.subscribe(
       res => {
         const updatedArrayCount = res.filter(i => i === true).length;
-        if (updatedArrayCount <= 3) {
+        if (updatedArrayCount <= 3 && updatedArrayCount > 0) {
           console.log("Checkboxes count ",updatedArrayCount);
           this.menteeForm.get('MentorDomianArea').valid;
-        } else {
+        } else if(updatedArrayCount == 0){
+          this.menteeForm.get('MentorDomianArea').touched;
+          this.menteeForm.invalid;
+          this.menteeForm.get('MentorDomianArea').setErrors({ zero: true });
+        }else {
           console.log("Checkboxes invalid  ",updatedArrayCount);
           this.menteeForm.get('MentorDomianArea').touched;
           this.menteeForm.invalid;
@@ -387,14 +392,14 @@ this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
 
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((cancelIt) => {
+    this.sub5 = dialogRef.afterClosed().subscribe((cancelIt) => {
       console.log('The dialog was closed');
       if (cancelIt) {
         if (this.mentee['MenteeId'] == 0) {
           this.menteeForm.reset();
         } else {
           // route to subscriptions
-          this.router.navigate(['/mentee']);
+          this.router.navigate(['mentee']);
         }
 
       }
@@ -404,8 +409,9 @@ this.sub3 = this.menteeSelectors.mentees$.subscribe(mentees => {
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.sub2.unsubscribe();
-    this.sub3.unsubscribe();
-    this.sub4.unsubscribe();
+    // this.sub3.unsubscribe();
+    //this.sub4.unsubscribe();
+    //this.sub5.unsubscribe();
   }
 
 }

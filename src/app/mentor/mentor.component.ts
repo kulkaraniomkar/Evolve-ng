@@ -20,33 +20,31 @@ export class MentorComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
-  displayedColumns = ['fullName', 'division', 'duration', 'startDate', 'finishDate', 'mentor', 'actions'];
+  displayedColumns = ['fullName', 'status', 'division', 'duration', 'startDate', 'endDate', 'actions'];
   constructor(private store: Store<EntityState>,
     private mentorSelectors: MentorSelectors) {
    
   }
   ngOnInit() {
     this.store.dispatch(new MentorAction.GetMentors());
-    this.getAllMentorSubscriptions();
 
     this.mentors$ = this.mentorSelectors.mentors$;
     this.loading$ = this.mentorSelectors.loading$;
-
-     this.mentors$
-      .pipe(
-       takeUntil(this.unsubscribe$)
-      )
-      .subscribe(data => {
-        this.dataSource.data = data as MSubscription[];
-      })
+    this.getAllMentorSubscriptions();
+    
   }
   /* get all the mentor subscription
   * a mentor can only signup once
   * subscriptions shows history and current 
   */
   getAllMentorSubscriptions() {
-    this.mentors$ = this.mentorSelectors.mentors$;
-    this.loading$ = this.mentorSelectors.loading$;
+    this.mentors$
+    .pipe(
+     takeUntil(this.unsubscribe$)
+    )
+    .subscribe(data => {
+      this.dataSource.data = data as MSubscription[];
+    })
   }
 
   /**

@@ -196,12 +196,12 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12 col-md-8 col-sm-12">
                     <span *ngIf="!IsEdit"><button mat-raised-button color="primary" type="submit"
-                            [disabled]="!menteeForm.valid" (click)="submitMentee()">&nbsp;Submit&nbsp;
+                            [disabled]="!menteeForm.valid" (click)="onSubmitMentee()">&nbsp;Submit&nbsp;
                         </button>
                         &nbsp;&nbsp;&nbsp;
                     </span>
                     <span *ngIf="IsEdit"> <button mat-raised-button color="primary" type="button"
-                            [disabled]="!menteeForm.valid" (click)="saveMentee(true)">&nbsp;Save&nbsp;
+                            [disabled]="!menteeForm.valid" (click)="onSaveMentee()">&nbsp;Save&nbsp;
                         </button>
                     </span>
                     <!--
