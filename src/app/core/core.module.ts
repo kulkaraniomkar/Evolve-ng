@@ -5,6 +5,7 @@ import { ToastService } from './toast.service';
 import { MatSnackBar } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
+import { ModalComponent } from './modal/modal.component';
 
 export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
   if (parentModule) {
@@ -15,8 +16,9 @@ export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
 
 @NgModule({
   imports: [CommonModule, MaterialModule],
-  declarations: [],
+  declarations: [ModalComponent],
   exports: [],
+  entryComponents: [ModalComponent],
   providers: [ SorterService, ToastService ]
 })
 export class CoreModule {

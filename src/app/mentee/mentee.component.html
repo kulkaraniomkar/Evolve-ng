@@ -1,1 +1,7 @@
-<p>mentee works!</p>
+<div class="spinner-container" *ngIf="(loading$ | async )">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="mentees$ | async as mentees">
+      <app-mentee-subscriptions [mentees]="mentees"></app-mentee-subscriptions>
+    <!-- {{mentees | json}} -->
+</div>

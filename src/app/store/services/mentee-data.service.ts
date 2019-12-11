@@ -18,7 +18,8 @@ export class MenteeDataService {
 
   getMentees(): Observable<MSubscription[]> {
     const msg = 'Mentee subscriptions retrieved successfully!';
-    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
+   return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
+   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),
@@ -36,8 +37,11 @@ export class MenteeDataService {
   }
 
   addMentee(mentee: Mentee): Observable<Mentee> {
+    const msg = 'Mentee added successfully!';
     return this.http.post<Mentee>(`${this.apiUrlBase}/mentee/create`, mentee)
     .pipe(
+      tap((e) => { console.log(e); return this.toastService.openSnackBar(msg, 'POST')}),
+      //map(r => r),
       catchError(this.handleError(mentee))
     );
   }
@@ -51,8 +55,10 @@ export class MenteeDataService {
   }
 
   updateMentee(mentee: Mentee): Observable<Mentee> {
-    return this.http.put<Mentee>(`${this.apiUrlBase}/mentees/${mentee.MenteeId}`, mentee)
+    const msg = 'Mentee updated successfully!';
+    return this.http.put<Mentee>(`${this.apiUrlBase}/mentee/update?id=${mentee.MenteeId}`, mentee)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'PUT')),
       map(() => mentee),
       catchError(this.handleError(mentee))
     );

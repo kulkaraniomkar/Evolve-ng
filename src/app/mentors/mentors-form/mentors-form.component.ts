@@ -55,12 +55,14 @@ export class MentorsFormComponent implements OnInit {
       Experiences: this.formBuilder.array(formControlsExperience),
       MentorDomianArea: new FormArray(formControlsDomainArea)
     });
+    this.mentorForm.get('MentoringCommitment').setValue('1');
   }
   getMentorsDisplayData(id: number = 0) {
     this.store.dispatch(new MentorAction.GetMentor(id));
   }
   // submit the mentor form
   submit() {
+    console.log()
     const saveMentor: Mentor = {
       id: 0,
       MentorId: 0,

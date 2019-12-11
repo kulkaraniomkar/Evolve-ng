@@ -15,7 +15,8 @@ export class DomainArea {
   OrderId: number;
   Name: string;
   Text: string;
-  Value: number;
+  Value: string;
+  Selected: boolean;
 }
 export class Gender {
   OrderId: number;
@@ -63,7 +64,7 @@ export class Mentee {
   Duration?: any;
   UnitOfTimeId: number;
   YearsOfExperience: number;
-  //PreferredMentorId?: any;
+  PreferredMentorId?: any;
   PreferredMentorEmpId?: any;
   PreferredMentorGenderId?: any;
   PreferredMentorAgeId?: any;

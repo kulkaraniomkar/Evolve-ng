@@ -1,5 +1,6 @@
 
 export class MSubscription {
+    // id: number;
     MenteeId: number;
     MentorId?: any;
     MentorshipActivityId?: any;
@@ -14,4 +15,5 @@ export class MSubscription {
     Duration: string;
     StartDate?: any;
     EndDate?: any;
+    RegisteredDate?: Date;
 }

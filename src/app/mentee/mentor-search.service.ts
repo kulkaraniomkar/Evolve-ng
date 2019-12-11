@@ -18,7 +18,7 @@ export class MentorSearchService {
     return this.http.put<SearchResults[]>(`${this.apiUrlBase}/mentor/search`, searchParams)
       .pipe(
         tap(() => this.toastService.openSnackBar(msg, 'Auto Search')),
-        map(res => res.length > 0 ? res : [{EmployeeId: 0, FullName: 'No results to display' }])
+        map(res => res.length > 0 ? res : [{EmployeeId: 0, FullName: 'This employee does not fall within the division you selected.' }])
       );
   }
 }
