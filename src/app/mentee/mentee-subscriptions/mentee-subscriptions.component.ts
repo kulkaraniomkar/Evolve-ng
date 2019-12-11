@@ -16,7 +16,7 @@ export class MenteeSubscriptionsComponent implements OnInit, OnChanges {
   set mentees(value: MSubscription[]) {
       this._mentees = value;
   }
-  public displayedColumns = ['division', 'status', 'duration', 'startDate', 'finishDate', 'mentor', 'registeredDate', 'shareProfile', 
+  public displayedColumns = ['registeredDate', 'status', 'duration', 'startDate', 'finishDate', 'mentor',  'shareProfile', 
   //'details', 
   'update', 
   // 'delete'
