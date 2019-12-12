@@ -39,7 +39,6 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   id: number; // id for the mentee
   isLoading: boolean = false; // status of spinner
   IsEdit: boolean = false;
-  onSaveStatus: boolean = false;
 
   constructor(
     private store: Store<EntityState>,
@@ -68,7 +67,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
     /* dispatch action to load the mentee and mentee data
     * if id = 0 we load only  meta data
     */
-    this.store.dispatch(new MenteeAction.GetMentee(this.id))
+    this.store.dispatch(new MenteeAction.GetMentee(this.id));
     /**
      *  initialize form data
      */
@@ -250,6 +249,13 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
         return false
       }
     });
+    const checkboxesExperience = this.sortedArrayExperiences.map((val) => {
+      if (val.Selected) {
+        return true
+      } else {
+        return false
+      }
+    });
 
     //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
     this.menteeForm.get('Interest').setValue(this.mentee['Interest']);
@@ -258,7 +264,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
     this.menteeForm.get('PreferredMentorEmpId').setValue(this.mentee['PreferredMentor']);
     this.menteeForm.get('PreferredMentorGenderId').setValue(this.mentee['PreferredMentorGenderId'] ? this.mentee['PreferredMentorGenderId'].toString() : '20');
     this.menteeForm.get('PreferredMentorAgeId').setValue(this.mentee['PreferredMentorAgeId'] ? this.mentee['PreferredMentorAgeId'].toString() : '1');
-    this.menteeForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0]['ExperienceId'].toString());
+    this.menteeForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0] ? this.mentee['MenteeExperience'][0]['ExperienceId'].toString() : '2');
     this.menteeForm.get('MentorDomianArea').setValue(checkboxesValues);
     this.menteeForm.get('Comment').setValue(this.mentee['Comment']);
     this.menteeForm.get('ShareProfile').setValue(this.mentee['ShareProfile']);

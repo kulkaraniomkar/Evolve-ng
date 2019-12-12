@@ -7,21 +7,23 @@
     }
 
     export interface Experience {
-        OrderId: string;
+        OrderId: number;
         Name: string;
         Text: string;
         Value: string;
+        Selected: boolean;
     }
 
     export interface DomainArea {
-        OrderId: string;
+        OrderId: number;
         Name: string;
         Text: string;
         Value: string;
+        Selected: boolean;
     }
 
     export interface Mentor {
-        id: number;
+        //id: number;
         MentorId: number;
         EmployeeId: string;
         ProfessionalBackground?: any;
@@ -31,7 +33,7 @@
         PriorRoles?: any;
         Available: boolean;
         ReadTerms: boolean;
-        UnitOfTime: number;
+        UnitOfTimeId: number;
         MentoringCommitment: number;
         Comment?: any;
         YearsOfExperience?: any;
