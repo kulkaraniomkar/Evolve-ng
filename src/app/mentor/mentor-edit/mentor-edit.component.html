@@ -105,18 +105,18 @@
                 <mat-label>Prior Roles in RMB <span style="color: red;">*</span></mat-label>
                 <input matInput placeholder="Enter your previous role" type="text" formControlName="PriorRoles" />
                 <mat-icon matSuffix>work_outline</mat-icon>
-                <!-- <mat-error
-                *ngIf="mentorForm.controls.PriorRoles.hasError('required') && mentorForm.controls.PriorRoles.touched">
+                <mat-error
+                *ngIf="mentorForm.get('PriorRoles').hasError('required') && mentorForm.get('PriorRoles').touched">
                 Required
             </mat-error>
             <mat-error
-                *ngIf="mentorForm.controls.PriorRoles.hasError('minlength') && mentorForm.controls.PriorRoles.touched">
+                *ngIf="mentorForm.get('PriorRoles').hasError('minlength') && mentorForm.get('PriorRoles').touched">
                 Too short
             </mat-error>
             <mat-error
-                *ngIf="mentorForm.controls.PriorRoles.hasError('maxlength') && mentorForm.controls.PriorRoles.touched">
-                Oops, maximum characters exceed
-            </mat-error> -->
+                *ngIf="mentorForm.get('PriorRoles').hasError('maxlength') && mentorForm.get('PriorRoles').touched">
+                Oops, maximum characters exceeded.
+            </mat-error>
             </mat-form-field>
             <div class="row">
                 <div class="col-lg-6">

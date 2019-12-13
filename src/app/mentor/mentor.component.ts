@@ -21,7 +21,7 @@ export class MentorComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
-  displayedColumns = ['fullName', 'status', 'division', 'duration', 'startDate', 'endDate', 'actions'];
+  displayedColumns = ['fullName', 'status', 'division', 'duration', 'startDate', 'endDate'];
   constructor(private store: Store<EntityState>,
     private mentorSelectors: MentorSelectors) {
    

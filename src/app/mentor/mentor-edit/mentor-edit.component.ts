@@ -105,7 +105,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       //MentoringCommitment: ['', [Validators.required, Validators.maxLength(50)]],
       //UnitOfTime: ['', [Validators.required, Validators.max(18)]],
       PriorRoles: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      Comment: [],
+      Comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
 
       Experiences: this.formBuilder.array(this.formControlsExperience),
       MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea),
@@ -187,6 +187,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     this.mentorForm.get('Duration').setValue(this.mentor['MentoringCommitment']);    
     this.mentorForm.get('Passion').setValue(this.mentor['Passion']);
     this.mentorForm.get('Available').setValue(this.mentor['Available'] ? true : false);
+    this.mentorForm.get('PriorRoles').setValue(this.mentor['PriorRoles']);
     this.mentorForm.get('ProfessionalBackground').setValue(this.mentor['ProfessionalBackground']);
     this.mentorForm.get('ReadTerms').setValue(this.mentor['ReadTerms'] ? true : false);
     this.mentorForm.get('UnitOfTimeId').setValue(this.mentor['UnitOfTimeId']);
@@ -303,15 +304,17 @@ export class MentorEditComponent implements OnInit, OnDestroy {
    * @param DomainIdArray 
    */
   objMentor(DomainIdArray, ExperienceArray): Mentor {
+    console.log(this.mentorForm.get('UnitOfTimeId').value);
     return {
       MentorId: this.mentor['MentorId'],
       EmployeeId: this.mentor['EmployeeId'],
       Interest: this.mentorForm.get('Interest').value,
       Passion: this.mentorForm.get('Passion').value,
+      PriorRoles: this.mentorForm.get('PriorRoles').value,
       Available: this.mentorForm.get('Available').value,
       ProfessionalBackground: this.mentorForm.get('ProfessionalBackground').value,
       ReadTerms: this.mentorForm.get('ReadTerms').value,
-      UnitOfTimeId: this.mentorForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
+      UnitOfTimeId: this.mentorForm.get('UnitOfTimeId').value,
       MentoringCommitment: this.mentorForm.get('Duration').value,
       Comment: this.mentorForm.get('Comment').value,
       MentorDomianArea: DomainIdArray,
