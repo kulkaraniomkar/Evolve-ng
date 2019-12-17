@@ -1,31 +1,63 @@
-<!-- <div class="spinner-container" *ngIf="(loading$ | async)">
+<div class="spinner-container" *ngIf="(loading$ | async)">
     <mat-spinner></mat-spinner>
 </div>
 
-<div *ngIf="mentorId > 0"> 
+<!--<div *ngIf="mentorId > 0"> 
     <button mat-raised-button color="accent" [routerLink]="['/mentor/edit', mentorId]">
         <mat-icon class="mat-18">edit</mat-icon> &nbsp; Edit your details
     </button>
-    
-<table mat-table [dataSource]="dataSource" matSort>
+    -->
+<div *ngIf="dataSource">
+    <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
             <td mat-cell *matCellDef="let element"> {{element.MenteeFullName}} </td>
         </ng-container>
-    
-    
-       
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-            <td mat-cell *matCellDef="let mentee" class="action-link">
-                <button mat-icon-button color="accent" [routerLink]="['/mentor/edit', mentee.MenteeId]">
+        <ng-container matColumnDef="division">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Division </th>
+            <td mat-cell *matCellDef="let element"> {{element.Division}} </td>
+        </ng-container>
+        <ng-container matColumnDef="regDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registered date </th>
+            <td mat-cell *matCellDef="let element"> {{element.RegisteredDate | date}} </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="extractSaved">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Saved </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent">
+                    <mat-icon class="mat-18">archive</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="match">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Auto Match </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent">
                     <mat-icon class="mat-18">edit</mat-icon>
                 </button>
             </td>
         </ng-container>
-    
+        <ng-container matColumnDef="match">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Manual Match </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent">
+                    <mat-icon class="mat-18">edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>
- -->

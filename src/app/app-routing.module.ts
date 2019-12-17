@@ -7,6 +7,7 @@ const routes: Routes = [
   // { path: 'mentee', loadChildren: () => import('./mentees/mentees.module').then(m => m.MenteesModule), data: { breadcrumb: 'Mentee Signup'} },
   { path: 'mentee', loadChildren: () => import('./mentee/mentee.module').then(m => m.MenteeModule), data: { breadcrumb: 'Mentee'} },
   { path: 'mentor', loadChildren: () => import('./mentor/mentor.module').then(m => m.MentorModule), data: { breadcrumb: 'Mentor'} },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), data: { breadcrumb: 'Admin'} },
   ];
 
 @NgModule({
