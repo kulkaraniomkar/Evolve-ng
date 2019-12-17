@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { EntityState, MentorSelectors } from '../../store';
 import { Store } from '@ngrx/store';
-import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { Router, ActivatedRoute, RoutesRecognized, NavigationEnd, NavigationStart } from '@angular/router';
+import { takeUntil, filter, pairwise, tap, takeLast, last } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import * as MentorAction from '../../store/actions';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -32,14 +32,15 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   title: string = 'New signup';  // Title :: edit || signup || view 
   id: number; // id for the mentor
   IsEdit: boolean = false;
-
+  private previousUrl: string = 'initialroute'; // route 
   constructor(
     private store: Store<EntityState>,
     private mentorSelectors: MentorSelectors,
     private router: Router,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    
   ) {
     this.loading$ = this.mentorSelectors.loading$;
   }
@@ -52,8 +53,13 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(data => {
+        console.log(data);
         this.title = data['mode'];
-      })
+        console.log(data['mode']);
+      });
+      
+    /* get the url */
+    this.getUrl();
     /* grab the id from the url or route */
     this.id = +this.route.snapshot.paramMap.get('id');
     /* dispatch action to load the mentee and mentee data
@@ -79,11 +85,18 @@ export class MentorEditComponent implements OnInit, OnDestroy {
           this.onMentorDurationChange();
           // indivision changes
           // this.onMenteeInDivisionChanges();
-          /** mode edit -> patch values */
-          // mode Edit -> patch values
-          if (this.mentor.MentorId > 0 ) {
+          /** mode edit -> patch values 
+           *  mentorId not zero -> patch values
+           */
+          if (this.mentor['MentorId']) {
+            console.log('000000');
             this.getPatchMentorValues();
-          }
+          } 
+          if (this.previousUrl == '/mentor/subscriptions') {
+            console.log('222222');
+            // this.getPatchMentorValues();
+          } 
+         
         }
 
       })
@@ -184,7 +197,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     console.log(experienceValues);
     //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
     this.mentorForm.get('Interest').setValue(this.mentor['Interest']);
-    this.mentorForm.get('Duration').setValue(this.mentor['MentoringCommitment']);    
+    this.mentorForm.get('Duration').setValue(this.mentor['MentoringCommitment']);
     this.mentorForm.get('Passion').setValue(this.mentor['Passion']);
     this.mentorForm.get('Available').setValue(this.mentor['Available'] ? true : false);
     this.mentorForm.get('PriorRoles').setValue(this.mentor['PriorRoles']);
@@ -202,7 +215,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     // this.mentorForm.get('PreferredMentorAgeId').setValue(this.mentor['PreferredMentorAgeId'] ? this.mentee['PreferredMentorAgeId'].toString() : '1');
     // this.mentorForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0]['ExperienceId'] ? this.mentee['MenteeExperience'][0]['ExperienceId'].toString() : '2');
     // this.mentorForm.get('MentorDomianArea').setValue(checkboxesValues);
-   
+
     // this.mentorForm.get('ShareProfile').setValue(this.mentee['ShareProfile']);
     // this.menteeForm.get('ReadTerms').setValue(this.mentee['ReadTerms']);
 
@@ -235,7 +248,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
           this.mentorForm.reset();
         } else {
           // route to subscriptions
-          this.router.navigate(['mentor']);
+          this.router.navigate(['mentor/subscriptions']);
         }
 
       }
@@ -268,7 +281,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   onSaveMentor() {
     /* update valid form */
     if (this.mentorForm.valid) {
-     this.store.dispatch(new MentorAction.UpdateMentor(this.objMentor(this.sortDomainArea(), this.sortExperience())));
+      this.store.dispatch(new MentorAction.UpdateMentor(this.objMentor(this.sortDomainArea(), this.sortExperience())));
 
     }
 
@@ -322,8 +335,41 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     }
   }
   /**
+   * url from sub
+   */
+  getUrl() {
+    this.router
+      .events
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        pairwise(),
+        tap(c => console.log(c))
+        //takeUntil(this.unsubscribe$)
+      )
+      .subscribe(
+        event => {
+           this.previousUrl = event[0]['url'];
+           console.log(this.previousUrl);
+          // if (this.previousUrl == '/mentor/subscriptions') {
+          //   console.log('Patch values sign up');
+          //   this.getPatchMentorValues();
+          // } 
+         
+          if (this.mentor['MentorId'] == 0) {
+            this.title = 'New Signup';
+          } 
+          if(this.mentor['MentorId'] == 0 && this.previousUrl == '/mentor/subscriptions') {
+            /** redirect to list */
+            console.log(this.previousUrl);
+            console.log('mentor')
+            //this.router.navigate(['mentor/subscriptions']);
+          }
+        });
+  }
+  /**
    *  unsubscribe to all 
    */
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();

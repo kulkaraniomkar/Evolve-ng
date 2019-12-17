@@ -22,7 +22,7 @@
         Selected: boolean;
     }
 
-    export interface Mentor {
+    export class Mentor {
         //id: number;
         MentorId: number;
         EmployeeId: string;

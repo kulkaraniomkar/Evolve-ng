@@ -1,15 +1,15 @@
 <div class="spinner-container" *ngIf="(loading$ | async)">
     <mat-spinner></mat-spinner>
 </div>
-<div *ngIf="mentorId == 0"> 
+<!-- <div *ngIf="mentorId == 0"> 
         <button mat-raised-button color="primary" [routerLink]="['/mentor/signup', mentorId]">
             <mat-icon class="mat-18">edit</mat-icon> &nbsp; Signup/Edit your details
         </button>
- </div>
-<div *ngIf="mentorId > 0"> 
-    <button mat-raised-button color="accent" [routerLink]="['/mentor/edit', mentorId]">
+ </div> -->
+<div *ngIf="dataSource['data'].length > 0"> 
+    <button mat-raised-button color="accent" [routerLink]="['/mentor']" [state]="{ data: { breadcrumb: 'Edit', mode: 'Edit Mentee'}}">
         <mat-icon class="mat-18">edit</mat-icon> &nbsp; Edit your details
-    </button>
+    </button> 
     
 <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="fullName">
@@ -51,8 +51,9 @@
                 </button>
             </td>
         </ng-container> -->
-    
+       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="dataSource['data'].length === 0">No subscriptions available </div>
 </div>

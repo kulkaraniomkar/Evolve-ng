@@ -28,7 +28,7 @@
                 <mat-form-field appearance="outline">
                     <!-- <mat-label>Select <span style="color: red;">*</span></mat-label> -->
                     <mat-label>Unit of time <span style="color: red;">*</span></mat-label>
-                    <input matInput type="text" formControlName="UnitOfTimeId" [value]="unitOfTimes[0]['Value'] == 1 ? 'Months' : ''"/>
+                    <input matInput type="text" formControlName="UnitOfTimeId" [value]="unitOfTimes[0]['Selected'] ? 'Months' : ''"/>
                     <mat-icon matSuffix>calendar_today</mat-icon>
                     <!-- <mat-select formControlName="UnitOfTimeId">
                         <mat-option *ngFor="let item of unitOfTimes" [value]="item['Value']">

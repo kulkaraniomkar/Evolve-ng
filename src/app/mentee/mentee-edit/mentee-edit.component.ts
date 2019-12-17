@@ -124,7 +124,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       ReadTerms: [false, Validators.requiredTrue],
     });
     // set default to months
-    const unitMonths = this.mentee['UnitOfTimes'][0]['Value'] == 1 ? 'Months' : '';
+    const unitMonths = this.mentee['UnitOfTimes'][0]['Selected'] ? 'Months' : '';
     this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
     this.menteeForm.get('UnitOfTimeId').disable();
   }
@@ -304,6 +304,10 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       if (cancelIt) {
         if (this.mentee['MenteeId'] == 0) {
           this.menteeForm.reset();
+          // set default to months
+          const unitMonths = this.mentee['UnitOfTimes'][0]['Value'] == 1 ? 'Months' : '';
+          this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
+          this.menteeForm.get('UnitOfTimeId').disable();
         } else {
           // route to subscriptions
           this.router.navigate(['mentee']);
@@ -316,11 +320,11 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   /**
    *  save all changes
    */
-  onSaveMentee(){
+  onSaveMentee() {
     /* update valid form */
     if (this.menteeForm.valid) {
       this.store.dispatch(new MenteeAction.UpdateMentee(this.objMentee(this.sortDomainArea())));
-     
+
     }
 
   }
@@ -331,11 +335,11 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   onSubmitMentee() {
     if (this.menteeForm.valid) {
       this.store.dispatch(new MenteeAction.AddMentee(this.objMentee(this.sortDomainArea())));
-     }
+    }
   }
 
   /* create an array of object in this format [{ DomainId: 23}] */
-    sortDomainArea(){
+  sortDomainArea() {
     return this.menteeForm.get('MentorDomianArea').value.map((val, i) => {
       if (val) {
         return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
@@ -347,11 +351,13 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
    * @param DomainIdArray 
    */
   objMentee(DomainIdArray): Mentee {
+    console.log(this.menteeForm.get('UnitOfTimeId').value);
     return {
       MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'], InDivision: this.menteeForm.get('InDivision').value,
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
-      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value, UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
+      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value,
+      UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
       YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value ?
@@ -364,7 +370,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       CreatedDate: new Date,
       MenteeDomianArea: DomainIdArray,
       MenteeExperience: [{ ExperienceId: this.menteeForm.get('ExperienceId').value }],
-      
+
     }
 
 

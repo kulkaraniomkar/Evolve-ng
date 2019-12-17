@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
   loading$: Observable<boolean>;
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
-  displayedColumns = ['fullName', 'division', 'regDate', 'delete', 'match', 'extractSaved'];
+  displayedColumns = ['fullName', 'division', 'regDate', 'autoMatch', 'manualMatch', 'extractSaved'];
   constructor(
     private store: Store<EntityState>,
     private msubscriptionSelectors: MSubscriptionSelectors) {

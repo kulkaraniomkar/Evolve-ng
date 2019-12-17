@@ -81,13 +81,13 @@ export class MentorEffects {
     @Effect({ dispatch: false })
     updateMentorSuccess$: Observable<Action> = this.actions$.pipe(
       ofType(MentorActions.UPDATE_MENTOR_SUCCESS),
-      tap((action: MentorAction) => this.router.navigate(['/mentor']))
+      tap((action: MentorAction) => this.router.navigate(['/mentor/subscriptions']))
     );
 
     @Effect({ dispatch: false })
     addMentorSuccess$: Observable<Action> = this.actions$.pipe(
       ofType(MentorActions.ADD_MENTOR_SUCCESS),
-      tap((action: MentorAction) => this.router.navigate(['/mentor']))
+      tap((action: MentorAction) => this.router.navigate(['/mentor/subscriptions']))
     );
   constructor(
     private router: Router,
