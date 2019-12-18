@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 
 const toAction = MSubscriptionActions.toAction();
 type MSubscriptionAction = MSubscriptionActions.MSubscriptionAction;
+
 type GetMSubscriptionAction = MSubscriptionActions.GetMSubscriptions;
+type GetMentorsMatchAction = MSubscriptionActions.GetMentorsMatch;
 
 @Injectable()
 export class MSubscriptionEffects {
@@ -26,6 +28,18 @@ export class MSubscriptionEffects {
         )
       )
     );
+    @Effect()
+    getMentorsMatch$: Observable<Action> = this.actions$
+      .pipe(
+        ofType(MSubscriptionActions.GET_MENTORS_MATCH),
+        switchMap((action: GetMentorsMatchAction) =>
+          toAction(
+            this.msubscriptionDataService.getAutomatch(action.payload),
+            MSubscriptionActions.GetMentorsMatchSuccess,
+            MSubscriptionActions.GetMentorsError
+          )
+        )
+      );
 
  
 

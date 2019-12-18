@@ -357,7 +357,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
       ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value,
-      UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
+      UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 1,
       YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value ?

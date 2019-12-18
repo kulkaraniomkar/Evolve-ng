@@ -21,7 +21,7 @@ export class MenteeDataService {
    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentee/GetMenteeSubscriptions`)
    // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
     .pipe(
-      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      // tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),
       catchError(this.handleError())
     );

@@ -69,7 +69,6 @@ export function reducer(
     }
 
     case MentorActions.GET_MENTOR_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         mentor: action.payload,

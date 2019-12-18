@@ -6,6 +6,7 @@ import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
+import { MentorMatch } from '../../core/model/mentor-match';
 
 @Injectable()
 export class MSubscriptionDataService {
@@ -18,6 +19,17 @@ export class MSubscriptionDataService {
   getMSubscriptions(): Observable<MSubscription[]> {
     const msg = 'Mentee subscriptions retrieved successfully!';
    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/admin/GetPendingSubscriptions`)
+   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      map(res =>res['results']),
+      catchError(this.handleError())
+    );
+  }
+
+  getAutomatch(menteeId: number): Observable<MentorMatch[]> {
+    const msg = 'Auto match list retrieved successfully!';
+   return this.http.get<MentorMatch[]>(`${this.apiUrlBase}/admin/runautomatching/${menteeId}`)
    // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),

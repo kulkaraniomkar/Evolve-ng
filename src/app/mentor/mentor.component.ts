@@ -41,13 +41,11 @@ export class MentorComponent implements OnInit, OnDestroy {
   getAllMentorSubscriptions() {
     this.mentors$
     .pipe(
-     takeUntil(this.unsubscribe$)
+    takeUntil(this.unsubscribe$)
     )
     .subscribe(data => { 
-      console.log(data)  ;  
       this.dataSource.data = data as MSubscription[];
       // this.mentorId = data.length  ? data[0].MentorId : 0;
-      console.log(this.dataSource.data)  ;  
     })
   }
 

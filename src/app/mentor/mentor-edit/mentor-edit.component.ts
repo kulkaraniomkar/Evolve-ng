@@ -40,7 +40,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    
+
   ) {
     this.loading$ = this.mentorSelectors.loading$;
   }
@@ -53,13 +53,12 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(data => {
-        console.log(data);
-        this.title = data['mode'];
-        console.log(data['mode']);
+        this.title = data['mode'] ? 'Edit Signup' : 'New Signup';
       });
-      
+
     /* get the url */
     this.getUrl();
+    
     /* grab the id from the url or route */
     this.id = +this.route.snapshot.paramMap.get('id');
     /* dispatch action to load the mentee and mentee data
@@ -88,15 +87,17 @@ export class MentorEditComponent implements OnInit, OnDestroy {
           /** mode edit -> patch values 
            *  mentorId not zero -> patch values
            */
+
           if (this.mentor['MentorId']) {
             console.log('000000');
             this.getPatchMentorValues();
-          } 
-          if (this.previousUrl == '/mentor/subscriptions') {
-            console.log('222222');
-            // this.getPatchMentorValues();
-          } 
-         
+          }
+          console.log('222222', this.previousUrl);
+          // if (this.previousUrl == '/mentor/subscriptions') {
+          //   console.log('222222');
+          //   // this.getPatchMentorValues();
+          // } 
+
         }
 
       })
@@ -145,7 +146,6 @@ export class MentorEditComponent implements OnInit, OnDestroy {
         res => {
           const updatedArrayCount = res.filter(i => i === true).length;
           if (updatedArrayCount > 0) {
-            console.log("Checkboxes count ", updatedArrayCount);
             this.mentorForm.get('MentorDomianArea').valid;
           } else if (updatedArrayCount == 0) {
             this.mentorForm.get('MentorDomianArea').touched;
@@ -194,7 +194,6 @@ export class MentorEditComponent implements OnInit, OnDestroy {
         return false
       }
     });
-    console.log(experienceValues);
     //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
     this.mentorForm.get('Interest').setValue(this.mentor['Interest']);
     this.mentorForm.get('Duration').setValue(this.mentor['MentoringCommitment']);
@@ -208,17 +207,6 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     this.mentorForm.get('Comment').setValue(this.mentor['Comment']);
     this.mentorForm.get('Experiences').setValue(experienceValues);
     this.mentorForm.get('MentorDomianArea').setValue(checkboxesValues);
-
-    // this.mentorForm.get('Passion').setValue(this.mentor['Passion'] ? this.mentee['InDivision'].toString() : '1');
-    // this.mentorForm.get('PreferredMentorEmpId').setValue(this.mentor['PreferredMentor']);
-    // this.mentorForm.get('PreferredMentorGenderId').setValue(this.mentor['PreferredMentorGenderId'] ? this.mentee['PreferredMentorGenderId'].toString() : '20');
-    // this.mentorForm.get('PreferredMentorAgeId').setValue(this.mentor['PreferredMentorAgeId'] ? this.mentee['PreferredMentorAgeId'].toString() : '1');
-    // this.mentorForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0]['ExperienceId'] ? this.mentee['MenteeExperience'][0]['ExperienceId'].toString() : '2');
-    // this.mentorForm.get('MentorDomianArea').setValue(checkboxesValues);
-
-    // this.mentorForm.get('ShareProfile').setValue(this.mentee['ShareProfile']);
-    // this.menteeForm.get('ReadTerms').setValue(this.mentee['ReadTerms']);
-
   }
   /**
      * Cancel/Confirm dialog box
@@ -246,6 +234,11 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       if (cancelIt) {
         if (this.mentor['MentorId'] == 0) {
           this.mentorForm.reset();
+          /* set default to months */
+          const unitMonths = this.mentor['UnitOfTimes'][0]['Value'] == '1' ? 'Months' : '';
+          this.mentorForm.get('UnitOfTimeId').setValue(unitMonths);
+          this.mentorForm.get('UnitOfTimeId').disable();
+          this.mentorForm.get('Available').disable();
         } else {
           // route to subscriptions
           this.router.navigate(['mentor/subscriptions']);
@@ -317,7 +310,6 @@ export class MentorEditComponent implements OnInit, OnDestroy {
    * @param DomainIdArray 
    */
   objMentor(DomainIdArray, ExperienceArray): Mentor {
-    console.log(this.mentorForm.get('UnitOfTimeId').value);
     return {
       MentorId: this.mentor['MentorId'],
       EmployeeId: this.mentor['EmployeeId'],
@@ -327,7 +319,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       Available: this.mentorForm.get('Available').value,
       ProfessionalBackground: this.mentorForm.get('ProfessionalBackground').value,
       ReadTerms: this.mentorForm.get('ReadTerms').value,
-      UnitOfTimeId: this.mentorForm.get('UnitOfTimeId').value,
+      UnitOfTimeId: this.mentorForm.get('UnitOfTimeId').value == 'Months' ? 1 : 1,
       MentoringCommitment: this.mentorForm.get('Duration').value,
       Comment: this.mentorForm.get('Comment').value,
       MentorDomianArea: DomainIdArray,
@@ -348,24 +340,29 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         event => {
-           this.previousUrl = event[0]['url'];
-           console.log(this.previousUrl);
+          this.previousUrl = event[0]['url'];
+          console.log("new url ", this.previousUrl);
           // if (this.previousUrl == '/mentor/subscriptions') {
           //   console.log('Patch values sign up');
           //   this.getPatchMentorValues();
           // } 
+
+          // if (this.mentor['MentorId'] == 0) {
+          //   this.title = 'New Signup';
+          //   console.log(this.previousUrl);
+          //   console.log(this.mentor['MentorId']);
+          // }
          
-          if (this.mentor['MentorId'] == 0) {
-            this.title = 'New Signup';
-          } 
-          if(this.mentor['MentorId'] == 0 && this.previousUrl == '/mentor/subscriptions') {
+          if (this.mentor['MentorId'] > 0 && this.previousUrl != '/mentor/subscriptions') {
             /** redirect to list */
             console.log(this.previousUrl);
             console.log('mentor')
-            //this.router.navigate(['mentor/subscriptions']);
+            this.router.navigate(['mentor/subscriptions']);
           }
         });
   }
+  
+  
   /**
    *  unsubscribe to all 
    */

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as MSubscriptionAction from '../store/actions';
 import { takeUntil } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material';
+import { MentorMatch } from '../core/model/mentor-match';
 
 @Component({
   selector: 'app-admin',
@@ -15,6 +16,7 @@ import { MatTableDataSource } from '@angular/material';
 export class AdminComponent implements OnInit {
 
   mentees$: Observable<MSubscription[]>;
+  mentorsmatch$: Observable<MentorMatch[]>;
   loading$: Observable<boolean>;
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
@@ -22,7 +24,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private store: Store<EntityState>,
     private msubscriptionSelectors: MSubscriptionSelectors) {
-    // this.mentees$ = this.menteeSelectors.mentees$;
+    this.mentorsmatch$ = this.msubscriptionSelectors.mentorsmatch$;
     this.loading$ = this.msubscriptionSelectors.loading$;
     }
 
@@ -51,6 +53,10 @@ export class AdminComponent implements OnInit {
   }
   getMenteesSubscriptions(){
     this.store.dispatch(new MSubscriptionAction.GetMSubscriptions())
+  }
+  /* on auto match */
+  onAutoMatch(menteeId){
+    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(13))
   }
   /**
    *  unsubscribe to all 

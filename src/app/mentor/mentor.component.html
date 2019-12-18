@@ -55,5 +55,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="dataSource['data'].length === 0">No subscriptions available </div>
+    
 </div>
+<div *ngIf="dataSource['data'].length === 0">No subscriptions available. </div>
