@@ -39,7 +39,6 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   id: number; // id for the mentee
   isLoading: boolean = false; // status of spinner
   IsEdit: boolean = false;
-  onSaveStatus: boolean = false;
 
   constructor(
     private store: Store<EntityState>,
@@ -68,7 +67,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
     /* dispatch action to load the mentee and mentee data
     * if id = 0 we load only  meta data
     */
-    this.store.dispatch(new MenteeAction.GetMentee(this.id))
+    this.store.dispatch(new MenteeAction.GetMentee(this.id));
     /**
      *  initialize form data
      */
@@ -125,7 +124,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       ReadTerms: [false, Validators.requiredTrue],
     });
     // set default to months
-    const unitMonths = this.mentee['UnitOfTimes'][0]['Value'] == 1 ? 'Months' : '';
+    const unitMonths = this.mentee['UnitOfTimes'][0]['Selected'] ? 'Months' : '';
     this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
     this.menteeForm.get('UnitOfTimeId').disable();
   }
@@ -250,6 +249,13 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
         return false
       }
     });
+    const checkboxesExperience = this.sortedArrayExperiences.map((val) => {
+      if (val.Selected) {
+        return true
+      } else {
+        return false
+      }
+    });
 
     //this.menteeForm.get('UnitOfTimeId').setValue(mentee['UnitOfTimeId'].toString());
     this.menteeForm.get('Interest').setValue(this.mentee['Interest']);
@@ -258,7 +264,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
     this.menteeForm.get('PreferredMentorEmpId').setValue(this.mentee['PreferredMentor']);
     this.menteeForm.get('PreferredMentorGenderId').setValue(this.mentee['PreferredMentorGenderId'] ? this.mentee['PreferredMentorGenderId'].toString() : '20');
     this.menteeForm.get('PreferredMentorAgeId').setValue(this.mentee['PreferredMentorAgeId'] ? this.mentee['PreferredMentorAgeId'].toString() : '1');
-    this.menteeForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0]['ExperienceId'].toString());
+    this.menteeForm.get('ExperienceId').setValue(this.mentee['MenteeExperience'][0] ? this.mentee['MenteeExperience'][0]['ExperienceId'].toString() : '2');
     this.menteeForm.get('MentorDomianArea').setValue(checkboxesValues);
     this.menteeForm.get('Comment').setValue(this.mentee['Comment']);
     this.menteeForm.get('ShareProfile').setValue(this.mentee['ShareProfile']);
@@ -298,6 +304,10 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       if (cancelIt) {
         if (this.mentee['MenteeId'] == 0) {
           this.menteeForm.reset();
+          // set default to months
+          const unitMonths = this.mentee['UnitOfTimes'][0]['Value'] == 1 ? 'Months' : '';
+          this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
+          this.menteeForm.get('UnitOfTimeId').disable();
         } else {
           // route to subscriptions
           this.router.navigate(['mentee']);
@@ -310,11 +320,11 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   /**
    *  save all changes
    */
-  onSaveMentee(){
+  onSaveMentee() {
     /* update valid form */
     if (this.menteeForm.valid) {
       this.store.dispatch(new MenteeAction.UpdateMentee(this.objMentee(this.sortDomainArea())));
-     
+
     }
 
   }
@@ -325,11 +335,11 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   onSubmitMentee() {
     if (this.menteeForm.valid) {
       this.store.dispatch(new MenteeAction.AddMentee(this.objMentee(this.sortDomainArea())));
-     }
+    }
   }
 
   /* create an array of object in this format [{ DomainId: 23}] */
-    sortDomainArea(){
+  sortDomainArea() {
     return this.menteeForm.get('MentorDomianArea').value.map((val, i) => {
       if (val) {
         return { DomainId: this.sortedArrayDomainAreas[i]['Value'] }
@@ -341,11 +351,13 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
    * @param DomainIdArray 
    */
   objMentee(DomainIdArray): Mentee {
+    console.log(this.menteeForm.get('UnitOfTimeId').value);
     return {
       MenteeId: this.mentee['MenteeId'], EmployeeId: this.mentee['EmployeeId'], InDivision: this.menteeForm.get('InDivision').value,
       Division: this.mentee['Division'],  //TenantId: 0,
       Interest: this.menteeForm.get('Interest').value,
-      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value, UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 0,
+      ServicePeriod: 0, Duration: this.menteeForm.get('Duration').value,
+      UnitOfTimeId: this.menteeForm.get('UnitOfTimeId').value == 'Months' ? 1 : 1,
       YearsOfExperience: 0,
       //PreferredMentorId: this.EmployeeId,
       PreferredMentorEmpId: this.menteeForm.get('PreferredMentorEmpId').value ?
@@ -358,7 +370,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       CreatedDate: new Date,
       MenteeDomianArea: DomainIdArray,
       MenteeExperience: [{ ExperienceId: this.menteeForm.get('ExperienceId').value }],
-      
+
     }
 
 

@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { ConfirmationDialogComponent } from '../components/confirmation-dialog/confirmation-dialog.component';
 
-import { MenteeCrudComponent } from './mentee-crud/mentee-crud.component';
+//import { MenteeCrudComponent } from './mentee-crud/mentee-crud.component';
 import { MenteeEditComponent } from './mentee-edit/mentee-edit.component';
 
 

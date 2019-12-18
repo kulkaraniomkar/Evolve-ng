@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { concatMap, switchMap, tap } from 'rxjs/operators';
 import * as MentorActions from '../actions';
 import { MentorDataService } from '../services';
+import { Router } from '@angular/router';
 
 const toAction = MentorActions.toAction();
 type MentorAction = MentorActions.MentorAction;
@@ -77,8 +78,19 @@ export class MentorEffects {
         )
       )
     );
+    @Effect({ dispatch: false })
+    updateMentorSuccess$: Observable<Action> = this.actions$.pipe(
+      ofType(MentorActions.UPDATE_MENTOR_SUCCESS),
+      tap((action: MentorAction) => this.router.navigate(['/mentor/subscriptions']))
+    );
 
+    @Effect({ dispatch: false })
+    addMentorSuccess$: Observable<Action> = this.actions$.pipe(
+      ofType(MentorActions.ADD_MENTOR_SUCCESS),
+      tap((action: MentorAction) => this.router.navigate(['/mentor/subscriptions']))
+    );
   constructor(
+    private router: Router,
     private actions$: Actions,
     private menteeDataService: MentorDataService
   ) {}

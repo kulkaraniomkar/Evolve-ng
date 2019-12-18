@@ -55,8 +55,10 @@ export class MentorDataService {
   }
 
   updateMentor(mentor: Mentor): Observable<Mentor> {
-    return this.http.put<Mentor>(`${this.apiUrlBase}/mentors/${mentor.MentorId}`, mentor)
+    const msg = 'Mentor updated successfully!';
+    return this.http.put<Mentor>(`${this.apiUrlBase}/mentor/update?id=${mentor.MentorId}`, mentor)
     .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'PUT')),
       map(() => mentor),
       catchError(this.handleError(mentor))
     );

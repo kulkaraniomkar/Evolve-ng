@@ -43,6 +43,7 @@ export interface Experience {
   Name: string;
   Text: string;
   Value: number;
+  Selected: boolean;
 }
 export class MenteeExperience {
   MenteeExperienceId: number;

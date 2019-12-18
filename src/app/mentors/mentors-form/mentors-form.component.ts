@@ -63,8 +63,8 @@ export class MentorsFormComponent implements OnInit {
   // submit the mentor form
   submit() {
     console.log()
-    const saveMentor: Mentor = {
-      id: 0,
+    const saveMentor = {
+      //id: 0,
       MentorId: 0,
       EmployeeId: this.mentor_meta['EmployeeId'],
       ProfessionalBackground: this.mentorForm.get('ProfessionalBackground').value,
@@ -73,7 +73,7 @@ export class MentorsFormComponent implements OnInit {
       PriorRoles: this.mentorForm.get('PriorRoles').value,
       Available: true,
       ReadTerms: true,
-      UnitOfTime:this.mentorForm.get('UnitOfTime').value,
+      UnitOfTimeId:this.mentorForm.get('UnitOfTime').value,
       MentoringCommitment: this.mentorForm.get('MentoringCommitment').value,
       Comment: this.mentorForm.get('Comment').value,
       CreatedDateTime: new Date,
@@ -86,7 +86,7 @@ export class MentorsFormComponent implements OnInit {
     };
     if (this.mentorForm.valid) {
       //const menteerValue = { ...this.customer, ...this.customerForm.value };
-      this.store.dispatch(new MentorAction.AddMentor(saveMentor));
+      //this.store.dispatch(new MentorAction.AddMentor(saveMentor));
       //this.mentorForm.reset();
       this.router.navigate(['mentors/subscriptions']);
   }

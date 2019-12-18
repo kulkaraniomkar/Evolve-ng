@@ -78,73 +78,85 @@ const mentees: Mentee[] = [
         OrderId: 10,
         Name: "supportService",
         Text: "Support Services",
-        Value: 10
+        Value: 10,
+        Selected: false
       },
       {
         OrderId: 11,
         Name: "transacting",
         Text: "Transacting",
-        Value: 11
+        Value: 11,
+        Selected: false
       },
       {
         OrderId: 12,
         Name: "trading",
         Text: "Trading",
-        Value: 12
+        Value: 12,
+        Selected: false
       },
       {
         OrderId: 13,
         Name: "nonSpecific",
         Text: "No specific preference",
-        Value: 13
+        Value: 13,
+        Selected: false
       },
       {
         OrderId: 2,
         Name: "businessTechnology",
         Text: "Business Technology",
-        Value: 2
+        Value: 2,
+        Selected: false
       },
       {
         OrderId: 3,
         Name: "clientService",
         Text: "Client Services",
-        Value: 3
+        Value: 3,
+        Selected: false
       },
       {
         OrderId: 4,
         Name: "credit",
         Text: "Credit",
-        Value: 4
+        Value: 4,
+        Selected: false
       },
       {
         OrderId: 5,
         Name: "finance",
         Text: "Finance",
-        Value: 5
+        Value: 5,
+        Selected: false
       },
       {
         OrderId: 6,
         Name: "humanCapital",
         Text: "Human Capital",
-        Value: 6
+        Value: 6,
+        Selected: false
       },
       {
         OrderId: 7,
         Name: "legalRiskCompliance",
         Text: "Legal, Risk and Compliance",
-        Value: 7
+        Value: 7,
+        Selected: false
       },
       {
         OrderId: 8,
         Name: "marketingCommunication",
         Text: "Marketing and Communication",
-        Value: 8
+        Value: 8,
+        Selected: false
       },
       {
         OrderId: 9,
         Name: "operationProcess",
         Text: "Operations/Processes/Admin",
-        Value: 9
+        Value: 9,
+        Selected: false
       }
     ],
     DomainAreas: [
@@ -284,7 +296,7 @@ const mentees: Mentee[] = [
 
 const mentors: Mentor[] = [
   {
-    id: 0,
+    //id: 0,
     MentorId: 0,
     EmployeeId: '5320712',
     ProfessionalBackground: null,
@@ -294,7 +306,7 @@ const mentors: Mentor[] = [
     PriorRoles: null,
     Available: false,
     ReadTerms: false,
-    UnitOfTime: 0,
+    UnitOfTimeId: 0,
     MentoringCommitment: 0,
     Comment: null,
     YearsOfExperience: null,
@@ -316,147 +328,149 @@ const mentors: Mentor[] = [
         Value: '2'
       }
     ],
-    Experiences: [
-      {
-        OrderId: '10',
-        Name: 'supportService',
-        Text: 'Support Services',
-        Value: '10'
-      },
-      {
-        OrderId: '11',
-        Name: 'transacting',
-        Text: 'Transacting',
-        Value: '11'
-      },
-      {
-        OrderId: '12',
-        Name: 'trading',
-        Text: 'Trading',
-        Value: '12'
-      },
-      {
-        OrderId: '13',
-        Name: 'nonSpecific',
-        Text: 'No specific preference',
-        Value: '13'
-      },
-      {
-        OrderId: '2',
-        Name: 'businessTechnology',
-        Text: 'Business Technology',
-        Value: '2'
-      },
-      {
-        OrderId: '3',
-        Name: 'clientService',
-        Text: 'Client Services',
-        Value: '3'
-      },
-      {
-        OrderId: '4',
-        Name: 'credit',
-        Text: 'Credit',
-        Value: '4'
-      },
-      {
-        OrderId: '5',
-        Name: 'finance',
-        Text: 'Finance',
-        Value: '5'
-      },
-      {
-        OrderId: '6',
-        Name: 'humanCapital',
-        Text: 'Human Capital',
-        Value: '6'
-      },
-      {
-        OrderId: '7',
-        Name: 'legalRiskCompliance',
-        Text: 'Legal, Risk and Compliance',
-        Value: '7'
-      },
-      {
-        OrderId: '8',
-        Name: 'marketingCommunication',
-        Text: 'Marketing and Communication',
-        Value: '8'
-      },
-      {
-        OrderId: '9',
-        Name: 'operationProcess',
-        Text: 'Operations/Processes/Admin',
-        Value: '9'
-      }
-    ],
-    DomainAreas: [
-      {
-        OrderId: '1',
-        Name: 'broadenKnowledge',
-        Text: 'Broaden his/her organisational knowledge',
-        Value: '1'
-      },
-      {
-        OrderId: '10',
-        Name: 'helpingNavigateSystem',
-        Text: 'Helping him/her ‘navigate’ the system',
-        Value: '10'
-      },
-      {
-        OrderId: '2',
-        Name: 'enhanceTechnical',
-        Text: 'Enhance his/her technical skills',
-        Value: '2'
-      },
-      {
-        OrderId: '3',
-        Name: 'dealDiversity',
-        Text: 'Deal with diversity and inclusion challenges',
-        Value: '3'
-      },
-      {
-        OrderId: '4',
-        Name: 'honeLeadership',
-        Text: 'Hone his/her leadership skills',
-        Value: '4'
-      },
-      {
-        OrderId: '5',
-        Name: 'managingCareer',
-        Text: 'Managing a career transition',
-        Value: '5'
-      },
-      {
-        OrderId: '6',
-        Name: 'relationshipBuilding',
-        Text: 'Relationship building and networking',
-        Value: '6'
-      },
-      {
-        OrderId: '7',
-        Name: 'enhanceInfluence',
-        Text: 'Enhance his/her impact and influence',
-        Value: '7'
-      },
-      {
-        OrderId: '8',
-        Name: 'betterIntergrateBusiness',
-        Text: 'Better integrate into a team/Business Unit',
-        Value: '8'
-      },
-      {
-        OrderId: '9',
-        Name: 'offeringCareerGuidance',
-        Text: 'Offering career guidance',
-        Value: '9'
-      }
-    ]
+    Experiences:[],
+    DomainAreas: [],
+    // Experiences: [
+    //   {
+    //     OrderId: 10,
+    //     Name: 'supportService',
+    //     Text: 'Support Services',
+    //     Value: '10'
+    //   },
+    //   {
+    //     OrderId: 1,
+    //     Name: 'transacting',
+    //     Text: 'Transacting',
+    //     Value: '11'
+    //   },
+    //   {
+    //     OrderId: 12,
+    //     Name: 'trading',
+    //     Text: 'Trading',
+    //     Value: '12'
+    //   },
+    //   {
+    //     OrderId: 13,
+    //     Name: 'nonSpecific',
+    //     Text: 'No specific preference',
+    //     Value: '13'
+    //   },
+    //   {
+    //     OrderId: 2,
+    //     Name: 'businessTechnology',
+    //     Text: 'Business Technology',
+    //     Value: '2'
+    //   },
+    //   {
+    //     OrderId: 3,
+    //     Name: 'clientService',
+    //     Text: 'Client Services',
+    //     Value: '3'
+    //   },
+    //   {
+    //     OrderId: 4,
+    //     Name: 'credit',
+    //     Text: 'Credit',
+    //     Value: '4'
+    //   },
+    //   {
+    //     OrderId: 5,
+    //     Name: 'finance',
+    //     Text: 'Finance',
+    //     Value: '5'
+    //   },
+    //   {
+    //     OrderId: 6,
+    //     Name: 'humanCapital',
+    //     Text: 'Human Capital',
+    //     Value: '6'
+    //   },
+    //   {
+    //     OrderId: 7,
+    //     Name: 'legalRiskCompliance',
+    //     Text: 'Legal, Risk and Compliance',
+    //     Value: '7'
+    //   },
+    //   {
+    //     OrderId: 8,
+    //     Name: 'marketingCommunication',
+    //     Text: 'Marketing and Communication',
+    //     Value: '8'
+    //   },
+    //   {
+    //     OrderId: 9,
+    //     Name: 'operationProcess',
+    //     Text: 'Operations/Processes/Admin',
+    //     Value: '9'
+    //   }
+    // ],
+    // DomainAreas: [
+    //   {
+    //     OrderId: 1,
+    //     Name: 'broadenKnowledge',
+    //     Text: 'Broaden his/her organisational knowledge',
+    //     Value: '1'
+    //   },
+    //   {
+    //     OrderId: 10,
+    //     Name: 'helpingNavigateSystem',
+    //     Text: 'Helping him/her ‘navigate’ the system',
+    //     Value: '10'
+    //   },
+    //   {
+    //     OrderId: 2,
+    //     Name: 'enhanceTechnical',
+    //     Text: 'Enhance his/her technical skills',
+    //     Value: '2'
+    //   },
+    //   {
+    //     OrderId: 3,
+    //     Name: 'dealDiversity',
+    //     Text: 'Deal with diversity and inclusion challenges',
+    //     Value: '3'
+    //   },
+    //   {
+    //     OrderId: 4,
+    //     Name: 'honeLeadership',
+    //     Text: 'Hone his/her leadership skills',
+    //     Value: '4'
+    //   },
+    //   {
+    //     OrderId: 5,
+    //     Name: 'managingCareer',
+    //     Text: 'Managing a career transition',
+    //     Value: '5'
+    //   },
+    //   {
+    //     OrderId: 6,
+    //     Name: 'relationshipBuilding',
+    //     Text: 'Relationship building and networking',
+    //     Value: '6'
+    //   },
+    //   {
+    //     OrderId: 7,
+    //     Name: 'enhanceInfluence',
+    //     Text: 'Enhance his/her impact and influence',
+    //     Value: '7'
+    //   },
+    //   {
+    //     OrderId: 8,
+    //     Name: 'betterIntergrateBusiness',
+    //     Text: 'Better integrate into a team/Business Unit',
+    //     Value: '8'
+    //   },
+    //   {
+    //     OrderId: 9,
+    //     Name: 'offeringCareerGuidance',
+    //     Text: 'Offering career guidance',
+    //     Value: '9'
+    //   }
+    // ]
   }
 ];
 const mentorsall: Mentor[] =[
     {
-      id: 0,
+      //id: 0,
       MentorId: 1,
       EmployeeId: '5256534',
       ProfessionalBackground: 'Test Professional background',
@@ -466,7 +480,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'Test prior roles',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 10,
       Comment: 'Test commitment',
       YearsOfExperience: null,
@@ -479,7 +493,7 @@ const mentorsall: Mentor[] =[
       DomainAreas: null
     },
     {
-      id:5,
+      //id:5,
       MentorId: 5,
       EmployeeId: '3339270',
       ProfessionalBackground: 'Test Professional background',
@@ -489,7 +503,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'Test prior roles',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 10,
       Comment: 'Test commitment',
       YearsOfExperience: null,
@@ -502,7 +516,7 @@ const mentorsall: Mentor[] =[
       DomainAreas: null
     },
     {
-      id: 8,
+     // id: 8,
       MentorId: 8,
       EmployeeId: '5149428',
       ProfessionalBackground: 'Test Professional background',
@@ -512,7 +526,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'Test prior roles',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 10,
       Comment: 'Test commitment',
       YearsOfExperience: null,
@@ -547,7 +561,7 @@ const mentorsall: Mentor[] =[
       DomainAreas: null
     },
     {
-      id: 9,
+      //id: 9,
       MentorId: 9,
       EmployeeId: '3604519',
       ProfessionalBackground: 'Test Professional background',
@@ -557,7 +571,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'Test prior roles',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 10,
       Comment: 'Test commitment',
       YearsOfExperience: null,
@@ -591,7 +605,7 @@ const mentorsall: Mentor[] =[
       Experiences: null,
       DomainAreas: null
     },
-    { id:12,
+    { //id:12,
       MentorId: 12,
       EmployeeId: '4519094',
       ProfessionalBackground: 'Test Professional background',
@@ -601,7 +615,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'Test prior roles',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 10,
       Comment: 'Test commitment',
       YearsOfExperience: null,
@@ -636,7 +650,7 @@ const mentorsall: Mentor[] =[
       DomainAreas: null
     },
     {
-      id: 13,
+     // id: 13,
       MentorId: 13,
       EmployeeId: '5320712',
       ProfessionalBackground: 'qr3qgt',
@@ -646,7 +660,7 @@ const mentorsall: Mentor[] =[
       PriorRoles: 'qregrqg',
       Available: true,
       ReadTerms: true,
-      UnitOfTime: 2,
+      UnitOfTimeId: 2,
       MentoringCommitment: 1,
       Comment: 'qegtrg5g',
       YearsOfExperience: 0,

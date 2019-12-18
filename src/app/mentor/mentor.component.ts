@@ -17,10 +17,11 @@ export class MentorComponent implements OnInit, OnDestroy {
   mentors$: Observable<MSubscription[]>;
   loading$: Observable<boolean>;
   sub: Subscription;
+  mentorId: number;
 
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
-  displayedColumns = ['fullName', 'status', 'division', 'duration', 'startDate', 'endDate', 'actions'];
+  displayedColumns = ['fullName', 'status', 'division', 'duration', 'startDate', 'endDate'];
   constructor(private store: Store<EntityState>,
     private mentorSelectors: MentorSelectors) {
    
@@ -40,10 +41,11 @@ export class MentorComponent implements OnInit, OnDestroy {
   getAllMentorSubscriptions() {
     this.mentors$
     .pipe(
-     takeUntil(this.unsubscribe$)
+    takeUntil(this.unsubscribe$)
     )
-    .subscribe(data => {
+    .subscribe(data => { 
       this.dataSource.data = data as MSubscription[];
+      // this.mentorId = data.length  ? data[0].MentorId : 0;
     })
   }
 
