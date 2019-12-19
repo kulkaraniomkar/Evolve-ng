@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Mentor/Mentee information</h4>
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="card-body">
+
+            </div>
+        </div>
+        <div class="card">
+            <h5>Mentorship (editable)</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <input matInput [matDatepicker]="pickerStart" placeholder="Start date">
+                            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerStart startView="year" [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <input matInput [matDatepicker]="pickerEnd" placeholder="End date">
+                            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerEnd startView="year" [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                        <div class="col-lg-6">
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="pickerStart" placeholder="Start date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerStart startView="year" [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6">
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="pickerEnd" placeholder="End date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerEnd startView="year" [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

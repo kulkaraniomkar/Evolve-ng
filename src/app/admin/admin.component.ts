@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MSubscriptionSelectors, EntityState } from '../store';
 import { Observable, Subject } from 'rxjs';
 import { MSubscription } from '../core/model/m-subscriptions';
 import { Store } from '@ngrx/store';
 import * as MSubscriptionAction from '../store/actions';
 import { takeUntil } from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MentorMatch } from '../core/model/mentor-match';
 
 @Component({
@@ -21,6 +21,8 @@ export class AdminComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
   displayedColumns = ['fullName', 'division', 'regDate', 'autoMatch', 'manualMatch', 'extractSaved'];
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   constructor(
     private store: Store<EntityState>,
     private msubscriptionSelectors: MSubscriptionSelectors) {
@@ -54,9 +56,13 @@ export class AdminComponent implements OnInit {
   getMenteesSubscriptions(){
     this.store.dispatch(new MSubscriptionAction.GetMSubscriptions())
   }
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
   /* on auto match */
   onAutoMatch(menteeId){
-    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(13))
+    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(menteeId))
   }
   /**
    *  unsubscribe to all 

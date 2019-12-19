@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import * as Material from "@angular/material";
-
+import { MatRangeDatepickerModule, MatRangeNativeDateModule } from 'mat-range-datepicker';
 const modules = [
   Material.MatDialogModule,
   Material.MatInputModule,
@@ -28,7 +28,11 @@ const modules = [
   Material.MatListModule,
   Material.MatTooltipModule,
   Material.MatProgressSpinnerModule,
-  Material.MatSnackBarModule
+  Material.MatSnackBarModule,
+  Material.MatSortModule,
+  Material.MatDatepickerModule,
+  MatRangeDatepickerModule,
+  MatRangeNativeDateModule 
 
 ];
 

@@ -1,61 +1,41 @@
 <!-- this is the markup. you can change the details (your own name, your own avatar etc.) but don’t change the basic structure! -->
-<ng-container *ngIf="_matches.length">
-    <div *ngFor="let item of _matches">
-        <aside class="profile-card">
-            <div class="mask-shadow" ></div>
-            <header>
-        
-                <!-- here’s the avatar -->
-                <a href="#">
-                <img src="http://rmb-vdv-aspn01/evolve/user_photos/{{item.EmployeeId}}.jpg?size=200" alt=''>
-                </a>
-        
-                <!-- name -->
-                <h1>{{item.Name}}</h1>
-        
-                <!-- and role or location -->
-                <h2>{{item.JobTitle</h2>
-        
-            </header>
-        
-            <!-- bit of a bio; who are you? -->
-            <div class="profile-bio">
-        
-                <p>"Terence is an avid reader of science fiction, especially anything to do with aliens and tweed jackets. Most
-                    weekends, he can be found cataloguing his collection of rodent skeletons."</p>
-        
-            </div>
-        
-            <!-- some social links to show off -->
-            <ul class="profile-social-links">
-        
-                <!-- twitter - el clásico  -->
-                <li>
-                    <a href="https://twitter.com/tutsplus">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-twitter.svg">
-                    </a>
-                </li>
-        
-                <!-- envato – use this one to link to your marketplace profile -->
-                <li>
-                    <a href="https://envato.com">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-envato.svg">
-                    </a>
-                </li>
-        
-                <!-- codepen - your codepen profile-->
-                <li>
-                    <a href="https://codepen.io/tutsplus">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-codepen.svg">
-                    </a>
-                </li>
-        
-                <!-- add or remove social profiles as you see fit -->
-        
-            </ul>
-        
-        </aside>
+<div class="card" *ngIf="matches.length">
+    <div class="card-header">
+        <h4 class="text-center">Mentoring matching results</h4>
     </div>
-</ng-container>
-{{_matches}}
-<!-- that’s all folks! -->
+    <div class="card-body row">
+        <div class="col-lg-4" *ngFor="let item of matches">
+            <br> <br> <br> <br>
+            <div class="profile-card">
+                <div class="mask-shadow" ></div>
+                <header>
+                    <!-- here’s the avatar -->
+                    <a href="#">
+                        <img src="http://rmb-vdv-aspn01/evolve/user_photos/{{item.EmployeeId}}.jpg?size=200" alt=''>
+                    </a>
+                    <br>
+                    <!-- name -->
+                    <h1>{{item.Name}}</h1>
+                    <!-- and role or location -->
+                    <h2>{{item.JobTitle}}</h2>
+                </header>
+                <!-- bit of a bio; who are you? -->
+                <div class="profile-bio">
+                    <button mat-raised-button color="primary" type="button"
+                        (click)="onViewMentorProfile(item.MentorId)">&nbsp;View mentor profile&nbsp;
+                    </button>
+                    <br>
+                    <br>
+                    <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/view']">&nbsp; &nbsp;Select mentor&nbsp;&nbsp;
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-12 justify-content-end d-flex">
+            <button mat-raised-button color="primary" type="button" (click)="onSubmitMentor()">&nbsp;Save results&nbsp;
+            </button>
+        </div>
+    </div>
+</div>
