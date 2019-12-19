@@ -18,6 +18,8 @@ export class AdminComponent implements OnInit {
   mentees$: Observable<MSubscription[]>;
   mentorsmatch$: Observable<MentorMatch[]>;
   loading$: Observable<boolean>;
+  isDelete: boolean;
+  menteeName: string = '';
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<MSubscription>();
   displayedColumns = ['fullName', 'division', 'regDate', 'autoMatch', 'manualMatch', 'extractSaved'];
@@ -61,8 +63,15 @@ export class AdminComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   /* on auto match */
-  onAutoMatch(menteeId){
-    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(menteeId))
+  onAutoMatch(menteeId, menteeName){
+    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(menteeId));
+    this.isDelete = false;
+    this.menteeName = menteeName;
+  }
+  onExtractSavedMatch(menteeId, menteeName){
+    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(menteeId));
+    this.isDelete = true;
+    this.menteeName = menteeName;
   }
   /**
    *  unsubscribe to all 

@@ -21,6 +21,11 @@ const getAllMentorsMatch = createSelector(
   (state: MSubscriptionState) => state.mentorsmatch
 );
 
+const getAllSavedMatch = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.savedmatches
+);
+
 const getMSubscriptionsLoading = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.loading
@@ -33,6 +38,7 @@ export class MSubscriptionSelectors {
 
   msubscriptions$ = this.store.pipe(select(getAllMSubscriptions));
   mentorsmatch$ = this.store.pipe(select(getAllMentorsMatch));
+  savedmatches$ = this.store.pipe(select(getAllSavedMatch));
   msubscriptionState$ = this.store.pipe(select(getMSubscriptionState));
   loading$ = this.store.pipe(select(getMSubscriptionsLoading));
 

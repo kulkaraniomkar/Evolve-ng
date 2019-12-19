@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
-import { MentorMatch } from '../../core/model/mentor-match';
+import { MentorMatch, SavedMatch } from '../../core/model/mentor-match';
 
 
 export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
@@ -12,6 +12,10 @@ export const GET_MSUBSCRIPTIONS_ERROR = '[M Subcriptions] GET_MSUBSCRIPTIONS_ERR
 export const GET_MENTORS_MATCH = '[Mentor Match] GET_MENTOR_MATCH';
 export const GET_MENTORS_MATCH_SUCCESS = '[Mentor Match] GET_MMENTOR_MATCH_SUCCESS';
 export const GET_MENTORS_MATCH_ERROR = '[Mentor Match] GET_MENTOR_MATCH_ERROR';
+
+export const SAVE_MENTORS_MATCH = '[Save Mentor Match] SAVE_MENTOR_MATCH';
+export const SAVE_MENTORS_MATCH_SUCCESS = '[Save Mentor Match] SAVE_MMENTOR_MATCH_SUCCESS';
+export const SAVE_MENTORS_MATCH_ERROR = '[Save Mentor Match] SAVE_MENTOR_MATCH_ERROR';
 
 
 export const SET_MSUBSCRIPTION_LOADING = '[M Subcription] SET_MSUBSCRIPTIONS_LOADING';
@@ -23,6 +27,14 @@ export abstract class MSubscriptionAction implements DataAction<MSubscription> {
 export abstract class MentorMatchAction implements DataAction<MentorMatch> {
   readonly type: string;
   constructor(public readonly payload: MentorMatch) {}
+}
+export abstract class SavedMentorMatchAction implements DataAction<SavedMatch> {
+  readonly type: string;
+  constructor(public readonly payload: SavedMatch) {}
+}
+export abstract class SavedMentorMatchErrorAction implements DataErrorAction<SavedMatch> {
+  readonly type: string;
+  constructor(public readonly payload: DataServiceError<SavedMatch>) {}
 }
 
 export abstract class MSubscriptionErrorAction implements DataErrorAction<MSubscription> {
@@ -61,6 +73,17 @@ export class GetMentorsMatchError implements Action {
   readonly type = GET_MENTORS_MATCH_ERROR;
   constructor(public readonly payload: any) {}
 }
+export class AddSavedMatch extends SavedMentorMatchAction {
+  readonly type = SAVE_MENTORS_MATCH;
+}
+
+export class AddSavedMatchSuccess extends SavedMentorMatchAction {
+  readonly type = SAVE_MENTORS_MATCH_SUCCESS;
+}
+
+export class AddSavedMatchError extends SavedMentorMatchErrorAction {
+  readonly type = SAVE_MENTORS_MATCH_ERROR;
+}
 
 
 
@@ -77,4 +100,7 @@ export type AllMSubscriptionActions =
   | SetMSubscriptionLoading
   | GetMentorsMatch
   | GetMentorsMatchSuccess
-  | GetMentorsMatchError;
+  | GetMentorsMatchError
+  | AddSavedMatch 
+  | AddSavedMatchSuccess 
+  | AddSavedMatchError;

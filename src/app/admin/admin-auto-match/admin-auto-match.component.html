@@ -1,7 +1,7 @@
 <!-- this is the markup. you can change the details (your own name, your own avatar etc.) but don’t change the basic structure! -->
 <div class="card" *ngIf="matches.length">
     <div class="card-header">
-        <h4 class="text-center">Mentoring matching results</h4>
+        <h5 class="text-center"> {{isDelete ? savedMatchTitle : matchTitle}} for &nbsp;{{menteeName}} </h5>
     </div>
     <div class="card-body row">
         <div class="col-lg-4" *ngFor="let item of matches">
@@ -17,7 +17,7 @@
                     <!-- name -->
                     <h1>{{item.Name}}</h1>
                     <!-- and role or location -->
-                    <h2>{{item.JobTitle}}</h2>
+                    <h2>{{item.Division}}</h2>
                 </header>
                 <!-- bit of a bio; who are you? -->
                 <div class="profile-bio">
@@ -26,7 +26,7 @@
                     </button>
                     <br>
                     <br>
-                    <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/view']">&nbsp; &nbsp;Select mentor&nbsp;&nbsp;
+                    <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/view']">&nbsp; &nbsp;&nbsp; &nbsp;Select mentor&nbsp;&nbsp;&nbsp; &nbsp;
                     </button>
                 </div>
 
@@ -34,8 +34,15 @@
             </div>
         </div>
         <div class="col-12 justify-content-end d-flex">
-            <button mat-raised-button color="primary" type="button" (click)="onSubmitMentor()">&nbsp;Save results&nbsp;
-            </button>
+                <button mat-raised-button color="primary" type="button" (click)="onSaveResults()">&nbsp;Save results&nbsp;
+                    </button>
+                    &nbsp;&nbsp;
+                <span *ngIf="isDelete">
+                    <button mat-raised-button color="warn" type="button" (click)="onDeleteMentors()">&nbsp;Delete results&nbsp;
+                </button>
+            </span>
+           
+            
         </div>
     </div>
 </div>

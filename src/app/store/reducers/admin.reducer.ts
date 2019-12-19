@@ -1,10 +1,12 @@
 import * as MSubscriptionActions from '../actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
-import { MentorMatch } from '../../core/model/mentor-match';
+import { MentorMatch, SavedMatch } from '../../core/model/mentor-match';
 
 export interface MSubscriptionState {
   msubscriptions: MSubscription[];
   mentorsmatch: MentorMatch[];
+  savedmatches: SavedMatch[];
+  savedmatch: SavedMatch;
   loading: boolean;
   error: boolean;
 }
@@ -12,6 +14,8 @@ export interface MSubscriptionState {
 export const initialState: MSubscriptionState = {
   msubscriptions: [],
   mentorsmatch: null,
+  savedmatches: [],
+  savedmatch: null,
   loading: false,
   error: false
 };
@@ -44,7 +48,6 @@ export function reducer(
     }
 
     case MSubscriptionActions.GET_MSUBSCRIPTIONS_SUCCESS: {
-      console.log("GET_MS_SUCCESS ", action.payload);
       return {
         ...state,
         msubscriptions: action.payload,
@@ -57,6 +60,21 @@ export function reducer(
         mentorsmatch: action.payload,
         loading: false
       };
+    }
+    case MSubscriptionActions.SAVE_MENTORS_MATCH: {
+      return { ...state, loading: true };
+    }
+
+    case MSubscriptionActions.SAVE_MENTORS_MATCH_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        savedmatches: [...state.savedmatches, { ...action.payload }]
+      };
+    }
+
+    case MSubscriptionActions.SAVE_MENTORS_MATCH_ERROR: {
+      return { ...state, loading: false };
     }
 
     

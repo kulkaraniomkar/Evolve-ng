@@ -6,12 +6,14 @@ import { concatMap, switchMap, tap } from 'rxjs/operators';
 import * as MSubscriptionActions from '../actions';
 import { MSubscriptionDataService } from '../services';
 import { Router } from '@angular/router';
+// import { SavedMentorMatchAction } from '../actions';
 
 const toAction = MSubscriptionActions.toAction();
 type MSubscriptionAction = MSubscriptionActions.MSubscriptionAction;
 
 type GetMSubscriptionAction = MSubscriptionActions.GetMSubscriptions;
 type GetMentorsMatchAction = MSubscriptionActions.GetMentorsMatch;
+type AddSavedMatchAction = MSubscriptionActions.AddSavedMatch;
 
 @Injectable()
 export class MSubscriptionEffects {
@@ -40,6 +42,18 @@ export class MSubscriptionEffects {
           )
         )
       );
+      @Effect()
+      addSavedMatch$: Observable<Action> = this.actions$
+        .pipe(
+          ofType(MSubscriptionActions.SAVE_MENTORS_MATCH),
+          concatMap((action: AddSavedMatchAction) =>
+            toAction(
+              this.msubscriptionDataService.addSavedMatch(action.payload),
+              MSubscriptionActions.AddSavedMatchSuccess,
+              MSubscriptionActions.AddSavedMatchError
+            )
+          )
+        );
 
  
 

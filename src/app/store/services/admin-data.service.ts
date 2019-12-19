@@ -6,7 +6,7 @@ import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
-import { MentorMatch } from '../../core/model/mentor-match';
+import { MentorMatch, SavedMatch } from '../../core/model/mentor-match';
 
 @Injectable()
 export class MSubscriptionDataService {
@@ -35,6 +35,14 @@ export class MSubscriptionDataService {
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),
       catchError(this.handleError())
+    );
+  }
+  addSavedMatch(savedMatch: SavedMatch): Observable<SavedMatch> {
+    const msg = 'Saved matches successfully!';
+    return this.http.post<SavedMatch>(`${this.apiUrlBase}/admin/tempmatch/create`, savedMatch)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError(savedMatch))
     );
   }
 
