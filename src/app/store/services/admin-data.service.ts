@@ -6,7 +6,7 @@ import { DataServiceError } from './data-error.service';
 import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
-import { MentorMatch, SavedMatch } from '../../core/model/mentor-match';
+import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
 
 @Injectable()
 export class MSubscriptionDataService {
@@ -43,6 +43,24 @@ export class MSubscriptionDataService {
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(savedMatch))
+    );
+  }
+
+  removeSavedMatch(savedMatch: SavedMatch): Observable<SavedMatch> {
+    const msg = 'Removed saved matches successfully!';
+    return this.http.delete<SavedMatch>(`${this.apiUrlBase}/admin/tempmatching/remove/${savedMatch.MenteeId}`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'DELETE')),
+      catchError(this.handleError(savedMatch))
+    );
+  }
+
+  getMentorMatchInfo(mentorId: number): Observable<MentorMatchInfo> {
+    const msg = 'mentor/Mentee info retrieved successfully!';
+    return this.http.get<MentorMatchInfo>(`${this.apiUrlBase}/admin/getmentorinfo/${mentorId}`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError(mentorId))
     );
   }
 

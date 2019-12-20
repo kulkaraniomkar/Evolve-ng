@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
-import { MentorMatch, SavedMatch } from '../../core/model/mentor-match';
+import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
 
 
 export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
@@ -17,6 +17,13 @@ export const SAVE_MENTORS_MATCH = '[Save Mentor Match] SAVE_MENTOR_MATCH';
 export const SAVE_MENTORS_MATCH_SUCCESS = '[Save Mentor Match] SAVE_MMENTOR_MATCH_SUCCESS';
 export const SAVE_MENTORS_MATCH_ERROR = '[Save Mentor Match] SAVE_MENTOR_MATCH_ERROR';
 
+export const REMOVE_MENTORS_MATCH = '[Remove Mentors Match] REMOVE_MENTORS_MATCH';
+export const REMOVE_MENTORS_MATCH_SUCCESS = '[Remove Mentors Match] REMOVE_MENTORS_MATCH_SUCCESS';
+export const REMOVE_MENTORS_MATCH_ERROR = '[Remove Mentors Match] REMOVE_MENTORS_MATCH_ERROR';
+
+export const GET_MENTOR_INFO = '[Mentor Info] GET_MENTOR_INFO';
+export const GET_MENTOR_INFO_SUCCESS = '[Mentor Info] GET_MENTOR_INFO_SUCCESS';
+export const GET_MENTOR_INFO_ERROR = '[Mentor Info] GET_MENTOR_INFO_ERROR';
 
 export const SET_MSUBSCRIPTION_LOADING = '[M Subcription] SET_MSUBSCRIPTIONS_LOADING';
 
@@ -31,6 +38,12 @@ export abstract class MentorMatchAction implements DataAction<MentorMatch> {
 export abstract class SavedMentorMatchAction implements DataAction<SavedMatch> {
   readonly type: string;
   constructor(public readonly payload: SavedMatch) {}
+  
+}
+export abstract class MentorInfoAction implements DataAction<MentorMatchInfo> {
+  readonly type: string;
+  constructor(public readonly payload: MentorMatchInfo) {}
+  
 }
 export abstract class SavedMentorMatchErrorAction implements DataErrorAction<SavedMatch> {
   readonly type: string;
@@ -44,6 +57,11 @@ export abstract class MSubscriptionErrorAction implements DataErrorAction<MSubsc
 export abstract class MentorMatchErrorAction implements DataErrorAction<MentorMatch> {
   readonly type: string;
   constructor(public readonly payload: DataServiceError<MentorMatch>) {}
+}
+
+export abstract class MentorInfoErrorAction implements DataErrorAction<MentorMatchInfo> {
+  readonly type: string;
+  constructor(public readonly payload: DataServiceError<MentorMatchInfo>) {}
 }
 
 export class GetMSubscriptions implements Action {
@@ -85,7 +103,31 @@ export class AddSavedMatchError extends SavedMentorMatchErrorAction {
   readonly type = SAVE_MENTORS_MATCH_ERROR;
 }
 
+export class RemoveSavedMatch extends SavedMentorMatchAction {
+  readonly type = REMOVE_MENTORS_MATCH;
+}
 
+export class RemoveSavedMatchSuccess extends SavedMentorMatchAction {
+  readonly type = REMOVE_MENTORS_MATCH_SUCCESS;
+}
+
+export class RemoveSavedMatchError extends SavedMentorMatchErrorAction {
+  readonly type = REMOVE_MENTORS_MATCH_ERROR;
+}
+
+export class GetMentorInfo implements Action {
+  readonly type = GET_MENTOR_INFO;
+  constructor(public readonly payload: number) {}
+}
+
+export class GetMentorInfoSuccess implements Action {
+  readonly type = GET_MENTOR_INFO_SUCCESS;
+ constructor(public readonly payload: MentorMatchInfo) {}
+}
+
+export class GetMentorInfoError extends MentorInfoErrorAction {
+  readonly type = GET_MENTOR_INFO_ERROR;
+}
 
 
 export class SetMSubscriptionLoading {
@@ -103,4 +145,10 @@ export type AllMSubscriptionActions =
   | GetMentorsMatchError
   | AddSavedMatch 
   | AddSavedMatchSuccess 
-  | AddSavedMatchError;
+  | AddSavedMatchError
+  | RemoveSavedMatch 
+  | RemoveSavedMatchSuccess 
+  | RemoveSavedMatchError
+  | GetMentorInfo
+  | GetMentorInfoSuccess
+  | GetMentorInfoError;

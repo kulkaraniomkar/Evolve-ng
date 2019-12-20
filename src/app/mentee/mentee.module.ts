@@ -11,7 +11,7 @@ import { MenteeEditComponent } from './mentee-edit/mentee-edit.component';
 
 
 @NgModule({
-  declarations: [MenteeRoutingModule.components, ConfirmationDialogComponent, MenteeEditComponent],
+  declarations: [MenteeRoutingModule.components, ConfirmationDialogComponent],
   imports: [
     CommonModule,
     SharedModule,

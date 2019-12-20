@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MentorMatch, Matches, SavedMatch } from '../../core/model/mentor-match';
+import { MentorMatch, Matches, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
 import { EntityState, MSubscriptionSelectors } from '../../store';
 import * as SavedMatchAction from '../../store/actions';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MentorInfoComponent } from '../mentor-info/mentor-info.component';
 
 @Component({
   selector: 'app-admin-auto-match',
@@ -12,10 +16,11 @@ import { Store } from '@ngrx/store';
 export class AdminAutoMatchComponent implements OnInit {
   private _matches: MentorMatch[] = [];
   private _isDelete: boolean = false;
-  private  _menteeName: string = '';
+  private _menteeName: string = '';
+  private unsubscribe$ = new Subject<void>();
   matchTitle: string = 'Mentoring matching results';
   savedMatchTitle: string = 'Saved mentoring matching results';
-  
+
   @Input() get matches(): MentorMatch[] {
     return this._matches;
   }
@@ -36,19 +41,62 @@ export class AdminAutoMatchComponent implements OnInit {
   }
   constructor(
     private store: Store<EntityState>,
-    private savedmatchSelectors: MSubscriptionSelectors,
+    private adminSelectors: MSubscriptionSelectors,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
   }
-  onSaveResults(){
-   
-    const matches: Matches[]= this._matches.map(
-      m =>  { 
-        return { MentorId: m.MentorId};
+  onSaveResults() {
+    this.store.dispatch(new SavedMatchAction.AddSavedMatch(this.savedMatches()));
+  }
+  /** remove/delete saved results */
+  onDeleteMentors() {
+    this.store.dispatch(new SavedMatchAction.RemoveSavedMatch(this.savedMatches()));
+  }
+  /** create a savedmatch object */
+  private savedMatches() {
+    const matches: Matches[] = this._matches.map(m => {
+      return { MentorId: m.MentorId };
+    });
+    const savedMatches: SavedMatch = { MenteeId: this._matches[0]['MenteeId'], Matches: matches };
+    return savedMatches;
+  }
+  onViewMentorProfile(mentorId: number) {
+    this.store.dispatch(new SavedMatchAction.GetMentorInfo(mentorId));
+    /** open a dialog box showing mentor info */
+    this.openMentorInfoDialog();
+  }
+    /** dialog box */
+  openMentorInfoDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '600px';
+    //dialogConfig.data = mentorInfo;
+    const dialogRef = this.dialog.open(MentorInfoComponent, dialogConfig);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(cancelIt => {
+        if (cancelIt) {
+          /** close and return to matching */
+        }
       }
-    );
-    const savedMatches: SavedMatch = { MenteeId:this._matches[0]['MenteeId'], Matches: matches };
-    this.store.dispatch(new SavedMatchAction.AddSavedMatch(savedMatches));
+
+      )
+  }
+
+  openDialog(mentorInfo: MentorMatchInfo) {
+
+  }
+
+  /**
+  *  unsubscribe to all 
+  */
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.unsubscribe();
   }
 }

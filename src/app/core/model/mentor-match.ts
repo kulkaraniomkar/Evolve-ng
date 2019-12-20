@@ -1,3 +1,5 @@
+import { Mentor } from './mentor';
+
 export class MentorMatch {
     MentorId: number;
     MenteeId: number;
@@ -19,4 +21,20 @@ export class SavedMatch {
 }
 export class Matches {
     MentorId: number
+}
+
+export interface MentorInfo {
+    Id: number;
+    BusinessUnit: string;
+    Division: string;
+    Name: string;
+    Age: number;
+    Race: string;
+    CurrentPosition: string;
+    PreviousPosition?: any;
+    YearsInRMB: number;
+}
+export class MentorMatchInfo {
+    MentorInfo: MentorInfo;
+    MentorRegInfo: Mentor;
 }

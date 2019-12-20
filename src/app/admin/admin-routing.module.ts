@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdminSelectComponent } from './admin-select/admin-select.component';
+import { AdminAutoMatchComponent } from './admin-auto-match/admin-auto-match.component';
+
 
 
 const routes: Routes = [
@@ -16,6 +18,7 @@ const routes: Routes = [
 export class AdminRoutingModule {
   static components = [
     AdminComponent,
-    AdminSelectComponent
+    AdminSelectComponent,
+    AdminAutoMatchComponent
   ]
  }

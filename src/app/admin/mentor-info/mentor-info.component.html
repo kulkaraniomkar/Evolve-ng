@@ -1,0 +1,14 @@
+<div class="spinner-container" *ngIf="(loading$ | async )">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="mentorinfo$| async as mentorinfo">
+    <h2 mat-dialog-title>Mentor info</h2>
+    <mat-dialog-content>
+        <p>{{mentorinfo | json}}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button class="mat-raised-button" (click)="cancel()">Cancel</button>&nbsp;&nbsp;
+        <button class="mat-raised-button mat-primary" (click)="ok()">OK</button>
+    </mat-dialog-actions>
+</div>
