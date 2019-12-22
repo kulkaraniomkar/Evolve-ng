@@ -23,7 +23,7 @@ export class MentorDataService {
   return this.http.get<MSubscription[]>(`${this.apiUrlBase}/mentor/GetMentorSubscriptions`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET ALL')),
-      map(res =>res['results']),
+      map(res =>res),
       catchError(this.handleError())
     );
   }

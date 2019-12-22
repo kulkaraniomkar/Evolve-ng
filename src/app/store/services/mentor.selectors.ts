@@ -20,6 +20,10 @@ const getAllMentors = createSelector(
   getMentorState,
   (state: MentorState) => state.mentor
 );
+export const getRegisteredStatus = createSelector(
+  getMentorState,
+  (state: MentorState) => state.registered
+);
 
 export const getMentorsLoading = createSelector(
   getMentorState,
@@ -32,6 +36,7 @@ export class MentorSelectors {
   constructor(private store: Store<EntityState>) {}
 
   mentors$ = this.store.pipe(select(getAllMentors));
+  mentorRegistered$ = this.store.pipe(select(getRegisteredStatus));
   mentor$ = this.store.pipe(select(getMentor));
   mentorState$ = this.store.pipe(select(getMentorState));
   loading$ = this.store.pipe(select(getMentorsLoading));

@@ -9,4 +9,6 @@ export * from './mentor.selectors';
 export * from './admin.selectors';
 
 export * from './search-mentor.service';
-export * from './search-mentor.selectors'
+export * from './search-mentor.selectors';
+
+export * from './router.selectors'

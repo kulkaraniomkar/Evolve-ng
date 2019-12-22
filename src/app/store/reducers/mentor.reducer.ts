@@ -4,6 +4,7 @@ import { MSubscription } from '../../core/model/m-subscriptions';
 
 export interface MentorState {
   mentors: MSubscription[];
+  registered: boolean;
   mentor: Mentor;
   loading: boolean;
   error: boolean;
@@ -11,6 +12,7 @@ export interface MentorState {
 
 export const initialState: MentorState = {
   mentors: [],
+  registered: false,
   mentor: null,
   loading: false,
   error: false
@@ -30,6 +32,7 @@ export function reducer(
       return {
         ...state,
         loading: false,
+        registered: true,
        // mentors: [...state.mentors, { ...action.payload }]
       };
     }
@@ -39,26 +42,31 @@ export function reducer(
     }
 
     case MentorActions.GET_MENTORS: {
-      return { ...state, loading: true };
+      return { ...state, loading: true, registered: true };
     }
 
     case MentorActions.GET_MENTORS_ERROR: {
       return {
         ...state,
-        loading: false
+        loading: false,
+        registered: false
       };
     }
 
     case MentorActions.GET_MENTORS_SUCCESS: {
       return {
         ...state,
-        mentors: action.payload,
-        loading: false
+        mentors: action.payload['results'],
+        loading: false,
+        registered:  action.payload['Registered']
       };
     }
 
     case MentorActions.GET_MENTOR: {
       return { ...state, loading: true };
+    }
+    case MentorActions.REGISTERED: {
+      return { ...state,  registered: true };
     }
 
     case MentorActions.GET_MENTOR_ERROR: {

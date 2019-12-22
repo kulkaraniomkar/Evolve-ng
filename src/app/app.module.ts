@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthenticationInterceptor } from './core/authentication.interceptor.service';
 import { ToastService } from './core/toast.service';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 export const metaReducers: MetaReducer<any>[] = environment.production ? [] : [];
 
@@ -28,7 +29,10 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     AppStoreModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    // StoreRouterConnectingModule.forRoot({
+    //   stateKey: 'router'
+    // })
   ],
   declarations: [AppComponent],
   providers: [{

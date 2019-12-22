@@ -17,13 +17,15 @@ export const UPDATE_MENTOR = '[Mentor] UPDATE_MENTOR';
 export const UPDATE_MENTOR_SUCCESS = '[Mentor] UPDATE_MENTOR_SUCCESS';
 export const UPDATE_MENTOR_ERROR = '[Mentor] UPDATE_MENTOR_ERROR';
 
-export const GET_MENTORS = '[Mentor Subcriptions] GET_MENTORES';
-export const GET_MENTORS_SUCCESS = '[Mentor Subcriptions] GET_MENTORES_SUCCESS';
-export const GET_MENTORS_ERROR = '[Mentor Subcriptions] GET_MENTORES_ERROR';
+export const GET_MENTORS = '[Mentor Subcriptions] GET_MENTORS';
+export const GET_MENTORS_SUCCESS = '[Mentor Subcriptions] GET_MENTORS_SUCCESS';
+export const GET_MENTORS_ERROR = '[Mentor Subcriptions] GET_MENTORS_ERROR';
 
 export const DELETE_MENTOR = '[Mentor] DELETE_MENTOR';
 export const DELETE_MENTOR_SUCCESS = '[Mentor] DELETE_MENTOR_SUCCESS';
 export const DELETE_MENTOR_ERROR = '[Mentor] DELETE_MENTOR_ERROR';
+
+export const REGISTERED = '[Mentor registered] REGISTERED';
 
 export const SET_MENTOR_LOADING = '[Mentor] SET_MENTOR_LOADING';
 
@@ -101,6 +103,9 @@ export class DeleteMentorError extends MentorErrorAction {
   readonly type = DELETE_MENTOR_ERROR;
 }
 
+export class SetRegistered implements Action {
+  readonly type = REGISTERED;
+}
 export class SetMentorLoading {
   readonly type = SET_MENTOR_LOADING;
   constructor(public payload = true) {}
@@ -122,4 +127,5 @@ export type AllMentorActions =
   | DeleteMentor
   | DeleteMentorSuccess
   | DeleteMentorError
-  | SetMentorLoading;
+  | SetMentorLoading
+  | SetRegistered;

@@ -16,4 +16,5 @@ export class MSubscription {
     StartDate?: any;
     EndDate?: any;
     RegisteredDate?: Date;
+    Registered?: boolean;
 }
