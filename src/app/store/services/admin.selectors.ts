@@ -29,6 +29,10 @@ const getMentorInfo = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.mentormenteeinfo
 );
+const getMentorMentee = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.mentormentee
+);
 
 const getMSubscriptionsLoading = createSelector(
   getMSubscriptionState,
@@ -41,6 +45,7 @@ export class MSubscriptionSelectors {
   constructor(private store: Store<EntityState>) {}
 
   msubscriptions$ = this.store.pipe(select(getAllMSubscriptions));
+  mentorMentee$ = this.store.pipe(select(getMentorMentee));
   mentorinfo$ = this.store.pipe(select(getMentorInfo));
   mentorsmatch$ = this.store.pipe(select(getAllMentorsMatch));
   savedmatches$ = this.store.pipe(select(getAllSavedMatch));

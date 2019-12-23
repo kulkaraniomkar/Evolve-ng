@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
+import { MentorMentee, MentorMenteeIds } from '../../core/model/mentor-mentee';
 
 @Injectable()
 export class MSubscriptionDataService {
@@ -56,11 +57,20 @@ export class MSubscriptionDataService {
   }
 
   getMentorMatchInfo(mentorId: number): Observable<MentorMatchInfo> {
-    const msg = 'mentor/Mentee info retrieved successfully!';
+    const msg = 'Mentor/Mentee info retrieved successfully!';
     return this.http.get<MentorMatchInfo>(`${this.apiUrlBase}/admin/getmentorinfo/${mentorId}`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(mentorId))
+    );
+  }
+
+  getMentorMentee(mm: MentorMenteeIds): Observable<MentorMentee> {
+    const msg = 'Mentor/Mentee information retrieved successfully!';
+    return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/get/${mm.mentorId}/${mm.menteeId}/0`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError(mm))
     );
   }
 

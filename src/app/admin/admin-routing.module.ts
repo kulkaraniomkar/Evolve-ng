@@ -8,7 +8,7 @@ import { AdminAutoMatchComponent } from './admin-auto-match/admin-auto-match.com
 
 const routes: Routes = [
   { path: '', component: AdminComponent,  data: { breadcrumb: 'Admin'} },
-  { path: 'view', component: AdminSelectComponent,  data: { breadcrumb: 'View mentor/mentee'} },
+  { path: 'view/:mentorid/:menteeid', component: AdminSelectComponent,  data: { breadcrumb: 'View mentor/mentee'} },
 ];
 
 @NgModule({
