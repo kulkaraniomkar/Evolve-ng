@@ -27,6 +27,8 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
 
   mmForm = this.formBuilder.group({
     id: [],
+    statusId: ['', Validators.required],
+    startDate: ['', Validators.required],
     endDate: ['', Validators.required],
     comments_array: this.formBuilder.array([this.formBuilder.group({comment:''})])
   });
@@ -68,6 +70,9 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   deleteComment(index) {
     console.log(index);
     this.commentsArray.removeAt(index);
+  }
+  onSubmit(){
+    console.log('Submitted!', this.mmForm.value);
   }
 
   ngOnDestroy() {

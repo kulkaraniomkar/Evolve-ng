@@ -3,7 +3,7 @@ import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, MentorMenteeIds } from '../../core/model/mentor-mentee';
+import { MentorMentee, MentorMenteeIds, MatchCreate } from '../../core/model/mentor-mentee';
 
 
 export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
@@ -30,8 +30,17 @@ export const GET_MENTOR_MENTEE = '[Mentor Mentee] GET_MENTOR_MENTEE';
 export const GET_MENTOR_MENTEE_SUCCESS = '[Mentor Mentee] GET_MENTOR_MENTEE_SUCCESS';
 export const GET_MENTOR_MENTEE_ERROR = '[Mentor Mentee] GET_MENTOR_MENTEE_ERROR';
 
+export const CREATE_MATCH = '[Create Match] CREATE_MATCH';
+export const CREATE_MATCH_SUCCESS = '[Create Match] CREATE_MATCH_SUCCESS';
+export const CREATE_MATCH_ERROR = '[Create Match] CREATE_MATCH_ERROR';
+
+
 export const SET_MSUBSCRIPTION_LOADING = '[M Subcription] SET_MSUBSCRIPTIONS_LOADING';
 
+export abstract class CreateMatchAction implements DataAction<MatchCreate> {
+  readonly type: string;
+  constructor(public readonly payload: MatchCreate) {}
+}
 export abstract class MSubscriptionAction implements DataAction<MSubscription> {
   readonly type: string;
   constructor(public readonly payload: MSubscription) {}
@@ -62,6 +71,10 @@ export abstract class MentorMenteeErrorAction implements DataErrorAction<MentorM
 export abstract class SavedMentorMatchErrorAction implements DataErrorAction<SavedMatch> {
   readonly type: string;
   constructor(public readonly payload: DataServiceError<SavedMatch>) {}
+}
+export abstract class CreateMatchErrorAction implements DataErrorAction<MatchCreate> {
+  readonly type: string;
+  constructor(public readonly payload: DataServiceError<MatchCreate>) {}
 }
 
 
@@ -156,6 +169,19 @@ export class GetMentorMenteeSuccess implements Action {
 
 export class GetMentorMenteeError extends MentorMenteeErrorAction {
   readonly type = GET_MENTOR_MENTEE_ERROR;
+}
+
+
+export class CreateMatch extends CreateMatchAction {
+  readonly type = CREATE_MATCH;
+}
+
+export class CreateMatchSuccess extends CreateMatchAction {
+  readonly type = CREATE_MATCH_SUCCESS;
+}
+
+export class CreateMatchError extends CreateMatchErrorAction {
+  readonly type = CREATE_MATCH_ERROR;
 }
 
 

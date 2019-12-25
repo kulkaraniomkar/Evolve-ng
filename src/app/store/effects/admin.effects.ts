@@ -23,6 +23,9 @@ type GetMentorInfoAction = MSubscriptionActions.GetMentorInfo;
 type MentorMenteeAction = MSubscriptionActions.MentorMenteeAction;
 type GetMentorMenteeAction = MSubscriptionActions.GetMentorMentee;
 
+type MatchCreateAction = MSubscriptionActions.CreateMatchAction;
+type AddMatchCreateAction = MSubscriptionActions.CreateMatch;
+
 @Injectable()
 export class MSubscriptionEffects {
 
@@ -62,6 +65,20 @@ export class MSubscriptionEffects {
             )
           )
         );
+
+        @Effect()
+        addCreateMatch$: Observable<Action> = this.actions$
+          .pipe(
+            ofType(MSubscriptionActions.CREATE_MATCH),
+            concatMap((action: AddMatchCreateAction) =>
+              toAction(
+                this.msubscriptionDataService.addCreateMatch(action.payload),
+                MSubscriptionActions.CreateMatchSuccess,
+                MSubscriptionActions.CreateMatchError
+              )
+            )
+          );
+  
 
         @Effect()
         removeSavedMatch$: Observable<Action> = this.actions$

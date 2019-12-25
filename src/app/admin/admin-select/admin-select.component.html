@@ -135,14 +135,16 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <mat-form-field appearance="outline" class="full-width">
-                                <input matInput [matDatepicker]="pickerStart" placeholder="Start date">
+                                <input matInput [matDatepicker]="pickerStart" placeholder="Start date"
+                                    formControlName="startDate">
                                 <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerStart startView="year" [startAt]="startDate"></mat-datepicker>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6">
                             <mat-form-field appearance="outline" class="full-width">
-                                <input matInput [matDatepicker]="pickerEnd" placeholder="End date">
+                                <input matInput [matDatepicker]="pickerEnd" placeholder="End date"
+                                    formControlName="endDate">
                                 <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerEnd startView="year" [startAt]="startDate"></mat-datepicker>
                             </mat-form-field>
@@ -157,7 +159,7 @@
                         </div>
                         <div class="col-lg-6">
                             <mat-form-field appearance="outline" class="full-width">
-                                <mat-select>
+                                <mat-select formControlName="statusId">
                                     <mat-option *ngFor="let item of mentormentee['MentorshipStatus']"
                                         [value]="item['Value']">
                                         {{item['Text']}}
@@ -177,18 +179,29 @@
                                         formControlName="comment">
                                     </textarea>
                                 </mat-form-field>
-                               <div class="col-lg-11 col-md-11 col-sm-11 text-right" *ngIf="pointIndex">
-                                <button mat-raised-button color="warn" type="button" (click)="deleteComment(pointIndex)">Delete comment</button>
-                               </div>
-                               
+                                <div class="col-lg-11 col-md-11 col-sm-11 text-right" *ngIf="pointIndex">
+                                    <button mat-raised-button color="warn" type="button"
+                                        (click)="deleteComment(pointIndex)">Delete comment</button>
+                                </div>
+
 
                             </div>
                             <br>
-                            <button mat-raised-button color="primary" type="button" (click)="addComment()" >&nbsp;Add comment &nbsp;</button>
-                           
+                            <button mat-raised-button color="primary" type="button" (click)="addComment()">&nbsp;Add
+                                comment &nbsp;</button>
+
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        &nbsp;<button mat-raised-button color="primary" type="button" (click)="onSubmit()">Submit
+                        </button>
+                        &nbsp;&nbsp;
+                        <button mat-raised-button color="warn" type="button" (click)="cancelCreate()">Cancel</button>
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>

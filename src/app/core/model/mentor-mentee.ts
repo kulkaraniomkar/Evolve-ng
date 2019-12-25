@@ -63,3 +63,16 @@ export class MentorMenteeIds {
     mentorId: number;
     menteeId: number;
 }
+export class MatchCreate{
+    MenteeId: number;
+    MentorId: number;
+    StartDate: Date;
+    EndDate: Date;
+    StatusId: number;
+    MatchTypeId: number;
+    FinancialYrId: number;
+    Comments: Comments[]
+}
+export class Comments {
+    Comment: string;
+}
