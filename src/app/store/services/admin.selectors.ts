@@ -20,7 +20,10 @@ const getAllMentorsMatch = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.mentorsmatch
 );
-
+const getManualMatch = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.manualmatch
+);
 const getAllSavedMatch = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.savedmatches
@@ -44,6 +47,7 @@ export class MSubscriptionSelectors {
 
   constructor(private store: Store<EntityState>) {}
 
+  manualmatch$ = this.store.pipe(select(getManualMatch));
   msubscriptions$ = this.store.pipe(select(getAllMSubscriptions));
   mentorMentee$ = this.store.pipe(select(getMentorMentee));
   mentorinfo$ = this.store.pipe(select(getMentorInfo));

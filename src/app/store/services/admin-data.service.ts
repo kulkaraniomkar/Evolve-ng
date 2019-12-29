@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, MentorMenteeIds, MatchCreate } from '../../core/model/mentor-mentee';
+import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch } from '../../core/model/mentor-mentee';
 import { CreateMatch } from '../actions';
 
 @Injectable()
@@ -73,13 +73,22 @@ export class MSubscriptionDataService {
       catchError(this.handleError(mentorId))
     );
   }
-
   getMentorMentee(mm: MentorMenteeIds): Observable<MentorMentee> {
     const msg = 'Mentor/Mentee information retrieved successfully!';
     return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/get/${mm.mentorId}/${mm.menteeId}/0`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(mm))
+    );
+  }
+ 
+  getManualMentors(menteeid: number): Observable<ManualMatch[]> {
+    const msg = 'Manual match mentors retrieved successfully!';
+    return this.http.get<ManualMatch[]>(`${this.apiUrlBase}/admin/tempmatch/get/${menteeid}`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      map(res =>res['results']),
+      catchError(this.handleError(menteeid))
     );
   }
 

@@ -76,3 +76,21 @@ export class MatchCreate{
 export class Comments {
     Comment: string;
 }
+
+export class ManualMatch {
+    MentorId: number;
+    MenteeId: number;
+    MatchTypeId: number;
+    PercentageScore: number;
+    MentoringAvailability: number;
+    TechnicalExperienceProvidable?: any;
+    ProfessionalExperienceProvidable?: any;
+    Name: string;
+    EmployeeId: string;
+    Mnemonic: string;
+    Email: string;
+    Division: string;
+    Age: number;
+    Gender: number;
+    JobTitle: string;
+}

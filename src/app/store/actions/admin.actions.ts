@@ -3,7 +3,7 @@ import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, MentorMenteeIds, MatchCreate } from '../../core/model/mentor-mentee';
+import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch } from '../../core/model/mentor-mentee';
 
 
 export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
@@ -30,6 +30,10 @@ export const GET_MENTOR_MENTEE = '[Mentor Mentee] GET_MENTOR_MENTEE';
 export const GET_MENTOR_MENTEE_SUCCESS = '[Mentor Mentee] GET_MENTOR_MENTEE_SUCCESS';
 export const GET_MENTOR_MENTEE_ERROR = '[Mentor Mentee] GET_MENTOR_MENTEE_ERROR';
 
+export const GET_MANUAL_MENTORS = '[Manual mentors] GET_MANUAL_MENTORS';
+export const GET_MANUAL_MENTORS_SUCCESS = '[Manual mentors] GET_MANUAL_MENTORS_SUCCESS';
+export const GET_MANUAL_MENTORS_ERROR = '[Manual mentors] GET_MANUAL_MENTORS_ERROR';
+
 export const CREATE_MATCH = '[Create Match] CREATE_MATCH';
 export const CREATE_MATCH_SUCCESS = '[Create Match] CREATE_MATCH_SUCCESS';
 export const CREATE_MATCH_ERROR = '[Create Match] CREATE_MATCH_ERROR';
@@ -41,6 +45,10 @@ export abstract class CreateMatchAction implements DataAction<MatchCreate> {
   readonly type: string;
   constructor(public readonly payload: MatchCreate) {}
 }
+// export abstract class ManualMatchAction implements DataAction<number> {
+//   readonly type: string;
+//   constructor(public readonly payload: number) {}
+// }
 export abstract class MSubscriptionAction implements DataAction<MSubscription> {
   readonly type: string;
   constructor(public readonly payload: MSubscription) {}
@@ -67,6 +75,10 @@ export abstract class MentorMenteeAction implements DataAction<MentorMentee> {
 export abstract class MentorMenteeErrorAction implements DataErrorAction<MentorMentee> {
   readonly type: string;
   constructor(public readonly payload: DataServiceError<MentorMentee>) {}
+}
+export abstract class ManualMatchErrorAction implements DataErrorAction<ManualMatch> {
+  readonly type: string;
+  constructor(public readonly payload: DataServiceError<ManualMatch>) {}
 }
 export abstract class SavedMentorMatchErrorAction implements DataErrorAction<SavedMatch> {
   readonly type: string;
@@ -125,6 +137,22 @@ export class AddSavedMatch extends SavedMentorMatchAction {
 
 export class AddSavedMatchSuccess extends SavedMentorMatchAction {
   readonly type = SAVE_MENTORS_MATCH_SUCCESS;
+}
+
+export class GetManualMatchError implements Action {
+  readonly type = GET_MANUAL_MENTORS_ERROR;
+  constructor(public readonly payload: any) {}
+}
+
+export class GetManualMatch implements Action {
+  readonly type = GET_MANUAL_MENTORS;
+  constructor(public readonly payload: number) {}
+}
+
+
+export class GetManualMatchSuccess implements Action {
+  readonly type = GET_MANUAL_MENTORS_SUCCESS;
+  constructor(public readonly payload: ManualMatch[]) {}
 }
 
 export class AddSavedMatchError extends SavedMentorMatchErrorAction {
@@ -209,4 +237,7 @@ export type AllMSubscriptionActions =
   | GetMentorInfoError
   | GetMentorMentee
   | GetMentorMenteeSuccess
-  | GetMentorMenteeError;
+  | GetMentorMenteeError
+  | GetManualMatch
+  | GetManualMatchSuccess
+  | GetManualMatchError;

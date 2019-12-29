@@ -26,6 +26,7 @@ type GetMentorMenteeAction = MSubscriptionActions.GetMentorMentee;
 type MatchCreateAction = MSubscriptionActions.CreateMatchAction;
 type AddMatchCreateAction = MSubscriptionActions.CreateMatch;
 
+type ManualMatchAction = MSubscriptionActions.GetManualMatch;
 @Injectable()
 export class MSubscriptionEffects {
 
@@ -116,6 +117,24 @@ export class MSubscriptionEffects {
                     MSubscriptionActions.GetMentorMenteeError
                   )
                 )
+              );
+              @Effect()
+              getManualMentors$: Observable<Action> = this.actions$
+                .pipe(
+                  ofType(MSubscriptionActions.GET_MANUAL_MENTORS),
+                  switchMap((action: ManualMatchAction) =>
+                    toAction(
+                      this.msubscriptionDataService.getManualMentors(action.payload),
+                      MSubscriptionActions.GetManualMatchSuccess,
+                      MSubscriptionActions.GetManualMatchError
+                    )
+                  )
+                );
+
+              @Effect({ dispatch: false })
+              addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(
+                ofType(MSubscriptionActions.CREATE_MATCH_SUCCESS),
+                tap((action) => this.router.navigate(['/admin/matching']))
               );
 
  

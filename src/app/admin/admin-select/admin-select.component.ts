@@ -1,12 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EntityState, MSubscriptionSelectors } from '../../store';
+import { EntityState, MSubscriptionSelectors, CreateMatch } from '../../store';
 import * as MSubscriptionAction from '../../store/actions';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { MentorMentee, DomainArea } from '../../core/model/mentor-mentee';
+import * as CreateMatchAction from '../../store/actions';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { MentorMentee, DomainArea, MatchCreate } from '../../core/model/mentor-mentee';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { takeUntil } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ModalComponent } from '../../core/modal/modal.component';
 
 @Component({
   selector: 'app-admin-select',
@@ -23,10 +27,10 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   domainareas: DomainArea[];
  // mentormentee$: Observable<MentorMentee>;
   sub: Subscription;
+  private unsubscribe$ = new Subject<void>();
   // mmForm: FormGroup;
 
   mmForm = this.formBuilder.group({
-    id: [],
     statusId: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
@@ -39,6 +43,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     private store: Store<EntityState>,
     private mSelectors: MSubscriptionSelectors,
     private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.sub = this.mSelectors.mentorMentee$.subscribe(mm => {
       if(mm){
@@ -72,8 +77,48 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     this.commentsArray.removeAt(index);
   }
   onSubmit(){
-    console.log('Submitted!', this.mmForm.value);
+    const cm: MatchCreate = {
+      MenteeId: this.menteeid, MentorId: this.mentorid, StartDate: this.mmForm.get('startDate').value,
+      EndDate: this.mmForm.get('endDate').value, StatusId: this.mmForm.get('statusId').value, Comments: this.mmForm.get('comments_array').value,
+      MatchTypeId:1, FinancialYrId:8
+    }
+    console.log('Submitted!', cm);
+    if (this.mmForm.valid) {
+      this.store.dispatch(new CreateMatchAction.CreateMatch(cm));
+    }
   }
+    /**
+     * Cancel/Confirm dialog box
+     */
+    cancelCreate() {
+      const title = `Are you sure?`;
+  
+      const msg =  `This will cancel and go back to your list.`;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '350px';
+      dialogConfig.data = {
+        title: title,
+        message: msg,
+      };
+  
+      const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
+  
+      dialogRef.afterClosed().pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe((cancelIt) => {
+        console.log(cancelIt);
+        if (cancelIt) {
+          this.mmForm.reset();
+          }
+          //  else {
+          //   // route to admin list
+          //   this.router.navigate(['admin/matching']);
+          // }
+      });
+  
+    }
 
   ngOnDestroy() {
     if (this.sub) {
