@@ -20,7 +20,7 @@ export class AdminManualMatchComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean>; 
   private unsubscribe$ = new Subject<void>();
   public dataSource = new MatTableDataSource<ManualMatch>();
-  displayedColumns = ['fullName', 'status',  'assign', 'unAssign'];
+  displayedColumns = ['fullName', 'status',  'assign'];
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
  
