@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { concatMap, switchMap, tap } from 'rxjs/operators';
+import { concatMap, switchMap, tap, filter, map } from 'rxjs/operators';
 import * as MSubscriptionActions from '../actions';
 import { MSubscriptionDataService } from '../services';
 import { Router } from '@angular/router';
+import { ROUTER_REQUEST, RouterNavigationAction } from '@ngrx/router-store';
 // import { SavedMentorMatchAction } from '../actions';
 
 const toAction = MSubscriptionActions.toAction();
@@ -27,6 +28,9 @@ type MatchCreateAction = MSubscriptionActions.CreateMatchAction;
 type AddMatchCreateAction = MSubscriptionActions.CreateMatch;
 
 type ManualMatchAction = MSubscriptionActions.GetManualMatch;
+type SearchMenteeAction = MSubscriptionActions.GetSearchMentee;
+
+type InitializeSearchMentee = MSubscriptionActions.NavigateToSearch;
 @Injectable()
 export class MSubscriptionEffects {
 
@@ -130,11 +134,31 @@ export class MSubscriptionEffects {
                     )
                   )
                 );
+                @Effect()
+                getSearchMentee$: Observable<Action> = this.actions$
+                  .pipe(
+                    ofType(MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS),
+                    switchMap((action: SearchMenteeAction) =>
+                      toAction(
+                        this.msubscriptionDataService.getMenteeSearch(action.payload),
+                        MSubscriptionActions.GetSearchMenteeSuccess,
+                        MSubscriptionActions.GetSearchMenteeError
+                      )
+                    )
+                  );
 
               @Effect({ dispatch: false })
               addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(
                 ofType(MSubscriptionActions.CREATE_MATCH_SUCCESS),
                 tap((action) => this.router.navigate(['/admin/matching']))
+              );
+              @Effect({ dispatch: true })
+              navigateToSearchMentee$ = this.actions$.pipe(
+                ofType('@ngrx/router-store/request'),
+                filter((r: RouterNavigationAction) => r.payload.event.url.endsWith('/admin')),
+                tap(s => console.log(s)),
+                map(s => new MSubscriptionActions.NavigateToSearch())
+                //switchMap(a => new MSubscriptionActions.NavigateToSearch)
               );
 
  

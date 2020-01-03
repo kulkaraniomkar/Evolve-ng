@@ -10,6 +10,11 @@ export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
 export const GET_MSUBSCRIPTIONS_SUCCESS = '[M Subcriptions] GET_MSUBSCRIPTIONS_SUCCESS';
 export const GET_MSUBSCRIPTIONS_ERROR = '[M Subcriptions] GET_MSUBSCRIPTIONS_ERROR';
 
+export const NAVIGATE_TO_SEARCH = '[Navigate to mentee search] NAVIGATE_TO_SEARCH';
+export const GET_SEARCH_MSUBSCRIPTIONS = '[Mentee search] GET_SEARCH_MSUBSCRIPTIONS';
+export const GET_SEARCH_MSUBSCRIPTIONS_SUCCESS = '[Mentee search] GET_SEARCH_MSUBSCRIPTIONS_SUCCESS';
+export const GET_SEARCH_MSUBSCRIPTIONS_ERROR = '[Mentee search] GET_SEARCH_MSUBSCRIPTIONS_ERROR';
+
 export const GET_MENTORS_MATCH = '[Mentor Match] GET_MENTOR_MATCH';
 export const GET_MENTORS_MATCH_SUCCESS = '[Mentor Match] GET_MMENTOR_MATCH_SUCCESS';
 export const GET_MENTORS_MATCH_ERROR = '[Mentor Match] GET_MENTOR_MATCH_ERROR';
@@ -111,6 +116,9 @@ export class GetMentorsMatch implements Action {
   readonly type = GET_MENTORS_MATCH;
   constructor(public readonly payload: number) {}
 }
+export class NavigateToSearch implements Action {
+  readonly type = NAVIGATE_TO_SEARCH;
+}
 
 export class GetMSubscriptionsSuccess implements Action {
   readonly type = GET_MSUBSCRIPTIONS_SUCCESS;
@@ -147,6 +155,19 @@ export class GetManualMatchError implements Action {
 export class GetManualMatch implements Action {
   readonly type = GET_MANUAL_MENTORS;
   constructor(public readonly payload: number) {}
+}
+export class GetSearchMentee implements Action {
+  readonly type = GET_SEARCH_MSUBSCRIPTIONS;
+  constructor(public readonly payload: string) {}
+}
+export class GetSearchMenteeError implements Action {
+  readonly type = GET_SEARCH_MSUBSCRIPTIONS_ERROR;
+  constructor(public readonly payload: any) {}
+}
+
+export class GetSearchMenteeSuccess implements Action {
+  readonly type = GET_SEARCH_MSUBSCRIPTIONS_SUCCESS;
+  constructor(public readonly payload: MSubscription[]) {}
 }
 
 
@@ -240,4 +261,8 @@ export type AllMSubscriptionActions =
   | GetMentorMenteeError
   | GetManualMatch
   | GetManualMatchSuccess
-  | GetManualMatchError;
+  | GetManualMatchError
+  | GetSearchMentee
+  | GetSearchMenteeSuccess
+  | GetSearchMenteeError
+  | NavigateToSearch;

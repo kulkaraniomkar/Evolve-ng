@@ -91,6 +91,15 @@ export class MSubscriptionDataService {
       catchError(this.handleError(menteeid))
     );
   }
+  getMenteeSearch(menteeName: string): Observable<MSubscription[]> {
+    const msg = 'Search mentee retrieved successfully!';
+    return this.http.get<MSubscription[]>(`${this.apiUrlBase}/admin/mentee/search/${menteeName}`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      map(res =>res['results']),
+      catchError(this.handleError(menteeName))
+    );
+  }
 
 
   private handleError<T>(requestData?: T) {

@@ -37,6 +37,12 @@ export function reducer(
     case MSubscriptionActions.GET_MSUBSCRIPTIONS: {
       return { ...state, loading: true };
     }
+    case MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS: {
+      return { ...state,  msubscriptions:[], loading: true };
+    }
+    case MSubscriptionActions.NAVIGATE_TO_SEARCH: {
+      return { ...state,  msubscriptions:[], loading: false };
+    }
     case MSubscriptionActions.GET_MANUAL_MENTORS: {
       return { ...state, loading: true };
     }
@@ -59,6 +65,13 @@ export function reducer(
     }
 
     case MSubscriptionActions.GET_MSUBSCRIPTIONS_SUCCESS: {
+      return {
+        ...state,
+        msubscriptions: action.payload,
+        loading: false
+      };
+    }
+    case MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS_SUCCESS: {
       return {
         ...state,
         msubscriptions: action.payload,
@@ -92,6 +105,9 @@ export function reducer(
     }
    
     case MSubscriptionActions.SAVE_MENTORS_MATCH_ERROR: {
+      return { ...state, loading: false };
+    }
+    case MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS_ERROR: {
       return { ...state, loading: false };
     }
     case MSubscriptionActions.GET_MENTOR_INFO: {
