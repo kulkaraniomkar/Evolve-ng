@@ -84,7 +84,7 @@ export class MSubscriptionDataService {
  
   getManualMentors(menteeid: number): Observable<ManualMatch[]> {
     const msg = 'Manual match mentors retrieved successfully!';
-    return this.http.get<ManualMatch[]>(`${this.apiUrlBase}/admin/tempmatch/get/${menteeid}`)
+    return this.http.get<ManualMatch[]>(`${this.apiUrlBase}/admin/runmanualmatching/${menteeid}`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       map(res =>res['results']),
@@ -106,6 +106,7 @@ export class MSubscriptionDataService {
     return (res: HttpErrorResponse) => {
       const error = new DataServiceError(res.error, requestData);
       console.error(error);
+      this.toastService.openSnackBar(error['error']['Message'], 'Error');
       // return new ErrorObservable(error);
       return throwError(error);
     };

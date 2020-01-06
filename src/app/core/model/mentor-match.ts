@@ -4,6 +4,7 @@ export class MentorMatch {
     MentorId: number;
     MenteeId: number;
     MentoringAvailability: number;
+    PercentageScore: number;
     TechnicalExperienceProvidable: string[];
     ProfessionalExperienceProvidable: string[];
     Name: string;

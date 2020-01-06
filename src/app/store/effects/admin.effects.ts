@@ -146,12 +146,18 @@ export class MSubscriptionEffects {
                       )
                     )
                   );
-
+               
               @Effect({ dispatch: false })
               addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(
                 ofType(MSubscriptionActions.CREATE_MATCH_SUCCESS),
                 tap((action) => this.router.navigate(['/admin/matching']))
               );
+              @Effect({ dispatch: false })
+              addCreateMentorError$: Observable<Action> = this.actions$.pipe(
+                ofType(MSubscriptionActions.CREATE_MATCH_ERROR),
+                tap((action) => this.router.navigate(['/admin/matching']))
+              );
+             
               @Effect({ dispatch: true })
               navigateToSearchMentee$ = this.actions$.pipe(
                 ofType('@ngrx/router-store/request'),
