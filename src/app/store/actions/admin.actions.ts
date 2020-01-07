@@ -16,8 +16,12 @@ export const GET_SEARCH_MSUBSCRIPTIONS_SUCCESS = '[Mentee search] GET_SEARCH_MSU
 export const GET_SEARCH_MSUBSCRIPTIONS_ERROR = '[Mentee search] GET_SEARCH_MSUBSCRIPTIONS_ERROR';
 
 export const GET_MENTORS_MATCH = '[Mentor Match] GET_MENTOR_MATCH';
-export const GET_MENTORS_MATCH_SUCCESS = '[Mentor Match] GET_MMENTOR_MATCH_SUCCESS';
+export const GET_MENTORS_MATCH_SUCCESS = '[Mentor Match] GET_MENTOR_MATCH_SUCCESS';
 export const GET_MENTORS_MATCH_ERROR = '[Mentor Match] GET_MENTOR_MATCH_ERROR';
+
+export const EXTRACT_SAVED_MENTORS_MATCH = '[Extract Saved Mentor Match] EXTRACT_SAVED_MENTOR_MATCH';
+export const EXTRACT_SAVED_MENTORS_MATCH_SUCCESS = '[Extract Saved Mentor Match] EXTRACT_SAVED_MENTORS_MATCH_SUCCESS';
+export const EXTRACT_SAVED_MENTORS_MATCH_ERROR = '[Extract Saved Mentor Match] EXTRACT_SAVED_MENTORS_MATCH_ERROR';
 
 export const SAVE_MENTORS_MATCH = '[Save Mentor Match] SAVE_MENTOR_MATCH';
 export const SAVE_MENTORS_MATCH_SUCCESS = '[Save Mentor Match] SAVE_MMENTOR_MATCH_SUCCESS';
@@ -42,6 +46,10 @@ export const GET_MANUAL_MENTORS_ERROR = '[Manual mentors] GET_MANUAL_MENTORS_ERR
 export const CREATE_MATCH = '[Create Match] CREATE_MATCH';
 export const CREATE_MATCH_SUCCESS = '[Create Match] CREATE_MATCH_SUCCESS';
 export const CREATE_MATCH_ERROR = '[Create Match] CREATE_MATCH_ERROR';
+
+export const UPDATE_MATCH = '[Update Match] UPDATE_MATCH';
+export const UPDATE_MATCH_SUCCESS = '[Update Match] UPDATE_MATCH_SUCCESS';
+export const UPDATE_MATCH_ERROR = '[Update Match] UPDATE_MATCH_ERROR';
 
 
 export const SET_MSUBSCRIPTION_LOADING = '[M Subcription] SET_MSUBSCRIPTIONS_LOADING';
@@ -205,6 +213,22 @@ export class GetMentorInfoSuccess implements Action {
 export class GetMentorInfoError extends MentorInfoErrorAction {
   readonly type = GET_MENTOR_INFO_ERROR;
 }
+/** Extract saved mentor match */
+export class ExtractSavedMentorMatch implements Action {
+  readonly type = EXTRACT_SAVED_MENTORS_MATCH;
+  constructor(public readonly payload: number) {}
+}
+
+export class ExtractSavedMentorMatchSuccess implements Action {
+  readonly type = EXTRACT_SAVED_MENTORS_MATCH_SUCCESS;
+ constructor(public readonly payload: MentorMatch[]) {}
+}
+
+export class ExtractSavedMentorMatchError implements Action {
+  readonly type = EXTRACT_SAVED_MENTORS_MATCH_ERROR;
+  constructor(public readonly payload: any) {}
+}
+/** End */
 
 export class GetMentorMentee implements Action {
   readonly type = GET_MENTOR_MENTEE;
@@ -227,6 +251,17 @@ export class CreateMatch extends CreateMatchAction {
 
 export class CreateMatchSuccess extends CreateMatchAction {
   readonly type = CREATE_MATCH_SUCCESS;
+}
+
+export class UpdateMatchError extends CreateMatchErrorAction {
+  readonly type = UPDATE_MATCH_ERROR;
+}
+export class UpdateMatch extends CreateMatchAction {
+  readonly type = UPDATE_MATCH;
+}
+
+export class UpdateMatchSuccess extends CreateMatchAction {
+  readonly type = UPDATE_MATCH_SUCCESS;
 }
 
 export class CreateMatchError extends CreateMatchErrorAction {
@@ -265,4 +300,10 @@ export type AllMSubscriptionActions =
   | GetSearchMentee
   | GetSearchMenteeSuccess
   | GetSearchMenteeError
-  | NavigateToSearch;
+  | NavigateToSearch
+  | UpdateMatch
+  | UpdateMatchSuccess
+  | UpdateMatchError
+  | ExtractSavedMentorMatch
+  | ExtractSavedMentorMatchSuccess
+  | ExtractSavedMentorMatchError;

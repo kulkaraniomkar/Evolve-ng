@@ -12,7 +12,8 @@ const routes: Routes = [
   {  path: '', component: AdminManageComponent, data: { breadcrumb: 'Search '} },
   { path: 'matching', component: AdminComponent,  data: { breadcrumb: 'Mentee Matching'} },
   { path: 'manual-matching/:menteeid/:fullname', component: AdminManualMatchComponent,  data: { breadcrumb: 'Manual Matching'} },
-  { path: 'view/:mentorid/:menteeid', component: AdminSelectComponent,  data: { breadcrumb: 'View mentor/mentee'} },
+  { path: 'view/:mentorid/:menteeid/:matchtypeid', component: AdminSelectComponent,  data: { breadcrumb: 'View mentor/mentee', mode: 'create'} },
+  { path: 'update/:mentorid/:menteeid/:activityid', component: AdminSelectComponent,  data: { breadcrumb: 'Update mentor/mentee', mode: 'update'} },
 ];
 
 @NgModule({

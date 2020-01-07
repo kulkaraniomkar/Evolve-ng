@@ -26,9 +26,11 @@ type GetMentorMenteeAction = MSubscriptionActions.GetMentorMentee;
 
 type MatchCreateAction = MSubscriptionActions.CreateMatchAction;
 type AddMatchCreateAction = MSubscriptionActions.CreateMatch;
+type UpdateMatchCreateAction = MSubscriptionActions.UpdateMatch;
 
 type ManualMatchAction = MSubscriptionActions.GetManualMatch;
 type SearchMenteeAction = MSubscriptionActions.GetSearchMentee;
+type ExtractSavedMentorsAction = MSubscriptionActions.ExtractSavedMentorMatch;
 
 type InitializeSearchMentee = MSubscriptionActions.NavigateToSearch;
 @Injectable()
@@ -71,6 +73,18 @@ export class MSubscriptionEffects {
           )
         );
 
+        @Effect()
+        updateCreateMatch$: Observable<Action> = this.actions$
+          .pipe(
+            ofType(MSubscriptionActions.UPDATE_MATCH),
+            concatMap((action: UpdateMatchCreateAction) =>
+              toAction(
+                this.msubscriptionDataService.updateCreateMatch(action.payload),
+                MSubscriptionActions.UpdateMatchSuccess,
+                MSubscriptionActions.UpdateMatchError
+              )
+            )
+          );
         @Effect()
         addCreateMatch$: Observable<Action> = this.actions$
           .pipe(
@@ -146,6 +160,20 @@ export class MSubscriptionEffects {
                       )
                     )
                   );
+                  /** extract saved mentors */
+                  @Effect()
+                  extractSavedMentorMatch$: Observable<Action> = this.actions$
+                    .pipe(
+                      ofType(MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH),
+                      switchMap((action: ExtractSavedMentorsAction) =>
+                        toAction(
+                          this.msubscriptionDataService.getSavedMentors(action.payload),
+                          MSubscriptionActions.ExtractSavedMentorMatchSuccess,
+                          MSubscriptionActions.ExtractSavedMentorMatchError
+                        )
+                      )
+                    );
+                 /** end */
                
               @Effect({ dispatch: false })
               addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(

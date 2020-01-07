@@ -6,6 +6,7 @@ import { MentorMentee, ManualMatch } from '../../core/model/mentor-mentee';
 export interface MSubscriptionState {
   msubscriptions: MSubscription[];
   mentorsmatch: MentorMatch[];
+  extractedsavedmatch: MentorMatch[];
   savedmatches: SavedMatch[];
   savedmatch: SavedMatch;
   mentormentee: MentorMentee;
@@ -18,6 +19,7 @@ export interface MSubscriptionState {
 export const initialState: MSubscriptionState = {
   msubscriptions: [],
   mentorsmatch: null,
+  extractedsavedmatch: [],
   savedmatches: [],
   savedmatch: null,
   mentormentee: null,
@@ -38,10 +40,10 @@ export function reducer(
       return { ...state, loading: true };
     }
     case MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS: {
-      return { ...state,  msubscriptions:[], loading: true };
+      return { ...state, msubscriptions: [], loading: true };
     }
     case MSubscriptionActions.NAVIGATE_TO_SEARCH: {
-      return { ...state,  msubscriptions:[], loading: false };
+      return { ...state, msubscriptions: [], loading: false };
     }
     case MSubscriptionActions.GET_MANUAL_MENTORS: {
       return { ...state, loading: true };
@@ -50,7 +52,7 @@ export function reducer(
       return { ...state, loading: true };
     }
 
-    
+
     case MSubscriptionActions.GET_MANUAL_MENTORS_ERROR: {
       return {
         ...state,
@@ -89,6 +91,7 @@ export function reducer(
       return {
         ...state,
         mentorsmatch: action.payload,
+        extractedsavedmatch: action.payload,
         loading: false
       };
     }
@@ -103,7 +106,7 @@ export function reducer(
         savedmatches: [...state.savedmatches, { ...action.payload }]
       };
     }
-   
+
     case MSubscriptionActions.SAVE_MENTORS_MATCH_ERROR: {
       return { ...state, loading: false };
     }
@@ -119,7 +122,7 @@ export function reducer(
         mentormenteeinfo: action.payload,
         loading: false
       };
-    }   
+    }
 
     case MSubscriptionActions.GET_MENTOR_INFO_ERROR: {
       return { ...state, loading: false };
@@ -133,14 +136,30 @@ export function reducer(
         mentormentee: action.payload,
         loading: false
       };
-    }   
+    }
 
     case MSubscriptionActions.GET_MENTOR_MENTEE_ERROR: {
       return { ...state, loading: false };
     }
+    /** extract saved mentors */
+    case MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH: {
+      return { ...state, loading: true };
+    }
+    case MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH_SUCCESS: {
+      return {
+        ...state,
+        mentorsmatch: action.payload,
+        extractedsavedmatch: action.payload,
+        loading: false
+      };
+    }
+    case MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH_ERROR: {
+      return { ...state, loading: false };
+    }
+    /** end extract */
 
 
-    
+
   }
   return state;
 }

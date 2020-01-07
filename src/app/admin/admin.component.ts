@@ -28,7 +28,8 @@ export class AdminComponent implements OnInit {
   constructor(
     private store: Store<EntityState>,
     private msubscriptionSelectors: MSubscriptionSelectors) {
-    this.mentorsmatch$ = this.msubscriptionSelectors.mentorsmatch$;
+    this.mentorsmatch$ = this.msubscriptionSelectors.extractedsavedmatch$;
+    
     this.loading$ = this.msubscriptionSelectors.loading$;
     }
 
@@ -69,7 +70,7 @@ export class AdminComponent implements OnInit {
     this.menteeName = menteeName;
   }
   onExtractSavedMatch(menteeId, menteeName){
-    this.store.dispatch(new MSubscriptionAction.GetMentorsMatch(menteeId));
+    this.store.dispatch(new MSubscriptionAction.ExtractSavedMentorMatch(menteeId));
     this.isDelete = true;
     this.menteeName = menteeName;
   }

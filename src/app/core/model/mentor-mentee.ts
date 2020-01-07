@@ -5,12 +5,25 @@ export class MentorMentee {
     Duration: string;
     MentorInfo: MentorInfo;
     MenteeInfo: MenteeInfo;
-    MatchRegister?: any;
+    MatchRegister?: MatchRegister;
     MentorshipStatus: MentorshipStatus[];
     Expriences: Exprience[];
     DomainAreas: DomainArea[];
 }
-
+export class MatchRegister {
+    MentoshipActivityId: number;
+    MenteeId: number;
+    MentorId: number;
+    StartDate: Date;
+    EndDate: Date;
+    StatusId: number;
+    MatchTypeId:number;
+    FinancialYrId: number;
+    CreatedEmployeeId:number;
+    UpdatedEmployeeId: number;
+    CreatedDateTime: Date;
+    Comments: []
+  }
 export interface MentorInfo {
     Id: number;
     BusinessUnit: string;
@@ -62,8 +75,10 @@ export interface DomainArea {
 export class MentorMenteeIds {
     mentorId: number;
     menteeId: number;
+    activityid: number;
 }
 export class MatchCreate{
+    MentoshipActivityId?: number;
     MenteeId: number;
     MentorId: number;
     StartDate: Date;
@@ -75,6 +90,9 @@ export class MatchCreate{
 }
 export class Comments {
     Comment: string;
+    MentorshipActivity?: number;
+    CommentId?: number;
+    IsActive?: boolean
 }
 
 export class ManualMatch {

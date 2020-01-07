@@ -29,6 +29,16 @@ export class MSubscriptionDataService {
     );
   }
 
+  getSavedMentors(menteeId: number): Observable<MentorMatch[]> {
+    const msg = 'Saved match list retrieved successfully!';
+   return this.http.get<MentorMatch[]>(`${this.apiUrlBase}/admin/tempmatch/get/${menteeId}`)
+   // return this.http.get<MSubscription[]>(`${this.apiUrlBase}/msubscription`)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      map(res =>res['results']),
+      catchError(this.handleError())
+    );
+  }
   getAutomatch(menteeId: number): Observable<MentorMatch[]> {
     const msg = 'Auto match list retrieved successfully!';
    return this.http.get<MentorMatch[]>(`${this.apiUrlBase}/admin/runautomatching/${menteeId}`)
@@ -55,6 +65,14 @@ export class MSubscriptionDataService {
       catchError(this.handleError(createMatch))
     );
   }
+  updateCreateMatch(updateMatch: MatchCreate): Observable<MatchCreate> {
+    const msg = 'Updated successfully!';
+    return this.http.put<MatchCreate>(`${this.apiUrlBase}/admin/match/update/${updateMatch.MentoshipActivityId}`, updateMatch)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'POST')),
+      catchError(this.handleError(updateMatch))
+    );
+  }
 
   removeSavedMatch(savedMatch: SavedMatch): Observable<SavedMatch> {
     const msg = 'Removed saved matches successfully!';
@@ -75,7 +93,7 @@ export class MSubscriptionDataService {
   }
   getMentorMentee(mm: MentorMenteeIds): Observable<MentorMentee> {
     const msg = 'Mentor/Mentee information retrieved successfully!';
-    return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/get/${mm.mentorId}/${mm.menteeId}/0`)
+    return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/get/${mm.mentorId}/${mm.menteeId}/${mm.activityid}`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(mm))
@@ -91,6 +109,7 @@ export class MSubscriptionDataService {
       catchError(this.handleError(menteeid))
     );
   }
+
   getMenteeSearch(menteeName: string): Observable<MSubscription[]> {
     const msg = 'Search mentee retrieved successfully!';
     return this.http.get<MSubscription[]>(`${this.apiUrlBase}/admin/mentee/search/${menteeName}`)
