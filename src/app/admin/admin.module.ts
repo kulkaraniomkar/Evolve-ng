@@ -9,9 +9,11 @@ import { MaterialModule } from '../material/material.module';
 // import { AdminAutoMatchComponent } from './admin-auto-match/admin-auto-match.component';
 // import { AdminSelectComponent } from './admin-select/admin-select.component';
 import { MentorInfoComponent } from './mentor-info/mentor-info.component';
+import { AdminManageComponent } from './admin-manage/admin-manage.component';
+import { AdminManualMatchComponent } from './admin-manual-match/admin-manual-match.component';
 
 @NgModule({
-  declarations: [AdminRoutingModule.components, MentorInfoComponent],
+  declarations: [AdminRoutingModule.components, MentorInfoComponent, AdminManageComponent, AdminManualMatchComponent],
   imports: [
     CommonModule,
     SharedModule,

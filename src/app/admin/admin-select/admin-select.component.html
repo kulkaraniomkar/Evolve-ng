@@ -1,49 +1,248 @@
-<div class="card">
+<div class="spinner-container" *ngIf="(loading$ | async)">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="mentormentee" class="card">
     <div class="card-header">
         <h4>Mentor/Mentee information</h4>
     </div>
     <div class="card-body">
+        <!-- Mentor card-->
         <div class="card">
             <div class="card-body">
+                <h5 class="card-title">Mentor</h5>
+                <div class="col-lg-10">
+                    <div class="container grid-striped">
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Business unit
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MentorInfo']['BusinessUnit']}}
+                            </div>
+
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Division
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MentorInfo']['Division']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Name
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MentorInfo']['Name']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Current position
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MentorInfo']['CurrentPosition']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Previous position
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MentorInfo']['PreviousPosition'] ? mentormentee['MentorInfo']['PreviousPosition'] : '&mdash;'}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
             </div>
         </div>
+        <br>
+        <!-- Mentee card-->
         <div class="card">
-            <h5>Mentorship (editable)</h5>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <mat-form-field appearance="outline">
-                            <input matInput [matDatepicker]="pickerStart" placeholder="Start date">
-                            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerStart startView="year" [startAt]="startDate"></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-6">
-                        <mat-form-field appearance="outline">
-                            <input matInput [matDatepicker]="pickerEnd" placeholder="End date">
-                            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerEnd startView="year" [startAt]="startDate"></mat-datepicker>
-                        </mat-form-field>
+                <h5 class="card-title">Mentee</h5>
+                <div class="col-lg-10">
+                    <div class="container grid-striped">
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Business unit
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MenteeInfo']['BusinessUnit']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Division
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MenteeInfo']['Division']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Name
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MenteeInfo']['Name']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Current position
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MenteeInfo']['CurrentPosition']}}
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col font-weight-bold">
+                                Previous position
+                            </div>
+                            <div class="col">
+                                {{mentormentee['MenteeInfo']['PreviousPosition'] ? mentormentee['MenteeInfo']['PreviousPosition'] : '&mdash;'}}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="row">
+            </div>
+        </div>
+        <br>
+        <!-- Mentoring focus-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Mentoring focus</h5>
+                <div class="col-lg-10">
+                    <ng-container *ngFor="let item of domainareas; let i=index">
+                        <mat-checkbox checked="item['Selected']" disabled>
+                            {{item['Text']}}
+                        </mat-checkbox>
+
+                        <br />
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="mmForm">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mentorship (editable)</h5>
+                    <div class="row">
                         <div class="col-lg-6">
-                            <mat-form-field appearance="outline">
-                                <input matInput [matDatepicker]="pickerStart" placeholder="Start date">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <input matInput [matDatepicker]="pickerStart" placeholder="Start date"
+                                    formControlName="startDate">
+                                <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerStart startView="year" [startAt]="startDate"></mat-datepicker>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6">
-                            <mat-form-field appearance="outline">
-                                <input matInput [matDatepicker]="pickerEnd" placeholder="End date">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <input matInput [matDatepicker]="pickerEnd" placeholder="End date"
+                                    formControlName="endDate">
+                                <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerEnd startView="year" [startAt]="startDate"></mat-datepicker>
                             </mat-form-field>
                         </div>
-                </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Duration</mat-label>
+                                <input matInput value="{{mentormentee['Duration']}} month(s)" disabled>
+                            </mat-form-field>
+                        </div>
+                        <!-- {{mentormentee['MentorshipStatus'] | json}} -->
+                        <div class="col-lg-6">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-select [formControlName]="'statusId'">
+                                    <mat-option *ngFor="let item of mentormentee['MentorshipStatus']"
+                                        [value]="item['Value']">
+                                        {{item['Text']}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" formArrayName="comments_array">
+                            <div *ngFor="let item of commentsArray.controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+                                <mat-form-field appearance="outline" class="textarea-full-width">
+                                    <mat-label>Comments
+                                        <!-- <span style="color:red">*</span> -->
+                                    </mat-label>
+                                    <textarea matInput placeholder="Enter comments" cdkTextareaAutosize
+                                        cdkAutosizeMinRows="4" cdkAutosizeMaxRows="5" #autosize="cdkTextareaAutosize"
+                                        formControlName="comment">
+                                    </textarea>
+                                </mat-form-field>
+                                <!-- {{pointIndex}}ttt
+                                {{commentLength}} -->
+                                <div class="col-lg-11 col-md-11 col-sm-11 text-left">
+                                    <!-- <span *ngIf="pointIndex == commentLength && mode == 'update'">
+
+                                        <button mat-raised-button color="primary" type="button"
+                                            (click)="addComment()">&nbsp;Add
+                                            comment &nbsp;</button>&nbsp;&nbsp;
+                                    </span> -->
+                                    <span *ngIf="pointIndex >= 0 &&  mode == 'update'">
+                                        <button mat-raised-button color="primary" type="button"
+                                            (click)="saveComment()">&nbsp;Save comment &nbsp;
+                                        </button>&nbsp;&nbsp;
+                                        <button mat-raised-button color="warn" type="button"
+                                            (click)="deleteComment(pointIndex)">Delete comment
+                                        </button>
+                                    </span>
+                                    <hr>
+                                </div>
+                              
+                               
+
+                            </div>
+                            
+                            <br>
+                            <div class="col-lg-11 col-md-11 col-sm-11 text-right">
+                                <span *ngIf="mode == 'update'">
+{{commentLength}}
+                                    <button mat-raised-button color="primary" type="button"
+                                        (click)="addComment()">&nbsp;Add {{commentLength >= 0 ? 'more comments' : 'comment'}}
+                                         &nbsp;</button>&nbsp;&nbsp;
+                                </span>
+                               
+                            </div>
+                            <!-- <button mat-raised-button color="primary" type="button" (click)="addComment()">&nbsp;Add
+                                comment &nbsp;</button> -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <span *ngIf="mode == 'update'">
+                            &nbsp; &nbsp; &nbsp;<button mat-raised-button color="primary" type="button"
+                                (click)="onSave()" [disabled]="!mmForm.valid">Save
+                            </button>
+                        </span>
+                        <span *ngIf="mode != 'update'">
+                            &nbsp; &nbsp; &nbsp;<button mat-raised-button color="primary" type="button"
+                                (click)="onSubmit()" [disabled]="!mmForm.valid">Submit
+                            </button>
+                        </span>
+
+                        &nbsp;&nbsp;
+                        <button mat-raised-button color="warn" type="button" (click)="cancelCreate()">Cancel</button>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+
             </div>
-        </div>
+        </form>
     </div>
 </div>

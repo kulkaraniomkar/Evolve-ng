@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { concatMap, switchMap, tap } from 'rxjs/operators';
+import { concatMap, switchMap, tap, filter, map } from 'rxjs/operators';
 import * as MSubscriptionActions from '../actions';
 import { MSubscriptionDataService } from '../services';
 import { Router } from '@angular/router';
+import { ROUTER_REQUEST, RouterNavigationAction } from '@ngrx/router-store';
 // import { SavedMentorMatchAction } from '../actions';
 
 const toAction = MSubscriptionActions.toAction();
@@ -20,6 +21,18 @@ type AddSavedMatchAction = MSubscriptionActions.AddSavedMatch;
 type MentorInfoAction = MSubscriptionActions.MentorInfoAction;
 type GetMentorInfoAction = MSubscriptionActions.GetMentorInfo;
 
+type MentorMenteeAction = MSubscriptionActions.MentorMenteeAction;
+type GetMentorMenteeAction = MSubscriptionActions.GetMentorMentee;
+
+type MatchCreateAction = MSubscriptionActions.CreateMatchAction;
+type AddMatchCreateAction = MSubscriptionActions.CreateMatch;
+type UpdateMatchCreateAction = MSubscriptionActions.UpdateMatch;
+
+type ManualMatchAction = MSubscriptionActions.GetManualMatch;
+type SearchMenteeAction = MSubscriptionActions.GetSearchMentee;
+type ExtractSavedMentorsAction = MSubscriptionActions.ExtractSavedMentorMatch;
+
+type InitializeSearchMentee = MSubscriptionActions.NavigateToSearch;
 @Injectable()
 export class MSubscriptionEffects {
 
@@ -61,6 +74,32 @@ export class MSubscriptionEffects {
         );
 
         @Effect()
+        updateCreateMatch$: Observable<Action> = this.actions$
+          .pipe(
+            ofType(MSubscriptionActions.UPDATE_MATCH),
+            concatMap((action: UpdateMatchCreateAction) =>
+              toAction(
+                this.msubscriptionDataService.updateCreateMatch(action.payload),
+                MSubscriptionActions.UpdateMatchSuccess,
+                MSubscriptionActions.UpdateMatchError
+              )
+            )
+          );
+        @Effect()
+        addCreateMatch$: Observable<Action> = this.actions$
+          .pipe(
+            ofType(MSubscriptionActions.CREATE_MATCH),
+            concatMap((action: AddMatchCreateAction) =>
+              toAction(
+                this.msubscriptionDataService.addCreateMatch(action.payload),
+                MSubscriptionActions.CreateMatchSuccess,
+                MSubscriptionActions.CreateMatchError
+              )
+            )
+          );
+  
+
+        @Effect()
         removeSavedMatch$: Observable<Action> = this.actions$
           .pipe(
             ofType(MSubscriptionActions.REMOVE_MENTORS_MATCH),
@@ -85,6 +124,86 @@ export class MSubscriptionEffects {
                 )
               )
             );
+            @Effect()
+            getMentorMentee$: Observable<Action> = this.actions$
+              .pipe(
+                ofType(MSubscriptionActions.GET_MENTOR_MENTEE),
+                switchMap((action: GetMentorMenteeAction) =>
+                  toAction(
+                    this.msubscriptionDataService.getMentorMentee(action.payload),
+                    MSubscriptionActions.GetMentorMenteeSuccess,
+                    MSubscriptionActions.GetMentorMenteeError
+                  )
+                )
+              );
+              @Effect()
+              getManualMentors$: Observable<Action> = this.actions$
+                .pipe(
+                  ofType(MSubscriptionActions.GET_MANUAL_MENTORS),
+                  switchMap((action: ManualMatchAction) =>
+                    toAction(
+                      this.msubscriptionDataService.getManualMentors(action.payload),
+                      MSubscriptionActions.GetManualMatchSuccess,
+                      MSubscriptionActions.GetManualMatchError
+                    )
+                  )
+                );
+                @Effect()
+                getSearchMentee$: Observable<Action> = this.actions$
+                  .pipe(
+                    ofType(MSubscriptionActions.GET_SEARCH_MSUBSCRIPTIONS),
+                    switchMap((action: SearchMenteeAction) =>
+                      toAction(
+                        this.msubscriptionDataService.getMenteeSearch(action.payload),
+                        MSubscriptionActions.GetSearchMenteeSuccess,
+                        MSubscriptionActions.GetSearchMenteeError
+                      )
+                    )
+                  );
+                  /** extract saved mentors */
+                  @Effect()
+                  extractSavedMentorMatch$: Observable<Action> = this.actions$
+                    .pipe(
+                      ofType(MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH),
+                      switchMap((action: ExtractSavedMentorsAction) =>
+                        toAction(
+                          this.msubscriptionDataService.getSavedMentors(action.payload),
+                          MSubscriptionActions.ExtractSavedMentorMatchSuccess,
+                          MSubscriptionActions.ExtractSavedMentorMatchError
+                        )
+                      )
+                    );
+                 /** end */
+                 /** SAVE_MENTORS_MATCH_SUCCESS */
+                //  @Effect({ dispatch: true })
+                //  closeMentorMatch$ = this.actions$.pipe(
+                //    ofType(MSubscriptionActions.SAVE_MENTORS_MATCH_SUCCESS),
+                //    tap(s => console.log(s)),
+                //    map(s => new MSubscriptionActions.NavigateToSearch())
+                //    //switchMap(a => new MSubscriptionActions.NavigateToSearch)
+                //  );
+
+                 /** end */
+               
+              @Effect({ dispatch: false })
+              addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(
+                ofType(MSubscriptionActions.CREATE_MATCH_SUCCESS),
+                tap((action) => this.router.navigate(['/admin/matching']))
+              );
+              @Effect({ dispatch: false })
+              addCreateMentorError$: Observable<Action> = this.actions$.pipe(
+                ofType(MSubscriptionActions.CREATE_MATCH_ERROR),
+                tap((action) => this.router.navigate(['/admin/matching']))
+              );
+             
+              @Effect({ dispatch: true })
+              navigateToSearchMentee$ = this.actions$.pipe(
+                ofType('@ngrx/router-store/request'),
+                filter((r: RouterNavigationAction) => r.payload.event.url.endsWith('/admin')),
+                tap(s => console.log(s)),
+                map(s => new MSubscriptionActions.NavigateToSearch())
+                //switchMap(a => new MSubscriptionActions.NavigateToSearch)
+              );
 
  
 

@@ -33,6 +33,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   id: number; // id for the mentor
   IsEdit: boolean = false;
   private previousUrl: string = 'initialroute'; // route 
+  registered: boolean = false;
   constructor(
     private store: Store<EntityState>,
     private mentorSelectors: MentorSelectors,
@@ -42,6 +43,11 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
 
   ) {
+    this.mentorSelectors.mentorRegistered$.pipe(takeUntil(this.unsubscribe$)).subscribe(
+      r => {
+          this.registered = r;
+      }
+    );
     this.loading$ = this.mentorSelectors.loading$;
   }
 
@@ -49,15 +55,15 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     /**
   * set the mode :: edit mentee, create new mentee, view mentee
   */
-    this.route.data
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      ).subscribe(data => {
-        this.title = data['mode'] ? 'Edit Signup' : 'New Signup';
-      });
+    // this.route.data
+    //   .pipe(
+    //     takeUntil(this.unsubscribe$)
+    //   ).subscribe(data => {
+    //     this.title = data['mode'] ? 'Edit Signup' : 'New Signup';
+    //   });
 
     /* get the url */
-    this.getUrl();
+   // this.getUrl();
     
     /* grab the id from the url or route */
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -65,6 +71,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     * if id = 0 we load only  meta data
     */
     this.store.dispatch(new MentorAction.GetMentor(this.id));
+   
     /**
     *  initialize form data
     */
@@ -85,14 +92,16 @@ export class MentorEditComponent implements OnInit, OnDestroy {
           // indivision changes
           // this.onMenteeInDivisionChanges();
           /** mode edit -> patch values 
-           *  mentorId not zero -> patch values
+           *  mentorId not zero -> patch values and 
            */
 
           if (this.mentor['MentorId']) {
-            console.log('000000');
-            this.getPatchMentorValues();
+            this.title = 'Edit signup';
+           // this.router.navigate(['/mentor/subscriptions']);
+           this.getPatchMentorValues();
           }
-          console.log('222222', this.previousUrl);
+          //if()
+          // console.log('222222', this.previousUrl);
           // if (this.previousUrl == '/mentor/subscriptions') {
           //   console.log('222222');
           //   // this.getPatchMentorValues();
@@ -114,12 +123,12 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       Passion: ['', [Validators.required, Validators.maxLength(500)]],
       UnitOfTimeId: ['', Validators.required],
       Duration: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
-      Interest: ['', [Validators.required, Validators.maxLength(50)]],
+      Interest: ['', [Validators.required, Validators.maxLength(500)]],
       ProfessionalBackground: ['', [Validators.required, Validators.maxLength(50)]],
       //MentoringCommitment: ['', [Validators.required, Validators.maxLength(50)]],
       //UnitOfTime: ['', [Validators.required, Validators.max(18)]],
       PriorRoles: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      Comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      Comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
 
       Experiences: this.formBuilder.array(this.formControlsExperience),
       MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea),
@@ -329,38 +338,38 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   /**
    * url from sub
    */
-  getUrl() {
-    this.router
-      .events
-      .pipe(
-        filter(e => e instanceof NavigationEnd),
-        pairwise(),
-        tap(c => console.log(c))
-        //takeUntil(this.unsubscribe$)
-      )
-      .subscribe(
-        event => {
-          this.previousUrl = event[0]['url'];
-          console.log("new url ", this.previousUrl);
-          // if (this.previousUrl == '/mentor/subscriptions') {
-          //   console.log('Patch values sign up');
-          //   this.getPatchMentorValues();
-          // } 
+  // getUrl() {
+  //   this.router
+  //     .events
+  //     .pipe(
+  //       filter(e => e instanceof NavigationEnd),
+  //       pairwise(),
+  //       tap(c => console.log(c))
+  //       //takeUntil(this.unsubscribe$)
+  //     )
+  //     .subscribe(
+  //       event => {
+  //         this.previousUrl = event[0]['url'];
+  //         console.log("new url ", this.previousUrl);
+  //         // if (this.previousUrl == '/mentor/subscriptions') {
+  //         //   console.log('Patch values sign up');
+  //         //   this.getPatchMentorValues();
+  //         // } 
 
-          // if (this.mentor['MentorId'] == 0) {
-          //   this.title = 'New Signup';
-          //   console.log(this.previousUrl);
-          //   console.log(this.mentor['MentorId']);
-          // }
+  //         // if (this.mentor['MentorId'] == 0) {
+  //         //   this.title = 'New Signup';
+  //         //   console.log(this.previousUrl);
+  //         //   console.log(this.mentor['MentorId']);
+  //         // }
          
-          if (this.mentor['MentorId'] > 0 && this.previousUrl != '/mentor/subscriptions') {
-            /** redirect to list */
-            console.log(this.previousUrl);
-            console.log('mentor')
-            this.router.navigate(['mentor/subscriptions']);
-          }
-        });
-  }
+  //         if (this.mentor['MentorId'] > 0 && this.previousUrl != '/mentor/subscriptions') {
+  //           /** redirect to list */
+  //           console.log(this.previousUrl);
+  //           console.log('mentor')
+  //          // this.router.navigate(['mentor/subscriptions']);
+  //         }
+  //       });
+  // }
   
   
   /**

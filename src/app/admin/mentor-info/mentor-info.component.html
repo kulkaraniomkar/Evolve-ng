@@ -4,11 +4,124 @@
 <div *ngIf="mentorinfo$| async as mentorinfo">
     <h2 mat-dialog-title>Mentor info</h2>
     <mat-dialog-content>
-        <p>{{mentorinfo | json}}</p>
+        <h5 class="card-title">Mentor</h5>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="container grid-striped">
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Business unit
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['BusinessUnit']}}
+                    </div>
+
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Division
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['Division']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Name
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['Name']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Current position
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['CurrentPosition']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Previous position
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['PreviousPosition'] ? mentorinfo['MentorInfo']['PreviousPosition'] : '&mdash;'}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Race
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['Race'] ? mentorinfo['MentorInfo']['Race'] : '&mdash;'}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Years in RMB
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorInfo']['YearsInRMB'] ? mentorinfo['MentorInfo']['YearsInRMB'] : '&mdash;'}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <h5 class="card-title">Mentor registration information</h5>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="container grid-striped">
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Professional background
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorRegInfo']['ProfessionalBackground']}}
+                    </div>
+
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Interest
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorRegInfo']['Interest']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Passion
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorRegInfo']['Passion']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Current role
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorRegInfo']['CurrentRole']}}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col font-weight-bold">
+                        Previous role
+                    </div>
+                    <div class="col">
+                        {{mentorinfo['MentorRegInfo']['PriorRoles'] ? mentorinfo['MentorRegInfo']['PriorRoles'] : '&mdash;'}}
+                    </div>
+                </div>
+               
+                
+            </div>
+
+        </div>
+
     </mat-dialog-content>
 
-    <mat-dialog-actions>
+    <!-- <mat-dialog-actions>
         <button class="mat-raised-button" (click)="cancel()">Cancel</button>&nbsp;&nbsp;
         <button class="mat-raised-button mat-primary" (click)="ok()">OK</button>
-    </mat-dialog-actions>
+    </mat-dialog-actions> -->
 </div>

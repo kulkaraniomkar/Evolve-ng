@@ -18,6 +18,8 @@
                     <h1>{{item.Name}}</h1>
                     <!-- and role or location -->
                     <h2>{{item.Division}}</h2>
+                    <!-- and role or location -->
+                    <h3>Score: {{item.PercentageScore}} %</h3>
                 </header>
                 <!-- bit of a bio; who are you? -->
                 <div class="profile-bio">
@@ -26,7 +28,7 @@
                     </button>
                     <br>
                     <br>
-                    <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/view']">&nbsp; &nbsp;&nbsp; &nbsp;Select mentor&nbsp;&nbsp;&nbsp; &nbsp;
+                    <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/view', item.MentorId, item.MenteeId, item.MatchTypeId]">&nbsp; &nbsp;&nbsp; &nbsp;Select mentor&nbsp;&nbsp;&nbsp; &nbsp;
                     </button>
                 </div>
 
@@ -34,8 +36,8 @@
             </div>
         </div>
         <div class="col-12 justify-content-end d-flex">
-                <button mat-raised-button color="primary" type="button" (click)="onSaveResults()">&nbsp;Save results&nbsp;
-                    </button>
+                <span *ngIf="!isDelete"><button mat-raised-button color="primary" type="button" (click)="onSaveResults()">&nbsp;Save results&nbsp;
+                    </button></span>
                     &nbsp;&nbsp;
                 <span *ngIf="isDelete">
                     <button mat-raised-button color="warn" type="button" (click)="onDeleteMentors()">&nbsp;Delete results&nbsp;

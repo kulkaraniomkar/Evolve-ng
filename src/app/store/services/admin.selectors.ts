@@ -15,12 +15,20 @@ const getAllMSubscriptions = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.msubscriptions
 );
-
+/** extracted saved match  */
+const extractSavedMentorsMatch = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.extractedsavedmatch
+);
+/** end */
 const getAllMentorsMatch = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.mentorsmatch
 );
-
+const getManualMatch = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.manualmatch
+);
 const getAllSavedMatch = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.savedmatches
@@ -28,6 +36,10 @@ const getAllSavedMatch = createSelector(
 const getMentorInfo = createSelector(
   getMSubscriptionState,
   (state: MSubscriptionState) => state.mentormenteeinfo
+);
+const getMentorMentee = createSelector(
+  getMSubscriptionState,
+  (state: MSubscriptionState) => state.mentormentee
 );
 
 const getMSubscriptionsLoading = createSelector(
@@ -38,9 +50,11 @@ const getMSubscriptionsLoading = createSelector(
 @Injectable()
 export class MSubscriptionSelectors {
 
-  constructor(private store: Store<EntityState>) {}
-
+  constructor(private store: Store<EntityState>) { }
+  extractedsavedmatch$ = this.store.pipe(select(extractSavedMentorsMatch))
+  manualmatch$ = this.store.pipe(select(getManualMatch));
   msubscriptions$ = this.store.pipe(select(getAllMSubscriptions));
+  mentorMentee$ = this.store.pipe(select(getMentorMentee));
   mentorinfo$ = this.store.pipe(select(getMentorInfo));
   mentorsmatch$ = this.store.pipe(select(getAllMentorsMatch));
   savedmatches$ = this.store.pipe(select(getAllSavedMatch));
