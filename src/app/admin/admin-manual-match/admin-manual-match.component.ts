@@ -61,6 +61,9 @@ export class AdminManualMatchComponent implements OnInit, OnDestroy {
     console.log('get manual match ', menteeid);
     this.store.dispatch(new ManualMatchAction.GetManualMatch(menteeid))
   }
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
   /**
    *  unsubscribe to all 
    */

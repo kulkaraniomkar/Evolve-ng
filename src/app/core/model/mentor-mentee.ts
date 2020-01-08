@@ -98,6 +98,8 @@ export class Comments {
 export class ManualMatch {
     MentorId: number;
     MenteeId: number;
+    FullName?: string;
+    Available?: boolean;    
     MatchTypeId: number;
     PercentageScore: number;
     MentoringAvailability: number;

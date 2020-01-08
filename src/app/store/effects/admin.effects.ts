@@ -174,6 +174,16 @@ export class MSubscriptionEffects {
                       )
                     );
                  /** end */
+                 /** SAVE_MENTORS_MATCH_SUCCESS */
+                //  @Effect({ dispatch: true })
+                //  closeMentorMatch$ = this.actions$.pipe(
+                //    ofType(MSubscriptionActions.SAVE_MENTORS_MATCH_SUCCESS),
+                //    tap(s => console.log(s)),
+                //    map(s => new MSubscriptionActions.NavigateToSearch())
+                //    //switchMap(a => new MSubscriptionActions.NavigateToSearch)
+                //  );
+
+                 /** end */
                
               @Effect({ dispatch: false })
               addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(

@@ -103,6 +103,8 @@ export function reducer(
       return {
         ...state,
         loading: false,
+        mentorsmatch: [],
+        extractedsavedmatch: [],
         savedmatches: [...state.savedmatches, { ...action.payload }]
       };
     }
@@ -157,6 +159,28 @@ export function reducer(
       return { ...state, loading: false };
     }
     /** end extract */
+    /** delete results  */
+    case MSubscriptionActions.REMOVE_MENTORS_MATCH: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case MSubscriptionActions.REMOVE_MENTORS_MATCH_ERROR: {
+      return {
+        ...state,
+        loading: false
+      };
+    }
+    case MSubscriptionActions.REMOVE_MENTORS_MATCH_SUCCESS: {
+      return {
+        ...state,
+        mentorsmatch: [],
+        extractedsavedmatch: [],
+        loading: false
+      };
+    }
+    /** end */
 
 
 

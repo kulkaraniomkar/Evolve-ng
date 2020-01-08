@@ -24,7 +24,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   mentorid: number;
   menteeid: number;
   activityid: number;
-  commentLength: number;
+  commentLength: number = 0;
   matchtypeid: number;
   loading$: Observable<boolean>; 
   matchregister: MatchRegister;
@@ -91,7 +91,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     this.mmForm.get('statusId').setValue(statusId);
     /** Det comments*/
     const comArray = this.matchregister['Comments'].length ?  this.commentsObj() :
-    [{comment: 'Test'}];
+    [{comment: ''}];
     /** Add textarea control */
     if(comArray.length > 1){
       comArray.forEach((item, indx) => {
@@ -103,7 +103,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     this.mmForm.get('comments_array').setValue(comArray);
   }
   commentsObj(){
-    const cFilter = this.matchregister['Comments'].filter(c => !c['IsActive']);
+    const cFilter = this.matchregister['Comments'].filter(c => c['IsActive']);
     //let cArray =
     console.log(cFilter);
     if(cFilter.length){
@@ -119,11 +119,13 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     return this.mmForm.get('comments_array') as FormArray;
   }
   addComment() {
+    ++this.commentLength;
     this.commentsArray.push(this.formBuilder.group({comment:''}));
   }
 
   deleteComment(index) {
     console.log(index);
+    --this.commentLength;
     this.commentsArray.removeAt(index);
   }
   onSubmit(){
