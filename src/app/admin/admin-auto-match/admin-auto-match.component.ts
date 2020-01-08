@@ -57,7 +57,7 @@ export class AdminAutoMatchComponent implements OnInit {
   /** create a savedmatch object */
   private savedMatches() {
     const matches: Matches[] = this._matches.map(m => {
-      return { MentorId: m.MentorId };
+      return { MentorId: m.MentorId, PercentageScore: m.PercentageScore };
     });
     const savedMatches: SavedMatch = { MenteeId: this._matches[0]['MenteeId'], Matches: matches };
     return savedMatches;
