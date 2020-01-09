@@ -29,9 +29,10 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean>;
   private unsubscribe$ = new Subject<void>();
 
-  title: string = 'New signup';  // Title :: edit || signup || view 
+  title: string = 'New Signup';  // Title :: edit || signup || view 
   id: number; // id for the mentor
   IsEdit: boolean = false;
+  closeSignupCard: boolean = true;
   private previousUrl: string = 'initialroute'; // route 
   registered: boolean = false;
   constructor(
@@ -177,6 +178,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
         res => {
           const updatedArrayCount = res.filter(i => i === true).length;
           if (updatedArrayCount > 0) {
+            console.log(this.mentorForm.get('Experiences').value);
             this.mentorForm.get('Experiences').valid;
           } else if (updatedArrayCount == 0) {
             this.mentorForm.get('Experiences').touched;
@@ -257,6 +259,11 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     });
 
   }
+  /** close card */
+  closeCard(){
+    this.closeSignupCard = false;
+  }
+  /** end */
   /**
   *  on Duration change enable/disbale 
   * Available control

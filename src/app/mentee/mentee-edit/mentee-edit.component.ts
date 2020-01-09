@@ -35,7 +35,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   formControlsExperience: FormControl[];
 
   private unsubscribe$ = new Subject<void>();
-  title: string = 'New signup';  // Title :: edit || signup || view 
+  title: string = 'New Signup';  // Title :: edit || signup || view 
   id: number; // id for the mentee
   isLoading: boolean = false; // status of spinner
   IsEdit: boolean = false;

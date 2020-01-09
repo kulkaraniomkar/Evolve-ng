@@ -8,7 +8,7 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import { MentorMentee, DomainArea, MatchCreate, MatchRegister } from '../../core/model/mentor-mentee';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take, tap, takeLast, last } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ModalComponent } from '../../core/modal/modal.component';
 
@@ -81,6 +81,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     */
    this.store.dispatch(new MSubscriptionAction.GetMentorMentee({ mentorId: this.mentorid, menteeId: this.menteeid, activityid: this.activityid}));
     /** Initialize form with form data for update */
+    this.commentChange();
    
   }
   setFormValues() {
@@ -103,7 +104,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     this.mmForm.get('comments_array').setValue(comArray);
   }
   commentsObj(){
-    const cFilter = this.matchregister['Comments'].filter(c => c['IsActive']);
+    const cFilter = this.matchregister['Comments'].filter(c => !c['IsActive']);
     //let cArray =
     console.log(cFilter);
     if(cFilter.length){
@@ -153,6 +154,24 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
       this.store.dispatch(new CreateMatchAction.UpdateMatch(cm));
     }
   }
+  /** on comments change */
+  commentChange(){
+    this.mmForm.get('comments_array').valueChanges.pipe(
+    tap(s => console.log(s)),
+   // last(),
+    tap(s => console.log(s)),
+    takeUntil(this.unsubscribe$)
+     
+     //take(this.commentLength)
+    ).subscribe(
+      item => {
+        console.log(item);
+        //item
+      }
+    )
+  }
+  
+  /** end */
     /**
      * Cancel/Confirm dialog box
      */
