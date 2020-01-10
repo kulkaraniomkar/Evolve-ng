@@ -31,6 +31,7 @@ type UpdateMatchCreateAction = MSubscriptionActions.UpdateMatch;
 type ManualMatchAction = MSubscriptionActions.GetManualMatch;
 type SearchMenteeAction = MSubscriptionActions.GetSearchMentee;
 type ExtractSavedMentorsAction = MSubscriptionActions.ExtractSavedMentorMatch;
+type RemoveCommentAction = MSubscriptionActions.RemoveComment;
 
 type InitializeSearchMentee = MSubscriptionActions.NavigateToSearch;
 @Injectable()
@@ -174,6 +175,20 @@ export class MSubscriptionEffects {
                       )
                     );
                  /** end */
+                   /**remove comment */
+                   @Effect()
+                   removeComment$: Observable<Action> = this.actions$
+                     .pipe(
+                       ofType(MSubscriptionActions.REMOVE_COMMENT),
+                       switchMap((action: RemoveCommentAction) =>
+                         toAction(
+                           this.msubscriptionDataService.deleteComment(action.payload),
+                           MSubscriptionActions.RemoveCommentSuccess,
+                           MSubscriptionActions.RemoveCommentError
+                         )
+                       )
+                     );
+                  /** end */
                  /** SAVE_MENTORS_MATCH_SUCCESS */
                 //  @Effect({ dispatch: true })
                 //  closeMentorMatch$ = this.actions$.pipe(

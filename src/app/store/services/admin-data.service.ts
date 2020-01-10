@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { ToastService } from '../../core/toast.service';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch } from '../../core/model/mentor-mentee';
+import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch, Comments } from '../../core/model/mentor-mentee';
 import { CreateMatch } from '../actions';
 
 @Injectable()
@@ -82,6 +82,15 @@ export class MSubscriptionDataService {
       catchError(this.handleError(savedMatch))
     );
   }
+  
+  deleteComment(comment: Comments): Observable<Comments> {
+    const msg = 'Removed comment successfully!';
+    return this.http.post<Comments>(`${this.apiUrlBase}/admin/comment/${comment.MentorshipActivity}`,comment)
+    .pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'DELETE')),
+      catchError(this.handleError(Comments))
+    );
+  }
 
   getMentorMatchInfo(mentorId: number): Observable<MentorMatchInfo> {
     const msg = 'Mentor/Mentee info retrieved successfully!';
@@ -93,7 +102,7 @@ export class MSubscriptionDataService {
   }
   getMentorMentee(mm: MentorMenteeIds): Observable<MentorMentee> {
     const msg = 'Mentor/Mentee information retrieved successfully!';
-    return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/get/${mm.mentorId}/${mm.menteeId}/${mm.activityid}`)
+    return this.http.get<MentorMentee>(`${this.apiUrlBase}/admin/match/get/${mm.mentorId}/${mm.menteeId}/${mm.activityid}`)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'GET')),
       catchError(this.handleError(mm))

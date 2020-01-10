@@ -5,7 +5,7 @@ import * as MSubscriptionAction from '../../store/actions';
 import { Store } from '@ngrx/store';
 import * as CreateMatchAction from '../../store/actions';
 import { Observable, Subscription, Subject } from 'rxjs';
-import { MentorMentee, DomainArea, MatchCreate, MatchRegister } from '../../core/model/mentor-mentee';
+import { MentorMentee, DomainArea, MatchCreate, MatchRegister, Comments } from '../../core/model/mentor-mentee';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { takeUntil, take, tap, takeLast, last } from 'rxjs/operators';
@@ -30,6 +30,9 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   matchregister: MatchRegister;
   mentormentee: MentorMentee;
   domainareas: DomainArea[];
+  apiArray:Array<{}> = [];
+  currArray:Array<{}> = [];
+  dynamicArray:Array<{}> = []
  // mentormentee$: Observable<MentorMentee>;
   sub: Subscription;
   private unsubscribe$ = new Subject<void>();
@@ -93,20 +96,28 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     /** Det comments*/
     const comArray = this.matchregister['Comments'].length ?  this.commentsObj() :
     [{comment: ''}];
+    /** create temp array */
+    this.currArray =  comArray.map(item => { return { ...item, isActive: true,  added: false}});
+    this.apiArray =  comArray.map(item => { return { ...item, isActive: true,  added: false}});
+    
+    for(let i=comArray.length; i<5; i+=1){
+      this.currArray.push({comment: '', isActive: false, added: false});
+      this.apiArray.push({comment: '', isActive: false, added: false});
+    }
+   
     /** Add textarea control */
     if(comArray.length > 1){
       comArray.forEach((item, indx) => {
         if(indx >= 1){
-          this.addComment();
+          this.addCommentPatch();
         }
       })
     }
     this.mmForm.get('comments_array').setValue(comArray);
   }
   commentsObj(){
-    const cFilter = this.matchregister['Comments'].filter(c => !c['IsActive']);
-    //let cArray =
-    console.log(cFilter);
+    const cFilter = this.matchregister['Comments'].filter(c => c['IsActive']);
+   
     if(cFilter.length){
     let cs = cFilter.map(
         c => { return { comment: c['Comment']} }
@@ -114,20 +125,41 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
       this.commentLength = cs.length;
     return cs;
     }
-    return [{comment: 'Comment object'}];
+    return [{comment: ''}];
   }
   get commentsArray() {
     return this.mmForm.get('comments_array') as FormArray;
   }
-  addComment() {
+  addCommentPatch() {   
     ++this.commentLength;
     this.commentsArray.push(this.formBuilder.group({comment:''}));
+    //
+  }
+  addComment() {
+    this.currArray[this.commentLength]['added'] = true;
+    ++this.commentLength;
+    this.commentsArray.push(this.formBuilder.group({comment:''}));
+    //
   }
 
   deleteComment(index) {
-    console.log(index);
     --this.commentLength;
+    if(this.currArray[index]['isActive']){
+      /** call api */
+      const comm: Comments = { 
+        MentorshipActivity: this.mentormentee.MentorshipActivityId, 
+        CommentId: this.mentormentee.MatchRegister.Comments[index]['CommentId'],
+        IsActive: false,
+       Comment:  this.mentormentee.MatchRegister.Comments[index]['Comment']}
+      this.store.dispatch(new MSubscriptionAction.RemoveComment(comm));
+    }
+    this.currArray[index]['isActive'] = false;
+    this.currArray[index]['added'] = false;
+    console.log('Current array ', this.currArray);
+    console.log('Api values ', this.apiArray);
+    //this.currArray.map(item => { return { ...item, isActive: true}});
     this.commentsArray.removeAt(index);
+   
   }
   onSubmit(){
     const cm: MatchCreate = {
@@ -155,20 +187,22 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     }
   }
   /** on comments change */
-  commentChange(){
-    this.mmForm.get('comments_array').valueChanges.pipe(
-    tap(s => console.log(s)),
-   // last(),
-    tap(s => console.log(s)),
-    takeUntil(this.unsubscribe$)
-     
-     //take(this.commentLength)
-    ).subscribe(
-      item => {
-        console.log(item);
-        //item
-      }
-    )
+  commentChange() {
+    this.mmForm.get('comments_array')
+      .valueChanges
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(
+        item => {
+          item.map(i => {
+           for(let z=0;  z<item.length; z+=1){
+            this.currArray[z]['comment']
+            //console.log(i['comment'])
+           }
+            
+          })
+        }
+      )
   }
   
   /** end */

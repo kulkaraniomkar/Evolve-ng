@@ -3,7 +3,7 @@ import { DataServiceError } from '../services';
 import { DataAction, DataErrorAction } from './data.actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch } from '../../core/model/mentor-mentee';
+import { MentorMentee, MentorMenteeIds, MatchCreate, ManualMatch, Comments } from '../../core/model/mentor-mentee';
 
 
 export const GET_MSUBSCRIPTIONS = '[M Subcriptions] GET_MSUBSCRIPTIONS';
@@ -50,6 +50,11 @@ export const CREATE_MATCH_ERROR = '[Create Match] CREATE_MATCH_ERROR';
 export const UPDATE_MATCH = '[Update Match] UPDATE_MATCH';
 export const UPDATE_MATCH_SUCCESS = '[Update Match] UPDATE_MATCH_SUCCESS';
 export const UPDATE_MATCH_ERROR = '[Update Match] UPDATE_MATCH_ERROR';
+
+export const REMOVE_COMMENT = '[Remove comment] REMOVE_COMMENT';
+export const REMOVE_COMMENT_SUCCESS = '[Remove comment] UPDATE_MATCH_SUCCESS';
+export const REMOVE_COMMENT_ERROR = '[Remove comment] REMOVE_COMMENT_ERROR';
+
 
 
 export const SET_MSUBSCRIPTION_LOADING = '[M Subcription] SET_MSUBSCRIPTIONS_LOADING';
@@ -230,6 +235,22 @@ export class ExtractSavedMentorMatchError implements Action {
 }
 /** End */
 
+/** remove comment match */
+export class RemoveComment implements Action {
+  readonly type = REMOVE_COMMENT;
+  constructor(public readonly payload: Comments) {}
+}
+
+export class RemoveCommentSuccess implements Action {
+  readonly type = REMOVE_COMMENT_SUCCESS;
+ constructor(public readonly payload: Comments) {}
+}
+
+export class  RemoveCommentError implements Action {
+  readonly type = REMOVE_COMMENT_ERROR;
+  constructor(public readonly payload: any) {}
+}
+/** End */
 export class GetMentorMentee implements Action {
   readonly type = GET_MENTOR_MENTEE;
   constructor(public readonly payload: MentorMenteeIds) {}
@@ -306,4 +327,7 @@ export type AllMSubscriptionActions =
   | UpdateMatchError
   | ExtractSavedMentorMatch
   | ExtractSavedMentorMatchSuccess
-  | ExtractSavedMentorMatchError;
+  | ExtractSavedMentorMatchError
+  | RemoveComment
+  | RemoveCommentSuccess
+  | RemoveCommentError;

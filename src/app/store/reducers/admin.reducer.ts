@@ -1,7 +1,7 @@
 import * as MSubscriptionActions from '../actions';
 import { MSubscription } from '../../core/model/m-subscriptions';
 import { MentorMatch, SavedMatch, MentorMatchInfo } from '../../core/model/mentor-match';
-import { MentorMentee, ManualMatch } from '../../core/model/mentor-mentee';
+import { MentorMentee, ManualMatch, Comments } from '../../core/model/mentor-mentee';
 
 export interface MSubscriptionState {
   msubscriptions: MSubscription[];
@@ -181,11 +181,46 @@ export function reducer(
       };
     }
     /** end */
+    /** delete comment  */
+    case MSubscriptionActions.REMOVE_COMMENT: {
+      const comments = state.mentormentee['MatchRegister']['Comments'].filter(h => h ! == action.payload)
+    
+      const commentsInit = { ...state.mentormentee['MatchRegister'], Comments: comments};
+      return {
+        ...state,
+        loading: true,
+       // mentormentee: { ...state, ...state.mentormentee, ...state.mentormentee['MatchRegister'], comments },
+      };
+    }
+    case MSubscriptionActions.REMOVE_COMMENT_ERROR: {
+     
+      return {
+        ...state,
+        loading: false
+      };
+    }
+    case MSubscriptionActions.REMOVE_COMMENT_SUCCESS: {
+      return modifyMSubscriptionState(state, action.payload);
+      // return {
+      //   ...state,
+      //   mentormentee: ,
+      //   extractedsavedmatch: [],
+      //   loading: false
+      // };
+    }
+    /** end */
 
 
 
   }
   return state;
+}
+function modifyMSubscriptionState(msubscriptionState: MSubscriptionState, commentsChanges: Partial<Comments>): MSubscriptionState{
+  return {
+    ...msubscriptionState,
+    loading: false,
+   // mentormentee: 
+  }
 }
 
 
