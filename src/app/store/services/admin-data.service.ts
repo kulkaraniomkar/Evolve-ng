@@ -85,7 +85,7 @@ export class MSubscriptionDataService {
   
   deleteComment(comment: Comments): Observable<Comments> {
     const msg = 'Removed comment successfully!';
-    return this.http.post<Comments>(`${this.apiUrlBase}/admin/comment/${comment.MentorshipActivity}`,comment)
+    return this.http.post<Comments>(`${this.apiUrlBase}/admin/comment/${comment.MentoshipActivityId}`,comment)
     .pipe(
       tap(() => this.toastService.openSnackBar(msg, 'DELETE')),
       catchError(this.handleError(Comments))

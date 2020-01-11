@@ -84,7 +84,11 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     */
    this.store.dispatch(new MSubscriptionAction.GetMentorMentee({ mentorId: this.mentorid, menteeId: this.menteeid, activityid: this.activityid}));
     /** Initialize form with form data for update */
-    this.commentChange();
+    if(this.mode == 'update'){
+      console.log('update now');
+      this.commentChange();
+    }
+  
    
   }
   setFormValues() {
@@ -106,6 +110,7 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     }
    
     /** Add textarea control */
+    console.log(comArray);
     if(comArray.length > 1){
       comArray.forEach((item, indx) => {
         if(indx >= 1){
@@ -117,12 +122,13 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   }
   commentsObj(){
     const cFilter = this.matchregister['Comments'].filter(c => c['IsActive']);
-   
+    console.log(cFilter);
     if(cFilter.length){
     let cs = cFilter.map(
         c => { return { comment: c['Comment']} }
       );
       this.commentLength = cs.length;
+      console.log(cs);
     return cs;
     }
     return [{comment: ''}];
@@ -146,11 +152,15 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     --this.commentLength;
     if(this.currArray[index]['isActive']){
       /** call api */
+     
+      const tc = this.mentormentee.MatchRegister.Comments.filter(a => a.IsActive);
+      console.log(tc);
+      console.log(index);
       const comm: Comments = { 
-        MentorshipActivity: this.mentormentee.MentorshipActivityId, 
-        CommentId: this.mentormentee.MatchRegister.Comments[index]['CommentId'],
+        MentoshipActivityId: this.mentormentee.MentorshipActivityId, 
+        CommentId: tc[index]['CommentId'],
         IsActive: false,
-       Comment:  this.mentormentee.MatchRegister.Comments[index]['Comment']}
+       Comment:  tc[index]['Comment']}
       this.store.dispatch(new MSubscriptionAction.RemoveComment(comm));
     }
     this.currArray[index]['isActive'] = false;

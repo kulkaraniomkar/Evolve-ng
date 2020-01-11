@@ -52,7 +52,7 @@ export const UPDATE_MATCH_SUCCESS = '[Update Match] UPDATE_MATCH_SUCCESS';
 export const UPDATE_MATCH_ERROR = '[Update Match] UPDATE_MATCH_ERROR';
 
 export const REMOVE_COMMENT = '[Remove comment] REMOVE_COMMENT';
-export const REMOVE_COMMENT_SUCCESS = '[Remove comment] UPDATE_MATCH_SUCCESS';
+export const REMOVE_COMMENT_SUCCESS = '[Remove comment] REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_ERROR = '[Remove comment] REMOVE_COMMENT_ERROR';
 
 

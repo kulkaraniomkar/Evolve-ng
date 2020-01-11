@@ -23,6 +23,8 @@ export const initialState: MSubscriptionState = {
   savedmatches: [],
   savedmatch: null,
   mentormentee: null,
+  // mentormentee: {MentorshipActivityId:0, MentorId:0, MenteeId:0, Duration: null,
+  //    MenteeInfo:null, MentorInfo: null, MatchRegister:},
   mentormenteeinfo: null,
   manualmatch: [],
   loading: false,
@@ -183,30 +185,69 @@ export function reducer(
     /** end */
     /** delete comment  */
     case MSubscriptionActions.REMOVE_COMMENT: {
-      const comments = state.mentormentee['MatchRegister']['Comments'].filter(h => h ! == action.payload)
-    
-      const commentsInit = { ...state.mentormentee['MatchRegister'], Comments: comments};
+      console.log(action.payload);
+      const tempComm: Comments[] = state.mentormentee['MatchRegister']['Comments'];
+      const comments = tempComm.map(h => {
+        console.log(h);
+        if (h['CommentId'] === action.payload['CommentId']) {
+          return { ...h, IsActive: false }
+        }
+        return { ...h}
+      });
+      console.log('comments ', comments);
+      const commentsInit = {
+        ...state.mentormentee,
+        MatchRegister: {
+          ...state.mentormentee['MatchRegister'],
+          Comments: comments
+        },
+      }
+      const commentsInit2 = {
+        ...state,
+        mentormentee: {
+          ...state.mentormentee,
+          MatchRegister: {
+            ...state.mentormentee['MatchRegister'],
+            Comments: comments
+          },
+        },
+      }
+      console.log(commentsInit);
       return {
         ...state,
+        mentormentee: {
+          ...state.mentormentee,
+          MatchRegister: {
+            ...state.mentormentee['MatchRegister'],
+            Comments: comments
+          },
+        },
         loading: true,
-       // mentormentee: { ...state, ...state.mentormentee, ...state.mentormentee['MatchRegister'], comments },
+       
       };
     }
     case MSubscriptionActions.REMOVE_COMMENT_ERROR: {
-     
+      const tempComm: Comments[] = state.mentormentee['MatchRegister']['Comments'];
+      const comments = tempComm.map(h => {
+        if (h['CommentId'] === action.payload['requestData']['CommentId']) {
+          return { ...h, IsActive: true }
+        }
+        return { ...h }
+      });
+      const commInit = { ...state.mentormentee, ...state.mentormentee['MatchRegister'], Comments: comments };
+
+      return {
+        ...state,
+        loading: false,
+        mentormentee: commInit
+      };
+    }
+    case MSubscriptionActions.REMOVE_COMMENT_SUCCESS: {
+      //return modifyMSubscriptionState(state, action.payload);
       return {
         ...state,
         loading: false
       };
-    }
-    case MSubscriptionActions.REMOVE_COMMENT_SUCCESS: {
-      return modifyMSubscriptionState(state, action.payload);
-      // return {
-      //   ...state,
-      //   mentormentee: ,
-      //   extractedsavedmatch: [],
-      //   loading: false
-      // };
     }
     /** end */
 
@@ -215,11 +256,11 @@ export function reducer(
   }
   return state;
 }
-function modifyMSubscriptionState(msubscriptionState: MSubscriptionState, commentsChanges: Partial<Comments>): MSubscriptionState{
+function modifyMSubscriptionState(msubscriptionState: MSubscriptionState, commentsChanges: Partial<Comments>): MSubscriptionState {
   return {
     ...msubscriptionState,
     loading: false,
-   // mentormentee: 
+    // mentormentee: 
   }
 }
 

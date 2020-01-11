@@ -22,7 +22,7 @@ export class MatchRegister {
     CreatedEmployeeId:number;
     UpdatedEmployeeId: number;
     CreatedDateTime: Date;
-    Comments: []
+    Comments: Comments[]
   }
 export interface MentorInfo {
     Id: number;
@@ -90,7 +90,7 @@ export class MatchCreate{
 }
 export class Comments {
     Comment: string;
-    MentorshipActivity?: number;
+    MentoshipActivityId?: number;
     CommentId?: number;
     IsActive?: boolean
 }
