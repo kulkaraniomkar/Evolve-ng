@@ -187,6 +187,7 @@ export function reducer(
     case MSubscriptionActions.REMOVE_COMMENT: {
       console.log(action.payload);
       const tempComm: Comments[] = state.mentormentee['MatchRegister']['Comments'];
+      
       const comments = tempComm.map(h => {
         console.log(h);
         if (h['CommentId'] === action.payload['CommentId']) {

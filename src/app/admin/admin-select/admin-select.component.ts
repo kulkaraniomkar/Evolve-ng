@@ -171,6 +171,39 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
     this.commentsArray.removeAt(index);
    
   }
+  saveComment(index){
+    --this.commentLength;
+    console.log(this.currArray[index]['isActive']);
+    console.log(index);
+    if(this.currArray[index]['isActive']){
+      /** call api */
+     
+      const tc = this.mentormentee.MatchRegister.Comments.filter(a => a.IsActive);
+      console.log(tc);
+      console.log(index);
+      const comm: Comments = { 
+        MentoshipActivityId: this.mentormentee.MentorshipActivityId, 
+        CommentId: tc[index]['CommentId'] || 0,
+        IsActive:true,
+       Comment:  tc[index]['Comment']}
+       console.log(comm);
+       this.store.dispatch(new MSubscriptionAction.RemoveComment(comm));
+    } else {
+      const comm: Comments = { 
+        MentoshipActivityId: this.mentormentee.MentorshipActivityId, 
+        CommentId:  0,
+        IsActive:true,
+       Comment:  this.mmForm.get('comments_array').value[index]['comment']}
+       console.log(comm);
+       console.log(this.mmForm.get('comments_array').value);
+       this.store.dispatch(new MSubscriptionAction.RemoveComment(comm));
+
+    }
+   
+    //this.currArray.map(item => { return { ...item, isActive: true}});
+   // this.commentsArray.removeAt(index);
+
+  }
   onSubmit(){
     const cm: MatchCreate = {
       MenteeId: this.menteeid, MentorId: this.mentorid, StartDate: this.mmForm.get('startDate').value,

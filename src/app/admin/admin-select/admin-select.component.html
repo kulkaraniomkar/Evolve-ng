@@ -193,7 +193,7 @@
                                     </span> -->
                                     <span *ngIf="pointIndex >= 0 &&  mode == 'update'">
                                         <button mat-raised-button color="primary" type="button"
-                                            (click)="saveComment()">&nbsp;Save comment &nbsp;
+                                            (click)="saveComment(pointIndex)">&nbsp;Save comment &nbsp;
                                         </button>&nbsp;&nbsp;
                                         <button mat-raised-button color="warn" type="button"
                                             (click)="deleteComment(pointIndex)">Delete comment

@@ -84,10 +84,11 @@ export class MSubscriptionDataService {
   }
   
   deleteComment(comment: Comments): Observable<Comments> {
-    const msg = 'Removed comment successfully!';
+    const msg = comment['IsActive'] ? 'Saved comment successfully!': 'Removed comment successfully!';
+    const msgTitle = comment['IsActive'] ? 'SAVED' : 'DELETED';
     return this.http.post<Comments>(`${this.apiUrlBase}/admin/comment/${comment.MentoshipActivityId}`,comment)
     .pipe(
-      tap(() => this.toastService.openSnackBar(msg, 'DELETE')),
+      tap(() => this.toastService.openSnackBar(msg, msgTitle)),
       catchError(this.handleError(Comments))
     );
   }

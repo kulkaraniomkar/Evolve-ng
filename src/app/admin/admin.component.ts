@@ -5,8 +5,9 @@ import { MSubscription } from '../core/model/m-subscriptions';
 import { Store } from '@ngrx/store';
 import * as MSubscriptionAction from '../store/actions';
 import { takeUntil } from 'rxjs/operators';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 import { MentorMatch } from '../core/model/mentor-match';
+import { AdminMenteeInfoComponent } from './admin-mentee-info/admin-mentee-info.component';
 
 @Component({
   selector: 'app-admin',
@@ -26,6 +27,9 @@ export class AdminComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   constructor(
+   // private dialogRef: MatDialogRef<MentorInfoComponent>,
+   // @Inject(MAT_DIALOG_DATA) data,
+    public dialog: MatDialog,
     private store: Store<EntityState>,
     private msubscriptionSelectors: MSubscriptionSelectors) {
     this.mentorsmatch$ = this.msubscriptionSelectors.extractedsavedmatch$;
@@ -73,6 +77,30 @@ export class AdminComponent implements OnInit {
     this.store.dispatch(new MSubscriptionAction.ExtractSavedMentorMatch(menteeId));
     this.isDelete = true;
     this.menteeName = menteeName;
+  }
+  onViewMente(menteeId: number, menteeName: string){
+    this.store.dispatch(new MSubscriptionAction.GetMentee(menteeId));
+    /** open dialog */
+    this.openMenteeInfoDialog(menteeId, menteeName);
+  }
+  openMenteeInfoDialog(menteeId: number, menteeName: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '600px';
+    dialogConfig.data = { menteeId, menteeName};
+    const dialogRef = this.dialog.open(AdminMenteeInfoComponent, dialogConfig);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(cancelIt => {
+        if (cancelIt) {
+          /** close and return to matching */
+        }
+      }
+
+      )
   }
   /**
    *  unsubscribe to all 

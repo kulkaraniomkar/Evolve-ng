@@ -31,6 +31,7 @@ const modules = [
   Material.MatSnackBarModule,
   Material.MatSortModule,
   Material.MatDatepickerModule,
+  Material.MatTabsModule,
   MatRangeDatepickerModule,
   MatRangeNativeDateModule 
 

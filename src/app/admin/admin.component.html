@@ -11,7 +11,7 @@
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Mentee name </th>
-        <td mat-cell *matCellDef="let element"> <span style="cursor: pointer;">{{element.MenteeFullName}} </span> </td>
+        <td mat-cell *matCellDef="let element"> <span style="cursor: pointer;" (click)="onViewMente(element.MenteeId, element.MenteeFullName)">{{element.MenteeFullName}} </span> </td>
         </ng-container>
         <ng-container matColumnDef="division">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Division </th>

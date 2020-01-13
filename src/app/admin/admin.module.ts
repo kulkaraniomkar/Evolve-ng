@@ -11,9 +11,10 @@ import { MaterialModule } from '../material/material.module';
 import { MentorInfoComponent } from './mentor-info/mentor-info.component';
 import { AdminManageComponent } from './admin-manage/admin-manage.component';
 import { AdminManualMatchComponent } from './admin-manual-match/admin-manual-match.component';
+import { AdminMenteeInfoComponent } from './admin-mentee-info/admin-mentee-info.component';
 
 @NgModule({
-  declarations: [AdminRoutingModule.components, MentorInfoComponent, AdminManageComponent, AdminManualMatchComponent],
+  declarations: [AdminRoutingModule.components, MentorInfoComponent, AdminManageComponent, AdminManualMatchComponent, AdminMenteeInfoComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,7 +22,8 @@ import { AdminManualMatchComponent } from './admin-manual-match/admin-manual-mat
     AdminRoutingModule
   ],
   entryComponents: [
-    MentorInfoComponent
+    MentorInfoComponent,
+    AdminMenteeInfoComponent
   ]
 })
 export class AdminModule { }
