@@ -153,8 +153,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <mat-form-field appearance="outline" class="full-width">
-                                <mat-label>Duration</mat-label>
-                                <input matInput value="{{mentormentee['Duration']}} month(s)" disabled>
+                                <mat-label>Mentee availability duration</mat-label>
+                                <input matInput value="{{mentormentee['Duration']}}" disabled>
                             </mat-form-field>
                         </div>
                         <!-- {{mentormentee['MentorshipStatus'] | json}} -->
@@ -209,7 +209,7 @@
                             <br>
                             <div class="col-lg-11 col-md-11 col-sm-11 text-right">
                                 <span *ngIf="mode == 'update'">
-{{commentLength}}
+
                                     <button mat-raised-button color="primary" type="button"
                                         (click)="addComment()">&nbsp;Add {{commentLength >= 0 ? 'more comments' : 'comment'}}
                                          &nbsp;</button>&nbsp;&nbsp;
@@ -226,7 +226,7 @@
                     <div class="col-lg-10 col-md-10 col-sm-10">
                         <span *ngIf="mode == 'update'">
                             &nbsp; &nbsp; &nbsp;<button mat-raised-button color="primary" type="button"
-                                (click)="onSave()" [disabled]="!mmForm.valid">Save
+                                (click)="onSave()" [disabled]="!mmForm.valid">Save all (except comments)
                             </button>
                         </span>
                         <span *ngIf="mode != 'update'">

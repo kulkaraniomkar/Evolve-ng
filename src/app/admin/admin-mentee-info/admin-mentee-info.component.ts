@@ -30,5 +30,8 @@ export class AdminMenteeInfoComponent implements OnInit {
 
   ngOnInit() {
   }
+  closeCard() {
+    this.dialogRef.close(false);
+  }
 
 }

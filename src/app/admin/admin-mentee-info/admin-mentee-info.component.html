@@ -3,6 +3,9 @@
     <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="menteeinfo$| async as menteeinfo">
+    <div class="text-right">
+        <mat-icon (click)="closeCard()" style="cursor: pointer">close</mat-icon>
+    </div>
     <h2 mat-dialog-title>Mentee info</h2>
     <mat-dialog-content>
 

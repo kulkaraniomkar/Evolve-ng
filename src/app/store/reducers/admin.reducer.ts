@@ -187,20 +187,26 @@ export function reducer(
     case MSubscriptionActions.REMOVE_COMMENT: {
       console.log(action.payload);
       const tempComm: Comments[] = state.mentormentee['MatchRegister']['Comments'];
-      
+
       const comments = tempComm.map(h => {
         console.log(h);
         if (h['CommentId'] === action.payload['CommentId']) {
           return { ...h, IsActive: false }
         }
+       
         return { ...h}
       });
+      let comment0 = [];
+      if(action.payload['CommentId'] == 0){
+         comment0 = [...tempComm, { ...action.payload }]
+      }
       console.log('comments ', comments);
+      console.log('comment ', comment0);
       const commentsInit = {
         ...state.mentormentee,
         MatchRegister: {
           ...state.mentormentee['MatchRegister'],
-          Comments: comments
+          Comments: action.payload['CommentId'] == 0 ? comment0 : comments
         },
       }
       const commentsInit2 = {

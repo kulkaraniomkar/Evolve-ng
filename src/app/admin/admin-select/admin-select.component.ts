@@ -221,8 +221,8 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
   onSave(){
     const cm: MatchCreate = {
       MenteeId: this.menteeid, MentorId: this.mentorid, StartDate: this.mmForm.get('startDate').value,
-      EndDate: this.mmForm.get('endDate').value, StatusId: this.mmForm.get('statusId').value, Comments: this.mmForm.get('comments_array').value,
-      MatchTypeId:this.matchtypeid, FinancialYrId:8, MentoshipActivityId: this.activityid
+      EndDate: this.mmForm.get('endDate').value, StatusId: this.mmForm.get('statusId').value, Comments: [{MentoshipActivityId:this.matchtypeid,CommentId:1,IsActive:true,Comment:"Test"}],
+      MatchTypeId:1, FinancialYrId:8, MentoshipActivityId: this.activityid
     }
     console.log('Saved!', cm);
     if (this.mmForm.valid) {
