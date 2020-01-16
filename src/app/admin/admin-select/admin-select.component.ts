@@ -272,7 +272,8 @@ export class AdminSelectComponent implements OnInit, OnDestroy {
       ).subscribe((cancelIt) => {
         console.log(cancelIt);
         if (cancelIt) {
-          this.mmForm.reset();
+          //this.mmForm.reset();
+          this.router.navigate(['admin/matching']);
           }
           //  else {
           //   // route to admin list
