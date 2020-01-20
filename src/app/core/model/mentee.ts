@@ -59,6 +59,7 @@ export class Mentee {
   EmployeeId: number;
   InDivision: boolean;
   Division: string;
+  BU?: string;
   //TenantId?: any;
   Interest?: any;
   ServicePeriod?: any;

@@ -175,7 +175,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
       SearchId: this.menteeForm.get('InDivision').value,
       SearchString: value ? value.toLowerCase() : '',
       Limit: 5,
-      Division: this.mentee['Division']
+      bu: this.mentee['bu']
     }
     return this.mentorSearchService.search(searchParams).pipe(
       // map the item property of the mentor search results as our return object

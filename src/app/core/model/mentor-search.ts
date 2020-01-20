@@ -2,7 +2,7 @@ export class SearchParams {
     SearchId: number;
     SearchString: string;
     Limit: number;
-    Division: string;
+    bu: string;
   }
   export class SearchResults{
       EmployeeId: number;

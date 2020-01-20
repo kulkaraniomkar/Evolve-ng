@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   //apiUrlBase: '../ReflectWebAPI/api'
- apiUrlBase: 'http://rmb-vdv-aspn01/Evolve/ReflectWebAPI/api'
+  apiUrlBase: 'http://rmb-vdv-aspn01/Evolve/ReflectWebAPI/api'
 };
 
 /*
