@@ -44,13 +44,12 @@ export class MenteeSubscriptionsComponent implements OnInit, OnChanges {
        // if empty move to signup
        const arrLength = await changes.mentees.currentValue.length;
        console.log(" array ", arrLength);
-       
-      this.maxMentee = changes.mentees.currentValue.reduce((prev, current) => (prev['MenteeId'] > current['MenteeId']) ? prev : current)
-       console.log(this.maxMentee);
       
        if( arrLength <= 0){
          console.log("empty array");
         this.router.navigate(['/mentee/signup', 0]);
+       }else{
+        this.maxMentee = changes.mentees.currentValue.reduce((prev, current) => (prev['MenteeId'] > current['MenteeId']) ? prev : current)
        }
     }
     console.log(this.dataSource.data);
