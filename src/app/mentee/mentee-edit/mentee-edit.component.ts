@@ -3,7 +3,7 @@ import { EntityState, MenteeSelectors } from '../../store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as MenteeAction from '../../store/actions';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, FormArray } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Mentee, UnitOfTime, Gender, SearchParam, AgePreference, DomainArea, Experience } from '../../core/model/mentee';
@@ -109,22 +109,22 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
     this.formControlsExperience = this.sortedArrayExperiences.map(control => new FormControl(false));
     this.menteeForm = this.formBuilder.group({
       MenteeId: [],
-      Interest: ['', Validators.required],
+      Interest: ['', [Validators.required, Validators.maxLength(500)]],
       UnitOfTimeId: ['', Validators.required],
       Duration: ['', [Validators.required, Validators.min(1), Validators.max(18)]],
       InDivision: ['', Validators.required],
       PreferredMentorEmpId: [''],
       PreferredMentorGenderId: ['', Validators.required],
       PreferredMentorAgeId: ['', Validators.required],
-      MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea),
+      MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea, this.minSelectedCheckboxes(3)),
       ExperienceId: ['', Validators.required],
       Experiences: this.formBuilder.array(this.formControlsExperience),
-      Comment: ['', Validators.required],
+      Comment: ['', [Validators.required, Validators.maxLength(500)]],
       ShareProfile: [false],
       ReadTerms: [false, Validators.requiredTrue],
     });
     // set default to months
-    const unitMonths = this.mentee['UnitOfTimes'][0]['Selected'] ? 'Months' : '';
+    const unitMonths = this.mentee['UnitOfTimes'][0]['Selected'] ? 'Month(s)' : '';
     this.menteeForm.get('UnitOfTimeId').setValue(unitMonths);
     this.menteeForm.get('UnitOfTimeId').disable();
   }
@@ -335,8 +335,34 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   onSubmitMentee() {
     if (this.menteeForm.valid) {
       this.store.dispatch(new MenteeAction.AddMentee(this.objMentee(this.sortDomainArea())));
+    }else {
+      Object.keys(this.menteeForm.controls).forEach(field => { // {1}
+        const control = this.menteeForm.get(field);            // {2}
+        control.markAsTouched({ onlySelf: true });       // {3}
+      });
+      this.menteeForm.get('ExperienceId').markAsTouched;
+      this.menteeForm.get('ReadTerms').markAsTouched;
+      this.menteeForm.get('MentorDomianArea').markAsTouched;
+      this.menteeForm.get('PreferredMentorGenderId').markAsTouched;
+      this.menteeForm.get('PreferredMentorAgeId').markAsTouched;
+     
     }
   }
+  /** validate checkboxes */
+minSelectedCheckboxes(min = 3) {
+  const validator: ValidatorFn = (formArray: FormArray) => {
+    const totalSelected = formArray.controls
+      // get a list of checkbox values (boolean)
+      .map(control => control.value)
+      // total up the number of checked checkboxes
+      .reduce((prev, next) => next ? prev + next : prev, 0);
+      // console.log(totalSelected);
+    // if the total is not greater than the minimum, return the error message
+    return totalSelected >= min ? null : { required: true };
+  };
+  // console.log('Validator ',validator);
+  return validator;
+}
 
   /* create an array of object in this format [{ DomainId: 23}] */
   sortDomainArea() {

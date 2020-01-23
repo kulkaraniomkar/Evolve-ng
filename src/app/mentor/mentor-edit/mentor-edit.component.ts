@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, RoutesRecognized, NavigationEnd, NavigationStar
 import { takeUntil, filter, pairwise, tap, takeLast, last } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import * as MentorAction from '../../store/actions';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, ValidatorFn } from '@angular/forms';
 import { Mentor, Experience, DomainArea, UnitOfTime } from '../../core/model/mentor';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ModalComponent } from '../../core/modal/modal.component';
@@ -46,7 +46,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   ) {
     this.mentorSelectors.mentorRegistered$.pipe(takeUntil(this.unsubscribe$)).subscribe(
       r => {
-          this.registered = r;
+        this.registered = r;
       }
     );
     this.loading$ = this.mentorSelectors.loading$;
@@ -64,15 +64,15 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     //   });
 
     /* get the url */
-   // this.getUrl();
-    
+    // this.getUrl();
+
     /* grab the id from the url or route */
     this.id = +this.route.snapshot.paramMap.get('id');
     /* dispatch action to load the mentee and mentee data
     * if id = 0 we load only  meta data
     */
     this.store.dispatch(new MentorAction.GetMentor(this.id));
-   
+
     /**
     *  initialize form data
     */
@@ -98,8 +98,8 @@ export class MentorEditComponent implements OnInit, OnDestroy {
 
           if (this.mentor['MentorId']) {
             this.title = 'Edit signup';
-           // this.router.navigate(['/mentor/subscriptions']);
-           this.getPatchMentorValues();
+            // this.router.navigate(['/mentor/subscriptions']);
+            this.getPatchMentorValues();
           }
           //if()
           // console.log('222222', this.previousUrl);
@@ -131,13 +131,14 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       PriorRoles: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       Comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
 
-      Experiences: this.formBuilder.array(this.formControlsExperience),
-      MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea),
+      Experiences: this.formBuilder.array(this.formControlsExperience, this.minSelectedCheckboxes(1)),
+      MentorDomianArea: this.formBuilder.array(this.formControlsDomainArea, this.minSelectedCheckboxes(1)),
       Available: [false],
       ReadTerms: [false, Validators.requiredTrue],
     });
     // set default to months
-    const unitMonths = this.mentor['UnitOfTimes'][0]['Value'] == '1' ? 'Months' : '';
+    const unitMonths = this.mentor['UnitOfTimes'][0]['Value'] == '1' ? 'Month(s)' : '';
+    console.log(unitMonths);
     this.mentorForm.get('UnitOfTimeId').setValue(unitMonths);
     this.mentorForm.get('UnitOfTimeId').disable();
     this.mentorForm.get('Available').disable();
@@ -177,9 +178,9 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           /** no specific selected */
-          if(res[res.length - 1]){
+          if (res[res.length - 1]) {
             const nospecificValue = [false, false, false, false, false, false, false, false, false, false, false, true]
-            this.mentorForm.get('Experiences').setValue(nospecificValue, {emitEvent: false});
+            this.mentorForm.get('Experiences').setValue(nospecificValue, { emitEvent: false });
           }
           const updatedArrayCount = res.filter(i => i === true).length;
           if (updatedArrayCount > 0) {
@@ -251,7 +252,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
         if (this.mentor['MentorId'] == 0) {
           this.mentorForm.reset();
           /* set default to months */
-          const unitMonths = this.mentor['UnitOfTimes'][0]['Value'] == '1' ? 'Months' : '';
+          const unitMonths = this.mentor['UnitOfTimes'][0]['Value'] == '1' ? 'Month(s)' : '';
           this.mentorForm.get('UnitOfTimeId').setValue(unitMonths);
           this.mentorForm.get('UnitOfTimeId').disable();
           this.mentorForm.get('Available').disable();
@@ -265,7 +266,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
 
   }
   /** close card */
-  closeCard(){
+  closeCard() {
     this.closeSignupCard = false;
   }
   /** end */
@@ -307,9 +308,47 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   onSubmitMentor() {
     if (this.mentorForm.valid) {
       this.store.dispatch(new MentorAction.AddMentor(this.objMentor(this.sortDomainArea(), this.sortExperience())));
+    } else {
+      Object.keys(this.mentorForm.controls).forEach(field => { // {1}
+        const control = this.mentorForm.get(field);            // {2}
+        control.markAsTouched({ onlySelf: true });       // {3}
+      });
+      this.mentorForm.get('Experiences').markAsTouched;
+      this.mentorForm.get('ReadTerms').markAsTouched;
+      this.mentorForm.get('MentorDomianArea').markAsTouched;
+      // this.mentorForm.get('Experiences').value.map(res => {
+      //   if(res){
+      //     this.mentorForm.get('Experiences').markAsTouched
+      //   }
+      // })
     }
   }
-
+  /** validate all fields */
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+/** validate checkboxes */
+minSelectedCheckboxes(min = 1) {
+  const validator: ValidatorFn = (formArray: FormArray) => {
+    const totalSelected = formArray.controls
+      // get a list of checkbox values (boolean)
+      .map(control => control.value)
+      // total up the number of checked checkboxes
+      .reduce((prev, next) => next ? prev + next : prev, 0);
+      // console.log(totalSelected);
+    // if the total is not greater than the minimum, return the error message
+    return totalSelected >= min ? null : { required: true };
+  };
+  // console.log('Validator ',validator);
+  return validator;
+}
   /* create an array of object in this format [{ DomainId: 23}] */
   sortDomainArea() {
     return this.mentorForm.get('MentorDomianArea').value.map((val, i) => {
@@ -373,7 +412,7 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   //         //   console.log(this.previousUrl);
   //         //   console.log(this.mentor['MentorId']);
   //         // }
-         
+
   //         if (this.mentor['MentorId'] > 0 && this.previousUrl != '/mentor/subscriptions') {
   //           /** redirect to list */
   //           console.log(this.previousUrl);
@@ -382,8 +421,8 @@ export class MentorEditComponent implements OnInit, OnDestroy {
   //         }
   //       });
   // }
-  
-  
+
+
   /**
    *  unsubscribe to all 
    */

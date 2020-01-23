@@ -158,7 +158,11 @@ export function reducer(
       };
     }
     case MSubscriptionActions.EXTRACT_SAVED_MENTORS_MATCH_ERROR: {
-      return { ...state, loading: false };
+      return { 
+        ...state, 
+        mentorsmatch:[],
+        extractedsavedmatch: [],
+        loading: false };
     }
     /** end extract */
     /** delete results  */

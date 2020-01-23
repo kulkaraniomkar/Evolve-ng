@@ -7,7 +7,7 @@ export class ToastService {
 
   openSnackBar(message: string, action: string) {
     setTimeout(
-      () => this.snackBar.open(message, action, { duration: 2000 }),
+      () => this.snackBar.open(message, action, { duration: 4000 }),
       0
     );
   }
