@@ -20,12 +20,27 @@
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                            <h5>
-                                {{menteeName}}
-                            </h5>
-                            <h6>
-                                {{menteeinfo.Division}}
-                            </h6>
+                    <!-- <h6 class="text-uppercase font-weight-light text-secondary">
+                        Contact Information
+                    </h6> -->
+                    <dl class="row"  style="font-size: 0.8em;">
+                        <dt class="col-md-5 col-sm-4">Mentee</dt>
+                        <dd class="col-md-7 col-sm-8">{{menteeName}}</dd>
+                        
+                        <dt class="col-md-5 col-sm-4">Division</dt>
+                        <dd class="col-md-7 col-sm-8"> {{menteeinfo.Division}}</dd>
+
+                        <dt class="col-md-5 col-sm-4">Business unit</dt>
+                        <dd class="col-md-7 col-sm-8"> {{menteeinfo.bu}}</dd>
+
+                        <dt class="col-md-5 col-sm-4">Availability</dt>
+                        <dd class="col-md-7 col-sm-8">{{menteeinfo.Duration}} &nbsp; month(s)</dd>
+
+                        
+                        <dt class="col-md-5 col-sm-4">Prefered mentor</dt>
+                        <dd class="col-md-7 col-sm-8">{{menteeinfo['PreferredMentor']['FullName']}} </dd>
+                    </dl>
+                            
                            
                 </div>
             </div>

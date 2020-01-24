@@ -87,7 +87,7 @@ export class AdminComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '600px';
+    dialogConfig.width = '700px';
     dialogConfig.data = { menteeId, menteeName};
     const dialogRef = this.dialog.open(AdminMenteeInfoComponent, dialogConfig);
 

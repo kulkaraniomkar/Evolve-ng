@@ -116,7 +116,9 @@ export class MentorEditComponent implements OnInit, OnDestroy {
     this.mentor = mentor;
     this.unitOfTimes = mentor['UnitOfTimes']; // metadata for the form
     this.sortedArrayDomainAreas = this.mentor['DomainAreas'].sort((a, b) => a.OrderId - b.OrderId);
-    this.sortedArrayExperiences = this.mentor['Experiences'].sort((a, b) => a.OrderId - b.OrderId);
+    let newExp = this.mentor['Experiences'].sort((a, b) => a.OrderId - b.OrderId);
+    newExp.pop();
+    this.sortedArrayExperiences = newExp;
     this.formControlsDomainArea = this.sortedArrayDomainAreas.map(control => new FormControl(false));
     this.formControlsExperience = this.sortedArrayExperiences.map(control => new FormControl(false));
     this.mentorForm = this.formBuilder.group({
