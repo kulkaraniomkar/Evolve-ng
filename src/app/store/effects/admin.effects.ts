@@ -199,7 +199,17 @@ export class MSubscriptionEffects {
                 //  );
 
                  /** end */
-               
+                 
+                 @Effect({ dispatch: false })
+                 updateMatchSuccess$: Observable<Action> = this.actions$.pipe(
+                   ofType(MSubscriptionActions.UPDATE_MATCH_SUCCESS),
+                   tap((action) => this.router.navigate(['/admin/matching']))
+                 );
+                 @Effect({ dispatch: false })
+                 updateMatchError$: Observable<Action> = this.actions$.pipe(
+                   ofType(MSubscriptionActions.UPDATE_MATCH_ERROR),
+                   tap((action) => this.router.navigate(['/admin/matching']))
+                 );
               @Effect({ dispatch: false })
               addCreateMentorSuccess$: Observable<Action> = this.actions$.pipe(
                 ofType(MSubscriptionActions.CREATE_MATCH_SUCCESS),
