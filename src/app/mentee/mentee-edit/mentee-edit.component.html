@@ -97,7 +97,7 @@
                                 <ng-container *ngIf="'!isLoading'">
                                     <mat-option *ngFor="let mentor of filteredMentors$ | async" [value]="mentor">
                                         <span *ngIf="mentor['EmployeeId']"><img width="50px"
-                                                src="http://rmb-vdv-aspn01/evolve/user_photos/{{mentor.EmployeeId}}.jpg" alt=''/></span>&nbsp;&nbsp;
+                                                src="../user_photos/{{mentor.EmployeeId}}.jpg" alt=''/></span>&nbsp;&nbsp;
                                         {{mentor.FullName }}<br />
                                     </mat-option>
                                 </ng-container>

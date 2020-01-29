@@ -180,10 +180,10 @@ export class MentorEditComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           /** no specific selected */
-          if (res[res.length - 1]) {
-            const nospecificValue = [false, false, false, false, false, false, false, false, false, false, false, true]
-            this.mentorForm.get('Experiences').setValue(nospecificValue, { emitEvent: false });
-          }
+          // if (res[res.length - 1]) {
+          //   const nospecificValue = [false, false, false, false, false, false, false, false, false, false, false, true]
+          //   this.mentorForm.get('Experiences').setValue(nospecificValue, { emitEvent: false });
+          // }
           const updatedArrayCount = res.filter(i => i === true).length;
           if (updatedArrayCount > 0) {
             console.log(this.mentorForm.get('Experiences').value);
