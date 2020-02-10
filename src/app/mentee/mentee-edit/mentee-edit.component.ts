@@ -33,7 +33,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
   menteeForm: FormGroup;
   formControlsDomainArea: FormControl[];
   formControlsExperience: FormControl[];
-
+  searchStatus: boolean = false;
   private unsubscribe$ = new Subject<void>();
   title: string = 'New Signup';  // Title :: edit || signup || view 
   id: number; // id for the mentee
@@ -222,6 +222,7 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
    * preferredmentorempid control
    */
   onMenteeInDivisionChanges() {
+    console.log(this.menteeForm.get('InDivision').value );
     this.menteeForm.get('InDivision').value ?
       this.menteeForm.get('PreferredMentorEmpId').enable() : this.menteeForm.get('PreferredMentorEmpId').disable();
 
@@ -231,10 +232,14 @@ export class MenteeEditComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe(divisionValue => {
-        if (divisionValue == undefined || divisionValue == null) {
+        console.log(divisionValue);
+        if (divisionValue == undefined || divisionValue == null || divisionValue ==  2 || divisionValue == 3) {
+          this.menteeForm.get('PreferredMentorEmpId').reset();
           this.menteeForm.get('PreferredMentorEmpId').disable();
+          this.searchStatus = false;
         } else {
           this.menteeForm.get('PreferredMentorEmpId').enable();
+          this.searchStatus = true;
         }
 
       }
