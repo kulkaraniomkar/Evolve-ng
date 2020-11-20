@@ -1,6 +1,0 @@
-<div class="spinner-container" *ngIf="(loading$ | async )">
-    <mat-spinner></mat-spinner>
-</div>
-<div *ngIf="mentors_meta$ | async as mentor_meta">   
-<app-mentors-form [mentor_meta]="mentor_meta"></app-mentors-form>
-</div>
