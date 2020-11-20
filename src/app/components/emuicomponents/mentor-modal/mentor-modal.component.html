@@ -1,0 +1,93 @@
+<nz-spin [nzSpinning]="loading$ | async">
+</nz-spin>
+<div *ngIf="mentorData">
+    <div class="card cui-profile-header" [ngStyle]="{'background-image': 'url(' + background + ')'}">
+        <div class="card-body text-center">
+            <emui-avatar [src]="mentorData?.EmployeeId" [size]="110" [bordered]="true" borderColor="#fff">
+            </emui-avatar>
+            <br>
+
+            <p *ngIf="mentorData.ShareProfile; then success else danger">
+            </p>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Information</strong>
+            </h5>
+            <dl class="row">
+                <dt class="col-xl-4 col-lg-4 col-md-4 col-sm-4">Division:</dt>
+                <dd class="col-xl-8 col-lg-8 col-md-8 col-sm-8">{{mentorData?.Division}}</dd>
+                <dt class="col-xl-4 col-lg-4 col-md-4 col-sm-4">Business unit:</dt>
+                <dd class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                    {{mentorExtra.BusinessUnit ? mentorExtra.BusinessUnit : '&mdash'}}</dd>
+                <dt class="col-xl-4 col-lg-4 col-md-4 col-sm-4">Professional background:</dt>
+                <dd class="col-xl-8 col-lg-8 col-md-8 col-sm-8">{{mentorData?.ProfessionalBackground}}</dd>
+                <dt class="col-xl-4 col-lg-4 col-md-4 col-sm-4">Prior roles:</dt>
+                <dd class="col-xl-8 col-lg-8 col-md-8 col-sm-8">{{mentorData?.PriorRoles}}</dd>
+                <!-- <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Preferred mentor age:</dt>
+                <dd class="col-xl-6 col-lg-6 col-md-6 col-sm-6">{{age?.Text}}</dd>
+                <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Preferred mentor gender:</dt>
+                <dd class="col-xl-6 col-lg-6 col-md-8 col-sm-6">{{gender?.Text}}</dd> -->
+            </dl>
+            <div class="cui-profile-social-counts">
+                <div class="text-center col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                    <h6>{{mentorExtra.Age ? mentorExtra.Age : '&mdash;'}}</h6>
+                    <p class="mb-0">Age</p>
+                </div>
+                <div class="text-center col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                    <h6>{{mentorExtra.YearsInRMB ? mentorExtra.YearsInRMB : '&mdash;'}}</h6>
+                    <p class="mb-0">Years at RMB</p>
+                </div>
+
+                <div class="text-center col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <h6>{{mentorData.CurrentRole ? mentorData?.CurrentRole : '&mdash;'}}</h6>
+                    <p class="mb-0">Current role</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Experiences in these areas</strong>
+            </h5>
+            <dl class="row">
+                <dt></dt>
+                <dd class="col-xl-12 col-xs-12 col-md-12 col-lg-12">
+                    <span class="badge badge-primary mr-1" *ngFor="let skill of experiences">
+                        {{skill.Text}}
+                    </span>
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Areas to add value to a mentee</strong>
+            </h5>
+            <dl class="row">
+                <dt></dt>
+                <dd class="col-xl-12 col-xs-12 col-md-12 col-lg-12">
+                    <span class="badge badge-primary mr-1" *ngFor="let skill of domainAreas">
+                        {{skill.Text}}
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+</div>
+<ng-template #success>
+    <emui-donut type="success" [name]="'Share profile'" class="text-white mt-2"></emui-donut>
+</ng-template>
+<ng-template #danger>
+    <emui-donut type="danger" [name]="'Share profile'" class="text-white mt-2"></emui-donut>
+</ng-template>

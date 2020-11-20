@@ -1,0 +1,99 @@
+<!-- {{allocatedData | json}} -->
+<nz-table #nestedTable nzShowPagination (nzPageIndexChange)="onPageNumberMentors($event)" [nzPageIndex]="paging.pageNumber"
+  [nzPageSize]="paging.pageSize" [nzTotal]="paging.totalItems" [nzShowTotal]="rangeTemplate" [nzFrontPagination]=false
+  [nzData]="allocatedMentors" [nzPageSizeOptions]="sizeChanger" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th nzShowExpand></th>
+      <th>Mentor profile card</th>
+      <th>Mentor fullname</th>
+      <th>Terms and conditions</th>
+      <th>Mentee slot(s) available</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+      <tr>
+        <td nzShowExpand [nzExpand]="data.expand" (nzExpandChange)="onExpandChange(data.MentorId, data.expand)"></td>
+        <td>
+          <emui-avatar [src]="data.MentorEmpId" [size]="50"></emui-avatar>
+        </td>
+        <td>{{ data.FullName }}</td>
+        <!-- <td><span
+                [ngClass]="[data.Available === 'Disabled' ? 'badge badge-danger font-size-12' : 'badge badge-success font-size-12']">
+                {{data.Available ? 'Available' : 'Not available'}}
+            </span></td> -->
+        <td>
+          <span
+            [ngClass]="[data.ReadTerms ? 'badge badge-success font-size-12' : 'badge badge-danger font-size-12']">
+            {{data.ReadTerms ? 'Accepted' : 'Not accepted'}}
+          </span>
+        </td>
+        <td>
+          <span class="value"
+            [style.color]="[data.CountLeft === 3 ? '#46be8a' : data.CountLeft === 2 ? '#007bff' : '#fb434a']">
+            {{data.CountLeft ? data.CountLeft : '&mdash;'}}
+          </span>
+
+        </td>
+        <td></td>
+
+      </tr>
+      <tr  [nzExpand]="data.expand">
+
+        <td></td>
+        <td colspan="6">
+          <nz-table #innerTable [nzData]="menteesPerMentor" [nzLoading]="loadingMenteesPerMentor" nzSize="middle"
+            nzShowPagination (nzPageIndexChange)="onPageNumberNested($event)" [nzPageIndex]="pagingNested.pageNumber"
+            [nzPageSize]="pagingNested.pageSize" [nzTotal]="pagingNested.totalItems" [nzShowTotal]="rangeTemplateNested"
+            [nzFrontPagination]=false>
+            <thead>
+              <tr>
+                <!-- <th>Mentee profile card</th> -->
+                <th>Mentee fullname</th>
+                <th>Division</th>
+                <th>Share profile</th>
+                <th>Status</th>
+                <th>Start - end date</th>
+                <th>Registered date</th>
+              </tr>
+            </thead>
+  <tbody>
+    <tr *ngFor="let data of innerTable.data">
+      <!-- <td>
+        <emui-avatar [src]="data.MenteeEmpId" [size]="50"></emui-avatar>
+      </td> -->
+      <td>{{ data.MenteeFullName }}</td>
+      <td>
+        {{ data.Division ? data.Division : '&mdash;' }}
+      </td>
+      <td>
+        <nz-badge [nzStatus]="data.ShareProfile ? 'success' : 'warning'" [nzText]="data.ShareProfile ? 'Yes': 'No'">
+        </nz-badge>
+      </td>
+      <td>
+        <span [ngClass]="[data.Status === 'In-Progress' ?  
+          'badge badge-success font-size-12' : data.Status === 'Exploratory' ? 
+          'badge badge-default font-size-12' :  data.Status === 'Closed' ? 
+          'badge badge-danger font-size-12' : 'badge badge-info font-size-12']">
+          {{data.Status === 'In-Progress' ? 'In progress' : data.Status === 'Exploratory' ? 'Exploratory' :  data.Status === 'Closed' ? 'Closed' : 'Open'}}</span>
+      </td>
+      <td>{{data.StartDate | date }} - {{data.EndDate | date }}</td>
+      <td>{{data.RegisteredDate | date }}</td>
+    </tr>
+  </tbody>
+  <ng-template #rangeTemplateNested let-range="range" let-total>
+    {{range[0]}}-{{range[1]}} of {{total}} items
+  </ng-template>
+</nz-table>
+</td>
+</tr>
+</ng-template>
+</tbody>
+<ng-template #totalTemplate let-total>
+  <span class="page-total">Total {{total}} items </span>
+</ng-template>
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{range[0]}}-{{range[1]}} of {{total}} items
+</ng-template>
+</nz-table>

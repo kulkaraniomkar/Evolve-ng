@@ -1,0 +1,14 @@
+<div class="userCard px-3 py-5"
+     [ngClass]="[
+      type ? 'typed ' + 'bg-' + type : ''
+    ]"
+>
+
+  <emui-avatar [src]="avatarUrl" [bordered]="true" [borderColor]="type ? 'white' : ''" [size]="90"></emui-avatar>
+  <div class="my-3 text-center">
+    <div class="userName font-size-18">{{userName}}</div>
+    <div class="post">{{userPost}}</div>
+  </div>
+ 
+</div>
+

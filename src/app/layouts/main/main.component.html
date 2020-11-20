@@ -1,0 +1,41 @@
+<nz-layout [ngClass]="{
+    'settings__borderLess': isBorderless,
+    'settings__squaredBorders': isSquaredBorders,
+    'settings__fixedWidth': isFixedWidth,
+    'settings__menuShadow': isMenuShadow,
+    'settings__menuTop': isMenuTop
+  }">
+  <nz-back-top></nz-back-top>
+  <!-- left menu -->
+  <nz-sider *ngIf="!isMobileView && !isMenuTop" [ngClass]="isLightTheme ? 'sider light' : 'sider'" nzCollapsible
+    [nzWidth]="256" [(nzCollapsed)]="isMenuCollapsed" (nzCollapsedChange)="onCollapse($event)">
+    <emui-menu-left [isMenuCollapsed]="isMenuCollapsed"></emui-menu-left>
+  </nz-sider>
+  <!-- mobile menu with drawer -->
+  <!-- <nz-drawer *ngIf="isMobileView" [nzClosable]="false" [nzWrapClassName]="'mobileMenu'" [nzVisible]="isMobileMenuOpen"
+    nzPlacement="left" (nzOnClose)="toggleMobileMenu()">
+    <div class="mobileMenu-handler" (click)="toggleMobileMenu()">
+      <div class="mobileMenu-handlerIcon"></div>
+    </div>
+    <emui-menu-left></emui-menu-left>
+  </nz-drawer> -->
+  <!-- top menu -->
+  <!-- <div *ngIf="isMenuTop && !isMobileView">
+    <emui-menu-top></emui-menu-top>
+  </div> -->
+  <emui-settings></emui-settings>
+  <nz-layout>
+    <nz-header>
+      <emui-topbar></emui-topbar>
+    </nz-header>
+    <nz-content style="height: 100%; position: relative;">
+      <emui-breadcrumbs></emui-breadcrumbs>
+      <div class="utils__content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <!-- <nz-footer>
+      <emui-footer></emui-footer>
+    </nz-footer> -->
+  </nz-layout>
+</nz-layout>

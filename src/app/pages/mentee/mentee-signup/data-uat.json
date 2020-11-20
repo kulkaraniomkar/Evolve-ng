@@ -1,0 +1,153 @@
+{
+    "Experiences": [
+        {
+            "OrderId": "1",
+            "controlName": "businessTechnology",
+            "label": "Business Technology",
+            "value": "1",
+            "checked": false
+        },
+        {
+            "OrderId": "2",
+            "controlName": "clientService",
+            "label": "Client Services",
+            "value": "2",
+            "checked": false
+        },
+        {
+            "OrderId": "3",
+            "controlName": "credit",
+            "label": "Credit",
+            "value": "3",
+            "checked": false
+        },
+        {
+            "OrderId": "4",
+            "controlName": "finance",
+            "label": "Finance",
+            "value": "4",
+            "checked": false
+        },
+        {
+            "OrderId": "5",
+            "controlName": "humanCapital",
+            "label": "Human Capital",
+            "value": "5",
+            "checked": false
+        },
+        {
+            "OrderId": "6",
+            "controlName": "legalRiskCompliance",
+            "label": "Legal, Risk and Compliance",
+            "value": "6",
+            "checked": false
+        },
+        {
+            "OrderId": "7",
+            "controlName": "marketingCommunication",
+            "label": "Marketing and Communication",
+            "value": "7",
+            "checked": false
+        },
+        {
+            "OrderId": "8",
+            "controlName": "operationProcess",
+            "label": "Operations/Processes/Admin",
+            "value": "8",
+            "checked": false
+        },
+        {
+            "OrderId": "9",
+            "controlName": "supportService",
+            "label": "Support Services",
+            "value": "9",
+            "checked": false
+        },
+        {
+            "OrderId": "10",
+            "controlName": "transacting",
+            "label": "Transacting",
+            "value": "10",
+            "checked": false
+        },
+        {
+            "OrderId": "11",
+            "controlName": "trading",
+            "label": "Trading",
+            "value": "11",
+            "checked": false
+        },
+        {
+            "OrderId": "12",
+            "controlName": "nonSpecific",
+            "label": "No specific preference",
+            "value": "12",
+            "checked": false
+        }
+    ],
+    "DomainAreas": [
+        {
+            "OrderId": "1",
+            "controlName": "learnToNavigate",
+            "label": "Learn how to ‘navigate’ the system",
+            "value": "51",
+            "checked": false
+        },
+        {
+            "OrderId": "2",
+            "controlName": "careerGuidance",
+            "label": "Career guidance",
+            "value": "52",
+            "checked": false
+        },
+        {
+            "OrderId": "3",
+            "controlName": "betterIntergrateBusiness",
+            "label": "Better integrate into a team/Business Unit",
+            "value": "53",
+            "checked": false
+        },
+        {
+            "OrderId": "4",
+            "controlName": "enhanceImpact",
+            "label": "Enhance my impact and influence in my role/team",
+            "value": "54",
+            "checked": false
+        },
+        {
+            "OrderId": "5",
+            "controlName": "relationshipBuilding",
+            "label": "Relationship building and networking",
+            "value": "55",
+            "checked": false
+        },
+        {
+            "OrderId": "6",
+            "controlName": "managingCareer",
+            "label": "Manage a career transition",
+            "value": "56",
+            "checked": false
+        },
+        {
+            "OrderId": "7",
+            "controlName": "dealDiversity",
+            "label": "Deal with diversity and inclusion challenges",
+            "value": "57",
+            "checked": false
+        },
+        {
+            "OrderId": "8",
+            "controlName": "enhanceTechnical",
+            "label": "Enhance my technical skills",
+            "value": "58",
+            "checked": false
+        },
+        {
+            "OrderId": "10",
+            "controlName": "honeLeadership",
+            "label": "Hone my leadership skills",
+            "value": "60",
+            "checked": false
+        }
+    ]
+}

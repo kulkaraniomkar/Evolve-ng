@@ -1,0 +1,11 @@
+<a href="javascript: void(0);"
+   class="avatar"
+   [ngClass]="[
+     size ? sizeClass : '',
+     bordered ? borderedClass : ''
+   ]"
+   [ngStyle]="{'border-color': borderColor}"
+>
+  <!-- <img [src]="'http://rmb-vut-miis03.rmb.co.za/Evolve/user_photos/' + src + '.jpg'"  (error)="imgErr($event)"> -->
+  <img [src]="'../user_photos/' + src + '.jpg'"  (error)="imgErr($event)">
+</a>

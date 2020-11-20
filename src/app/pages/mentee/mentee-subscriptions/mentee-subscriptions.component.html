@@ -1,0 +1,107 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div *ngIf="menteeData && viewMenteeId" class="text-center">
+        <nz-card nzType="inner" style="margin-top:16px;">
+            <i nz-icon nzType="info-circle" nzTheme="outline"></i>&nbsp;
+            <strong>Thank you for signing up to be a mentee!</strong> <br><br>
+            We are currently in the process of matching you to a suitable mentor and will be in contact with you over
+            the next few weeks.<br> Please feel free to contact the RMB mentoring should you have any queries regarding
+            your
+            mentoring status via email - <a class="utils__link--underlined"
+                href="mailto:mentoring@rmb.co.za">mentoring@rmb.co.za</a>.
+            <br>
+
+        </nz-card>
+    </div>
+    <br />
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div *ngIf="viewMenteeIdSession">
+                <button nz-button [nzType]="'default'" [nzLoading]="loading$ | async"
+                    (click)="onMenteeModal(viewMenteeIdSession, viewMenteeFnameSession)"> <i nz-icon
+                        nzType="select"></i>View
+                    my profile
+                </button>
+            </div>
+            <div *ngIf="!viewMenteeIdSession">
+                <br />
+                &nbsp;&nbsp;
+
+                <button nz-button [nzType]="'primary'" [nzLoading]="loading$ | async" (click)="onSignUp(0)"> <i nz-icon
+                        nzType="login"></i>Signup
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <nz-spin [nzSpinning]="loading$ | async">
+        <div *ngIf="menteeData">
+            <nz-table #subTable nzShowPagination [nzFrontPagination]=false nzShowSizeChanger
+                [nzPageIndex]="paging.pageNumber" [nzPageSize]="paging.pageSize" [nzTotal]="paging.totalItems"
+                [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)" [nzPageSizeOptions]="sizeChanger"
+                (nzPageIndexChange)="onPageNumber($event)" [nzData]="menteeData" class="utils__scrollTable"
+                [nzScroll]="{x: '100%'}">
+                <thead>
+                    <tr>
+
+                        <th>Registration date</th>
+                        <th>Status</th>
+                        <th>Mentee share profile</th>
+                        <th>Start - end date</th>
+                        <th>Mentor profile card</th>
+                        <th>Mentor name</th>
+                        <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of menteeData">
+                        <td>
+                            {{item.RegisteredDate | date }}
+                        </td>
+                        <td>{{item.Status}}</td>
+                        <td>
+                            <span
+                                [ngClass]="[item.ShareProfile ?  'badge badge-success font-size-12' : 'badge badge-danger font-size-12']">
+                                {{item.ShareProfile ? 'Accepted' : 'Not accepted'}}
+                            </span>
+                        </td>
+                        <td>
+                            {{item.StartDate | date}} &mdash; {{item.EndDate | date}}
+                        </td>
+                        <td>
+                            <emui-avatar [src]="item.MentorEmpId" [size]="50"></emui-avatar>
+                        </td>
+                        <td>
+                            {{item.MentorFullName ? item.MentorFullName : '&mdash;'}}
+                            <!-- <span *ngIf="item.ShareProfile; else notShared">
+                                <a class="utils__link--underlined" href="javascript: void(0);"
+                                    (click)="onViewMentor(item.MentorId, item.MentorFullName)">
+                                    {{item.MentorFullName}}
+                                </a>
+                            </span> -->
+                            <!-- <ng-template #notShared>
+                                {{item.MentorFullName ? }}
+                            </ng-template> -->
+
+                        </td>
+                        <td>
+                            <button nz-button [nzType]="'primary'" [nzLoading]="loading$ | async"
+                                (click)="editMentee(item.MenteeId)" [disabled]="item.Status != 'Open'"> <i nz-icon
+                                    nzType="edit"></i>
+                                Edit my profile
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+                <ng-template #totalTemplate let-total>
+                    <span class="page-total">Total {{total}} items </span>
+                </ng-template>
+                <ng-template #rangeTemplate let-range="range" let-total>
+                    {{range[0]}}-{{range[1]}} of {{total}} items
+                </ng-template>
+
+            </nz-table>
+        </div>
+
+    </nz-spin>
+
+</div>

@@ -1,0 +1,160 @@
+{
+    "Experiences": [
+        {
+            "OrderId": "10",
+            "Name": "supportService",
+            "Text": "Support Services",
+            "Value": "10",
+            "Selected": true
+        },
+        {
+            "OrderId": "11",
+            "Name": "transacting",
+            "Text": "Transacting",
+            "Value": "11",
+            "Selected": true
+        },
+        {
+            "OrderId": "12",
+            "Name": "trading",
+            "Text": "Trading",
+            "Value": "12",
+            "Selected": true
+        },
+        {
+            "OrderId": "13",
+            "Name": "nonSpecific",
+            "Text": "No specific preference",
+            "Value": "13",
+            "Selected": false
+        },
+        {
+            "OrderId": "2",
+            "Name": "businessTechnology",
+            "Text": "Business Technology",
+            "Value": "2",
+            "Selected": false
+        },
+        {
+            "OrderId": "3",
+            "Name": "clientService",
+            "Text": "Client Services",
+            "Value": "3",
+            "Selected": false
+        },
+        {
+            "OrderId": "4",
+            "Name": "credit",
+            "Text": "Credit",
+            "Value": "4",
+            "Selected": false
+        },
+        {
+            "OrderId": "5",
+            "Name": "finance",
+            "Text": "Finance",
+            "Value": "5",
+            "Selected": false
+        },
+        {
+            "OrderId": "6",
+            "Name": "humanCapital",
+            "Text": "Human Capital",
+            "Value": "6",
+            "Selected": false
+        },
+        {
+            "OrderId": "7",
+            "Name": "legalRiskCompliance",
+            "Text": "Legal, Risk and Compliance",
+            "Value": "7",
+            "Selected": false
+        },
+        {
+            "OrderId": "8",
+            "Name": "marketingCommunication",
+            "Text": "Marketing and Communication",
+            "Value": "8",
+            "Selected": true
+        },
+        {
+            "OrderId": "9",
+            "Name": "operationProcess",
+            "Text": "Operations/Processes/Admin",
+            "Value": "9",
+            "Selected": false
+        }
+    ],
+    "DomainAreas": [
+        {
+            "OrderId": "1",
+            "Name": "broadenKnowledge",
+            "Text": "Broaden his/her organisational knowledge",
+            "Value": "1",
+            "Selected": true
+        },
+        {
+            "OrderId": "10",
+            "Name": "helpingNavigateSystem",
+            "Text": "Helping him/her ‘navigate’ the system",
+            "Value": "10",
+            "Selected": true
+        },
+        {
+            "OrderId": "2",
+            "Name": "enhanceTechnical",
+            "Text": "Enhance his/her technical skills",
+            "Value": "2",
+            "Selected": true
+        },
+        {
+            "OrderId": "3",
+            "Name": "dealDiversity",
+            "Text": "Deal with diversity and inclusion challenges",
+            "Value": "3",
+            "Selected": true
+        },
+        {
+            "OrderId": "4",
+            "Name": "honeLeadership",
+            "Text": "Hone his/her leadership skills",
+            "Value": "4",
+            "Selected": false
+        },
+        {
+            "OrderId": "5",
+            "Name": "managingCareer",
+            "Text": "Managing a career transition",
+            "Value": "5",
+            "Selected": false
+        },
+        {
+            "OrderId": "6",
+            "Name": "relationshipBuilding",
+            "Text": "Relationship building and networking",
+            "Value": "6",
+            "Selected": true
+        },
+        {
+            "OrderId": "7",
+            "Name": "enhanceInfluence",
+            "Text": "Enhance his/her impact and influence",
+            "Value": "7",
+            "Selected": true
+        },
+        {
+            "OrderId": "8",
+            "Name": "betterIntergrateBusiness",
+            "Text": "Better integrate into a team/Business Unit",
+            "Value": "8",
+            "Selected": true
+        },
+        {
+            "OrderId": "9",
+            "Name": "offeringCareerGuidance",
+            "Text": "Offering career guidance",
+            "Value": "9",
+            "Selected": true
+        }
+    ]
+}

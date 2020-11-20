@@ -1,0 +1,85 @@
+<nz-spin [nzSpinning]="loading$ | async">
+</nz-spin>
+<div *ngIf="mentee">
+    <div class="card cui-profile-header" [ngStyle]="{'background-image': 'url(' + background + ')'}">
+        <div class="card-body text-center">
+            <emui-avatar [src]="mentee?.EmployeeId" [size]="110" [bordered]="true" borderColor="#fff">
+            </emui-avatar>
+            <br>
+
+            <p *ngIf="mentee.ShareProfile; then success else danger">
+            </p>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Information</strong>
+            </h5>
+            <dl class="row">
+
+                <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Division:</dt>
+                <dd class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    {{mentee ? mentee.Division ? mentee.Division :'&mdash;':'&mdash;' }}</dd>
+                <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Business unit:</dt>
+                <dd class="col-xl-6 col-lg-8 col-md-6 col-sm-6">{{mentee?.bu}}</dd>
+                <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Preferred mentor age:</dt>
+                <dd class="col-xl-6 col-lg-6 col-md-6 col-sm-6">{{age?.Text}}</dd>
+                <dt class="col-xl-6 col-lg-6 col-md-6 col-sm-6">Preferred mentor gender:</dt>
+                <dd class="col-xl-6 col-lg-6 col-md-8 col-sm-6">{{gender?.Text}}</dd>
+            </dl>
+            <div class="cui-profile-social-counts">
+                <div class="text-center col-xl-6">
+                    <h5>{{mentee?.YearsOfExperience}}</h5>
+                    <p class="mb-0">Years of experience</p>
+                </div>
+                <div class="text-center col-xl-6">
+                    <h5>{{preferredMentor}}</h5>
+                    <p class="mb-0">Preferred mentor</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Experiences I seek from a mentor</strong>
+            </h5>
+            <dl class="row">
+                <dt></dt>
+                <dd class="col-xl-12 col-xs-12 col-md-12 col-lg-12">
+                    <span class="badge badge-primary mr-1" *ngFor="let skill of experiences">
+                        {{skill.Text}}
+                    </span>
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3 text-black">
+                <strong>Achievements I seek from mentoring</strong>
+            </h5>
+            <dl class="row">
+                <dt></dt>
+                <dd class="col-xl-12 col-xs-12 col-md-12 col-lg-12">
+                    <span class="badge badge-primary mr-1" *ngFor="let skill of domainAreas">
+                        {{skill.Text}}
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+</div>
+<ng-template #success>
+    <emui-donut type="success" [name]="'Share profile'" class="text-white mt-2"></emui-donut>
+</ng-template>
+<ng-template #danger>
+    <emui-donut type="danger" [name]="'Share profile'" class="text-white mt-2"></emui-donut>
+</ng-template>

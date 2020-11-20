@@ -1,0 +1,341 @@
+<nz-spin [nzSpinning]="loading">
+    <div *ngIf="!signupStatus">
+        <nz-card nzType="inner" style="margin-top:16px;">
+            <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+            Thank you for your interest in becoming a mentor.
+            Should you require more information on what it means to be a mentor or the matching process please click
+            <a href="http://thevault/ourbusiness/HC_Enablement/Mentoring/index_orig1.html" target="_blank">here</a>.
+            To submit your profile please complete the fields below.
+        </nz-card>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <!-- {{mentorRegData | json}} -->
+            <span *ngIf="mentorData">
+
+                <emui-profile-head-card [employeeId]="mentorData.EmployeeId"></emui-profile-head-card>
+            </span>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="utils__title">
+                <strong>Mentor Signup</strong>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- <h4 class="text-black mb-3">
+            <strong>Main Parameters</strong>
+        </h4> -->
+            <form nz-form nzLayout="'vertical'" [formGroup]="signupForm">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="interest">My interest in being a mentor
+                                    </nz-form-label>
+                                    <nz-form-control [nzErrorTip]="interestErrorTpl">
+                                        <textarea rows="2" nz-input id="interestDescr"
+                                            formControlName="interest"></textarea>
+                                        <ng-template #interestErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                Please input your interest!
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('maxLength')">
+                                                Please limit the number of characters.
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="professional">Professional background (if
+                                        applicable)
+                                        eg CA</nz-form-label>
+                                    <nz-form-control [nzErrorTip]="professionalErrorTpl">
+                                        <textarea rows="2" nz-input id="professionalDescr"
+                                            formControlName="professionalBackground"></textarea>
+                                        <ng-template #professionalErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                Professional background required!
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('maxLength')">
+                                                Please limit the number of characters.
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="passion">Interests/Passions</nz-form-label>
+                                    <nz-form-control [nzErrorTip]="passionErrorTpl">
+                                        <textarea rows="2" nz-input id="PassionDescr"
+                                            formControlName="passion"></textarea>
+                                        <ng-template #passionErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                Interests/passions required!
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('maxLength')">
+                                                Please limit the number of characters.
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="menteeCount">Number of mentees I can mentor
+                                    </nz-form-label>
+                                    <nz-form-control [nzErrorTip]="countErrorTpl">
+                                        <input nz-input name="menteeCount" type="number" id="maxCount"
+                                            formControlName="menteeMaxCount">
+                                        <ng-template #countErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                Number of mentees you can mentor required
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('max')">
+                                                Maximum of 3 mentees
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('min')">
+                                                Minimum of 1 mentee
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+
+                            <!-- <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="totalMentees">Number of mentees I can mentor
+                                    </nz-form-label>
+                                    <nz-form-control>
+                                        <nz-select formControlName="menteeMaxCount"
+                                            [(ngModel)]="selectedMenteeMaxCount">
+                                            <nz-option *ngFor="let option of listOfMenteeMaxCountOption" nzCustomContent
+                                                [nzLabel]="option.label" [nzValue]="option.value"><i nz-icon
+                                                    [nzType]="option.type" nzTheme="outline"></i> {{option.label}}
+                                            </nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                            </div> -->
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="priorRoles">Prior roles in FirstRand Group
+                                    </nz-form-label>
+                                    <nz-form-control [nzErrorTip]="priorErrorTpl">
+                                        <input nz-input name="priorRoles" type="text" id="prioRoles"
+                                            placeholder="Prior roles" formControlName="priorRoles">
+                                        <ng-template #priorErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                Prior roles required!
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('maxLength')">
+                                                Please limit the number of characters.
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" formGroupName="experienceCheckboxGroup">
+                                <nz-form-label nzRequired>I have experience in the following areas (tick
+                                    as
+                                    appropriate)
+                                </nz-form-label>
+                                <br />
+                                <ul class="options">
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="businessTechnologyModel"
+                                            formControlName="businessTechnology">Business Technology
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="clientServiceModel"
+                                            formControlName="clientService">Client Services</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="creditModel"
+                                            formControlName="credit">Credit</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="financeModel"
+                                            formControlName="finance">Finance</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="humanCapitalModel"
+                                            formControlName="humanCapital">Human Capital</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="legalModel"
+                                            formControlName="legalRiskCompliance">Legal, Risk and Compliance</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="marketingCommunicationModel"
+                                            formControlName="marketingCommunication">Marketing and Communication</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="operationsModel"
+                                            formControlName="operationProcess">Operations/Processes/Admin</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="supportServiceModel"
+                                            formControlName="supportService">Support Services</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="transactingModel"
+                                            formControlName="transacting">Transacting</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="tradingModel"
+                                            formControlName="trading">Trading</label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="nonSpecificModel"
+                                            formControlName="nonSpecific">No specific preference</label>
+                                    </li>
+                                </ul>
+                                <div class="invalid-feedback"
+                                    *ngIf="signupForm.controls['experienceCheckboxGroup'].errors && signupForm.controls['experienceCheckboxGroup'].errors.requireOneCheckboxToBeChecked">
+                                    At least one checkbox is required to check</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" formGroupName="domainAreaCheckboxGroup">
+                                <nz-form-label nzRequired nzFor="totalPrice">Areas in which I can add value to a mentee
+                                    (tick as appropriate)
+                                </nz-form-label>
+                                <br />
+                                <ul class="options">
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="broadenKnowledgeModel"
+                                            formControlName="broadenKnowledge">Broaden his/her organisational knowledge
+
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="enhanceTechnicalModel"
+                                            formControlName="enhanceTechnical">Enhance his/her technical skills
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="dealDiversityModel"
+                                            formControlName="dealDiversity">Deal with diversity and inclusion challenges
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="honeLeadershipModel"
+                                            formControlName="honeLeadership">Hone his/her leadership skills
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="managingCareerModel"
+                                            formControlName="managingCareer">Managing a career transition
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="relationshipBuildingModel"
+                                            formControlName="relationshipBuilding">Relationship building and networking
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="enhanceInfluenceModel"
+                                            formControlName="enhanceInfluence">Enhance his/her impact and influence
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="betterIntergrateBusinessModel"
+                                            formControlName="betterIntergrateBusiness">Better integrate into a
+                                            team/Business Unit
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="offeringCareerGuidanceModel"
+                                            formControlName="offeringCareerGuidance">Offering career guidance
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="helpingNavigateSystemModel"
+                                            formControlName="helpingNavigateSystem">Helping him/her ‘navigate’ the
+                                            system
+                                        </label>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="interest">Any other information which might assist
+                                        with
+                                        the matching process</nz-form-label>
+                                    <nz-form-control [nzErrorTip]="priorErrorTpl">
+                                        <textarea rows="2" nz-input id="infoDescr" formControlName="comment"></textarea>
+                                        <ng-template #priorErrorTpl let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                                This information is required!
+                                            </ng-container>
+                                            <ng-container *ngIf="control.hasError('maxLength')">
+                                                Please limit the number of characters.
+                                            </ng-container>
+                                        </ng-template>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div class="col-lg-12">
+                                <ul class="options">
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="availableModel" formControlName="available">I
+                                            confirm that I am currently available to provide mentorship
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="shareProfileModel"
+                                            formControlName="shareProfile">I give consent to my profile being shared
+                                            with prospective
+                                            mentee
+                                        </label>
+                                    </li>
+                                    <li class="option optionCheckbox">
+                                        <label nz-checkbox [(ngModel)]="readTermsModel" formControlName="readTerms">I
+                                            have read and understood
+                                        </label> <a class="utils__link--underlined"
+                                            href="http://thevault/ourbusiness/HC_Enablement/Mentoring/index_orig1.html"
+                                            target="_blank">criteria to become a mentor</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-actions">
+                        <span *ngIf="!signupStatus">
+                            <button nz-button nzType="primary" class="mr-2" (click)="submitForm(signupForm.value)"><i
+                                    nz-icon nzType="user" nzTheme="outline"></i> Save </button>
+
+                        </span>
+                        <span *ngIf="signupStatus">
+                            <button nz-button nzType="default" class="mr-2" (click)="updateForm(signupForm.value)"><i
+                                    nz-icon nzType="edit" nzTheme="outline"></i> Update</button>
+                            <button nz-button [routerLink]="['/mentor/my-mentees']"
+                                routerLinkActive="router-link-active"><span class="lnr lnr-undo"></span>
+                                Cancel</button>
+                        </span>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</nz-spin>

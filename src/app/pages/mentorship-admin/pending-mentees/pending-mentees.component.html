@@ -1,0 +1,63 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <nz-table 
+    nzShowPagination 
+    [nzFrontPagination]=false 
+    nzShowSizeChanger 
+    [nzLoading]="loading"
+        [nzPageIndex]="paging.pageNumber" [nzPageSize]="paging.pageSize" [nzTotal]="paging.totalItems"
+        [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)" [nzPageSizeOptions]="sizeChanger"
+        (nzPageIndexChange)="onPageNumber($event)" [nzData]="pendingData" class="utils__scrollTable"
+        [nzScroll]="{x: '100%'}">
+        <thead>
+            <tr>
+                <th>Mentee profile card</th>
+                <th>Mentee name</th>
+                <th>Division</th>
+                <th>Registered date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pendingData">
+                <td>
+                    <emui-avatar [src]="item.MenteeEmpId" [size]="50"></emui-avatar>
+                </td>
+                <td>
+                    <a class="utils__link--underlined" href="javascript: void(0);"
+                        (click)="onMenteeModal(item.MenteeId, item.MenteeFullName)">
+                        {{item.MenteeFullName}}
+                    </a>
+                </td>
+                <td>
+
+                    {{item.Division}}
+
+                </td>
+                <td>
+                    {{item.RegisteredDate | date}}
+                </td>
+                <td>
+                    <button nz-button class="mr-1" nzSize="small"
+                        (click)="onExtractOrAutoMatch(item.MenteeId, item.MenteeFullName, 'auto')"><i nz-icon
+                            type="sync" theme="outline"></i>Auto match</button>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <button nz-button class="mr-1" nzSize="small"
+                        (click)="onManualMatch(item.MenteeId, item.MenteeFullName, item.MenteeEmpId)"><i nz-icon type="api"
+                            theme="outline"></i>Manual
+                        match</button>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <button nz-button class="mr-1" nzSize="small"
+                        (click)="onExtractOrAutoMatch(item.MenteeId, item.MenteeFullName, 'saved')"><i nz-icon
+                            type="download" theme="outline"></i>Extract
+                        saved</button>
+                </td>
+            </tr>
+        </tbody>
+        <ng-template #totalTemplate let-total>
+            <span class="page-total">Total {{total}} items </span>
+        </ng-template>
+        <ng-template #rangeTemplate let-range="range" let-total>
+            {{range[0]}}-{{range[1]}} of {{total}} items
+        </ng-template>
+    </nz-table>
+</div>

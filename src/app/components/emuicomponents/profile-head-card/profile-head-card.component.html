@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="head" [style.backgroundImage]="'url(assets/images/photos/4.jpeg)'">
+    <h2 class="text-white" style="padding-left:100px;" *ngIf="employeeName">
+      <strong>{{employeeName}}</strong>
+    </h2>
+  </div>
+  <div>
+    <div class="left">
+      <emui-avatar [src]="employeeId" [size]="90" borderColor="#fff" [bordered]="true"></emui-avatar>
+      <!-- <strong class="d-block">Sithelo Ngwenya</strong> -->
+    </div>
+  </div>
+</div>

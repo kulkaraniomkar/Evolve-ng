@@ -1,0 +1,50 @@
+<div class="d-inline-block mr-4">
+    <div class="livesearch" [ngClass]="{'livesearchShowed': showSearch}">
+        <button class="close" type="button" (click)="setHidden()">
+            <span class="utils__visibilityHidden">Close</span>
+            <i class="icmn-cross"></i>
+        </button>
+        <div class="container-fluid">
+            <div class="wrapper">
+
+                <input #liveSearchInput class="searchInput" [placeholder]="placeholder" autofocus />
+                <nz-radio-group [(ngModel)]="searchValue" (ngModelChange)="onSearchvalueChange($event)">
+                    <label nz-radio nzValue="mentee">Search for matched mentees</label>
+                    <label nz-radio nzValue="allocated">Search for allocated mentors</label>
+                    <label nz-radio nzValue="unallocated">Search for unallocated mentors</label>
+                    <!-- <label nz-radio nzValue="exploratory">Search for exploratory</label> -->
+                    &nbsp;&nbsp;&nbsp;
+                    <label>Press enter to search</label>
+                </nz-radio-group>
+                <!-- <ul class="options">
+                    <li class="option optionCheckbox">
+                        <label nz-checkbox nzDisabled [ngModel]="disabledTrue">Search for mentees</label>
+                    </li>
+                    <li class="option optionCheckbox">
+                        <label nz-checkbox>Search for mentors</label>
+                    </li>
+                    <li class="option optionCheckbox">
+                        <label nz-checkbox>Search for exploratory</label>
+                    </li>
+                    <li class="option">Press enter to search</li>
+                </ul> -->
+                <br />
+                <br />
+                <div *ngIf="showMenteeTable">
+                    <search-mentee-list [search]="searchParam"></search-mentee-list>
+                </div>
+                <div *ngIf="showUnallocatedTable">
+                    <unallocated-mentors [searchStr]="searchParam"></unallocated-mentors>
+                </div>
+                <div *ngIf="showAllocatedTable">
+                    <allocated-mentors [searchStr]="searchParam"></allocated-mentors>
+                </div>
+                <!-- <div *ngIf="showExploratoryTable">
+                    <exploratory-mentorship [searchStr]="searchParam"></exploratory-mentorship>
+                </div> -->
+
+                <!-- end results -->
+            </div>
+        </div>
+    </div>
+</div>

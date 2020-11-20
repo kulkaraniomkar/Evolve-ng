@@ -1,0 +1,60 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <!-- {{exploratoryData | json}} -->
+    <nz-table #pendingTable nzShowPagination [nzFrontPagination]=false nzShowSizeChanger [nzLoading]="loading"
+        [nzPageIndex]="pagingExploratory.pageNumber" [nzPageSize]="pagingExploratory.pageSize" [nzTotal]="pagingExploratory.totalItems"
+        [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)" [nzPageSizeOptions]="sizeChanger"
+        (nzPageIndexChange)="onPageNumber($event)" [nzData]="exploratoryMentorship" class="utils__scrollTable"
+        [nzScroll]="{x: '100%'}">
+        <thead>
+            <tr>
+                <th>Mentor profile card</th>
+                <th>Mentor name</th>
+                <th>Mentee profile card</th>
+                <th>Mentee name</th>
+                <th>Division</th>
+                <th>Mentee share profile</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of exploratoryMentorship">
+                <td>
+                    <emui-avatar [src]="item.MentorEmpId" [size]="50"></emui-avatar>
+                </td>
+                <td>
+                    <a class="utils__link--underlined" href="javascript: void(0);"
+                        (click)="onMentorModal(item.MentorId, item.MentorFullName)">
+                        {{item.MentorFullName}}
+                    </a>
+                </td>
+                <td>
+                    <emui-avatar [src]="item.MenteeEmpId" [size]="50"></emui-avatar>
+                </td>
+                <td>
+                    <a class="utils__link--underlined" href="javascript: void(0);"
+                        (click)="onMenteeModal(item.MenteeId, item.MenteeFullName)">
+                        {{item.MenteeFullName}}
+                    </a>
+                </td>
+                <td>
+                    {{item.Division}}
+                </td>
+                <td>
+                    <nz-badge [nzStatus]="item.ShareProfile ? 'success' : 'warning'"
+                        [nzText]="item.ShareProfile ? 'Yes': 'No'"></nz-badge>
+                </td>
+                <td>
+                    <button nz-button class="mr-1" nzSize="small"
+                        (click)="updateExploratory(item.MentorId, item.MenteeId, 0, item.MentorshipActivityId)"><i nz-icon
+                            type="edit" theme="outline"></i> Update session</button>
+                </td>
+            </tr>
+        </tbody>
+        <ng-template #totalTemplate let-total>
+            <span class="page-total">Total {{total}} items </span>
+        </ng-template>
+        <ng-template #rangeTemplate let-range="range" let-total>
+            {{range[0]}}-{{range[1]}} of {{total}} items
+        </ng-template>
+    </nz-table>
+</div>

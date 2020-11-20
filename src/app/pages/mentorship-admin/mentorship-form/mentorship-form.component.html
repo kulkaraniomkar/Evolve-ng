@@ -1,0 +1,340 @@
+<nz-spin [nzSpinning]="isSpinningMatching || isSpinningActivity">
+    <div class="row">
+        <div class="col-xl-6 col-md-6 col-xs-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-3 text-black">
+                        <strong>Mentor Information</strong>
+                    </h5>
+                    <dl class="row">
+                        <dt class="col-xl-3">Name:</dt>
+                        <dd class="col-xl-9">{{activityData?.MentorInfo?.Name}}</dd>
+
+                        <dt class="col-xl-3">Division:</dt>
+                        <dd class="col-xl-9">{{activityData?.MentorInfo?.Division}}</dd>
+
+                        <dt class="col-xl-3">Business unit:</dt>
+                        <dd class="col-xl-9">{{activityData?.MentorInfo?.BusinessUnit}}</dd>
+
+                    </dl>
+                    <div class="cui-profile-social-counts">
+                        <div class="text-center col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                            <h6>{{activityData?.MentorInfo?.PreviousPosition ? activityData?.MentorInfo?.PreviousPosition : '&mdash;'}}
+                            </h6>
+                            <p class="mb-0">Previous position</p>
+                        </div>
+                        <div class="text-center col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                            <h6>{{activityData?.MentorInfo.CurrentPosition}}</h6>
+                            <p class="mb-0">Current position</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-3 text-black">
+                            <strong>Mentee Information</strong>
+                        </h5>
+                        <dl class="row">
+                            <dt class="col-xl-3">Name:</dt>
+                            <dd class="col-xl-9">{{activityData?.MenteeInfo.Name}}</dd>
+
+                            <dt class="col-xl-3">Division:</dt>
+                            <dd class="col-xl-9">{{activityData?.MenteeInfo.Division}}</dd>
+
+                            <dt class="col-xl-3">Business unit:</dt>
+                            <dd class="col-xl-9">{{activityData?.MenteeInfo.BusinessUnit}}</dd>
+
+                        </dl>
+                        <div class="cui-profile-social-counts">
+                            <div class="text-center col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                                <h6>{{activityData?.MenteeInfo.PreviousPosition ? activityData['MenteeInfo'].PreviousPosition : '&mdash;'}}
+                                </h6>
+                                <p class="mb-0">Previous position</p>
+                            </div>
+                            <div class="text-center col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                                <h6>{{activityData?.MenteeInfo.CurrentPosition}}</h6>
+                                <p class="mb-0">Current position</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-xl-12 col-md-12 col-xs-12 col-lg-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="utils__title">
+                        <strong>Mentoring focus <i nz-icon nzType="search" nzTheme="outline"></i></strong>
+                    </div>
+                    <br>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-xl-3 col-xs-3 col-md-3 col-lg-3">Experiences:</dt>
+                        <dd class="col-xl-9">
+                            <span class="badge badge-default mr-1" *ngFor="let skill of experiences">
+                                {{skill.Text}}
+                            </span>
+                        </dd>
+                        <dt class="col-xl-3">Achievements:</dt>
+                        <dd class="col-xl-9">
+                            <span class="badge badge-default mr-1" *ngFor="let skill of domainAreas">
+                                {{skill.Text}}
+                            </span>
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-md-12 col-xs-12 col-lg-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="utils__title">
+                        <strong>Mentorship Edit <i nz-icon nzType="edit" nzTheme="outline"></i></strong>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form nz-form nzLayout="'vertical'" class="row" #mentormentee="ngForm"
+                        (ngSubmit)="submitForm(mentormentee)">
+                        <div class="col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Mentor </strong> </div>
+                                <div class="card-body">
+                                    <!-- mentor attendance-->
+                                    <nz-card>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <nz-form-item>
+                                                    <nz-form-label nzFor="title">Mentor enablement attendance
+                                                    </nz-form-label>
+                                                    <nz-form-control>
+                                                        <nz-switch [(ngModel)]="mentorAttendance"
+                                                            [nzDisabled]="mentorAttendanceContralState"
+                                                            name="mentorOrientationAttended"
+                                                            [nzCheckedChildren]="checkedTemplate"
+                                                            [nzUnCheckedChildren]="unCheckedTemplate"
+                                                            [nzDisabled]="mentorAttendanceContralState">
+                                                        </nz-switch>
+                                                        <ng-template #checkedTemplate><i nz-icon nzType="check"></i>
+                                                        </ng-template>
+                                                        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i>
+                                                        </ng-template>
+
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <nz-form-item *ngIf="mentorAttendance">
+                                                    <nz-form-label nzFor="title">Mentor orientation date</nz-form-label>
+                                                    <nz-form-control nzErrorTip="dateTpl" [nzValidateStatus]>
+                                                        <nz-date-picker [(ngModel)]="mentorOrientationDate"
+                                                            name="mentorOrientationDate" [nzSize]="'large'"
+                                                            [nzDisabledDate]="disabledDate"
+                                                            [nzDisabled]="mentorAttendanceContralState" required>
+                                                        </nz-date-picker>
+
+                                                        <ng-template #dateTpl let-control>
+                                                            <ng-container *ngIf="control.hasError('required')">Input is
+                                                                required</ng-container>
+                                                        </ng-template>
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+
+                                        </div>
+                                    </nz-card>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6 col-xs-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Mentee </strong>
+                                </div>
+                                <div class="card-body">
+                                    <!-- mentor attendance-->
+                                    <nz-card>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <nz-form-item>
+                                                    <nz-form-label nzFor="title">Mentee orientation attendance
+                                                    </nz-form-label>
+                                                    <nz-form-control>
+                                                        <nz-switch [(ngModel)]="menteeAttendance"
+                                                            name="menteeOrientationAttended"
+                                                            [nzCheckedChildren]="checkedTemplate"
+                                                            [nzUnCheckedChildren]="unCheckedTemplate"
+                                                            [nzDisabled]="menteeAttendanceContralState">
+                                                        </nz-switch>
+                                                        <ng-template #checkedTemplate><i nz-icon nzType="check"></i>
+                                                        </ng-template>
+                                                        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i>
+                                                        </ng-template>
+
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <nz-form-item *ngIf="menteeAttendance">
+                                                    <nz-form-label nzFor="title">Mentee orientation date</nz-form-label>
+                                                    <nz-form-control nzErrorTip="dateTpl" [nzValidateStatus]>
+                                                        <nz-date-picker [(ngModel)]="menteeOrientationDate"
+                                                            name="menteeOrientationDate" [nzSize]="'large'"
+                                                            [nzDisabledDate]="disabledDate"
+                                                            [nzDisabled]="menteeAttendanceContralState" nzRequired>
+                                                        </nz-date-picker>
+
+                                                        <ng-template #dateTpl let-control>
+                                                            <ng-container *ngIf="control.hasError('required')">Input is
+                                                                required</ng-container>
+                                                        </ng-template>
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+
+                                        </div>
+                                    </nz-card>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <nz-card>
+                                        <div class="row">
+                                            <div class="col-xl-4 col-md-4 col-xs-4 col-lg-4">
+                                                <nz-form-item>
+                                                   
+                                                    <nz-form-control>
+                                                        <nz-form-label nzFor="sku">Mentorship status</nz-form-label>
+                                                        <nz-form-control [nzErrorTip]="selectTpl" nzRequired>
+                                                            <nz-radio-group [(ngModel)]="selectedMentorshipStatus" name="mentorshipStatus">
+                                                                <label nz-radio [nzValue]="o" *ngFor="let o of mentorshipStatus">{{ o.Text }}</label>
+                                                              </nz-radio-group>
+                                                            <!-- <nz-select name="mentorshipStatus"
+                                                                [(ngModel)]="selectedMentorshipStatus"
+                                                                nzPlaceHolder="Select status">
+                                                                <nz-option *ngFor="let option of mentorshipStatus"
+                                                                    [nzValue]="option" [nzLabel]="option.Text">
+                                                                </nz-option>
+                                                            </nz-select> -->
+                                                            <ng-template #selectTpl let-control>
+                                                                <ng-container *ngIf="control.hasError('maxlength')">
+                                                                    MaxLength is 12
+                                                                </ng-container>
+                                                                <ng-container *ngIf="control.hasError('minlength')">
+                                                                    MinLength is 6
+                                                                </ng-container>
+                                                                <ng-container *ngIf="control.hasError('required')">
+                                                                    Choose
+                                                                    status
+                                                                </ng-container>
+                                                            </ng-template>
+                                                        </nz-form-control>
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div *ngIf="startEndDateControlVisibility"
+                                                class="col-xl-4 col-md-4 col-xs-4 col-lg-4">
+                                                <nz-form-item>
+                                                    <nz-form-label nzFor="title">Start - end dates</nz-form-label>
+                                                    <nz-form-control>
+                                                        <nz-range-picker [(ngModel)]="activityDates" name="rangePicker"
+                                                            [nzSize]="'large'" [nzDisabled]="startEndDateControlState"
+                                                            required></nz-range-picker>
+
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                            <div *ngIf="exploratoryControlVisibility"
+                                                class="col-xl-4 col-md-4 col-xs-4 col-lg-4">
+                                                <nz-form-item>
+                                                    <nz-form-label nzFor="title">Exploratory date</nz-form-label>
+                                                    <nz-form-control nzErrorTip="Date required">
+                                                        <nz-date-picker [(ngModel)]="exploratoryDate"
+                                                            name="exploratoryPicker" [nzSize]="'large'" [nzAllowClear]
+                                                            nzRequired [nzDisabled]="exploratoryDateControlState">
+                                                        </nz-date-picker>
+
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </div>
+                                        </div>
+                                    </nz-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <nz-card>
+
+
+                                        <nz-form-item *ngFor="let comment of comments; let i = index;">
+                                            <div class="col-lg-12">
+                                                <nz-form-label nzFor="'comment_'+i">Comment</nz-form-label>
+                                                <nz-form-control [nzErrorTip]="'commentTpl_'+i">
+                                                    <textarea class="comment-input" rows="2" nz-input id="comment_{{i}}"
+                                                        #comment_{{i}}="ngModel" [(ngModel)]="comment['Comment']"
+                                                        name="comment_{{i}}" required></textarea>
+                                                    <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
+                                                        (click)="removeField(i, mentormentee)"></i>
+                                                    <ng-template #commentTpl_{{i}} let-control>
+                                                        <ng-container *ngIf="control.hasError('required')">Comment
+                                                            required
+                                                        </ng-container>
+                                                    </ng-template>
+                                                </nz-form-control>
+                                            </div>
+                                        </nz-form-item>
+
+
+                                        <nz-form-item>
+                                            <div class="col-lg-12">
+                                                <nz-form-control>
+                                                    <button nz-button nzType="dashed" (click)="addField($event)">
+                                                        <i nz-icon nzType="plus"></i>
+                                                        Add another comment
+                                                    </button>
+                                                </nz-form-control>
+                                            </div>
+                                        </nz-form-item>
+
+
+                                    </nz-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-actions">
+                                <span *ngIf="!mentorshipActivityId">
+                                    <button nz-button nzType="primary" class="mr-2" type="submit"><i nz-icon
+                                            nzType="usergroup-add" nzTheme="outline"></i> Save match</button>
+                                </span>
+                                <span *ngIf="mentorshipActivityId">
+                                    <button nz-button nzType="default" class="mr-2" type="submit"><i nz-icon
+                                            nzType="edit" nzTheme="outline"></i> Update match</button>
+                                </span>
+                                <button nz-button (click)="showCancelConfirm()"><span class="lnr lnr-undo"></span>
+                                    Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</nz-spin>

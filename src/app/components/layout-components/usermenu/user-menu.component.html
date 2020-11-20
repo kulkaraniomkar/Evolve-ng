@@ -1,0 +1,34 @@
+<div *ngIf="!(identityloading$ | async)">
+  <div nz-dropdown nzTrigger="click" class="dropdown" [nzDropdownMenu]="menu">
+    <nz-badge>
+      <br />
+      <br />
+      <emui-avatar [src]="photo" [size]="50"></emui-avatar>
+      <!-- <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="'large'" class="avatar"></nz-avatar> -->
+    </nz-badge>
+  </div>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item>
+        <strong>Hello, {{name}}</strong>
+
+        <div>
+          <strong>Email: </strong>
+          {{email || '—'}}
+        </div>
+      </li>
+      <li nz-menu-divider></li>
+      <li nz-menu-item>
+        <div>
+          <strong>
+            Role(s):
+          </strong>
+          {{role || '—'}}
+        </div>
+      </li>
+      <li nz-menu-divider></li>
+
+
+    </ul>
+  </nz-dropdown-menu>
+</div>

@@ -1,0 +1,34 @@
+<div class="d-inline-block mr-4 pull-right">
+    <nz-input-group [nzPrefix]="prefixIconSearch">
+      <input nz-input class="extInput" (click)="onSearch()" placeholder="Type to search..." style="width: 200px" />
+    </nz-input-group>
+    <ng-template #prefixIconSearch>
+      <i nz-icon type="search"></i>
+    </ng-template>
+  </div>
+  <nz-tabset>
+    <nz-tab [nzTitle]="titlePending">
+      <ng-template #titlePending> <i nz-icon type="folder-open" theme="outline"></i> Pending mentees</ng-template>
+      <ng-template nz-tab>
+        <pending-mentees></pending-mentees>
+      </ng-template>
+    </nz-tab>
+    <nz-tab [nzTitle]="titleAvailable">
+      <ng-template #titleAvailable> <i class="fas fa-chalkboard-teacher"></i> &nbsp;Allocated mentors </ng-template>
+      <ng-template nz-tab>
+       <allocated-mentors></allocated-mentors>
+      </ng-template>
+    </nz-tab>
+    <nz-tab [nzTitle]="titleCompleted">
+      <ng-template #titleCompleted> <i class="fas fa-door-open"></i> Unallocated mentors</ng-template>
+      <ng-template nz-tab>
+        <unallocated-mentors></unallocated-mentors>
+      </ng-template>
+    </nz-tab>
+    <nz-tab [nzTitle]="titleClosed">
+      <ng-template #titleClosed> <i class="far fa-handshake"></i> &nbsp;Exploratory mentorship </ng-template>
+      <ng-template nz-tab>
+       <exploratory-mentorship></exploratory-mentorship>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>

@@ -1,0 +1,101 @@
+<nz-spin [nzSpinning]="loadingMatch || loadingActivity">
+    <div class="row" *ngIf="autoMatchData && autoMatchData.length">
+        <div class="col-xl-12 col-md-12 col-xs-12 col-lg-12">
+            <div class="card card-body mb4">
+                <div>
+                    <h2>
+                        <span class="text-black mr-2">
+                            <strong>{{selectedMenteeName}}</strong>
+                        </span>
+                    </h2>
+                    <p class="mb-1">Mentoring match results</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-xs-4 col-lg-4" *ngFor="let mentor of autoMatchData">
+            <div>
+                <div class="card cui-profile-header" [ngStyle]="{'background-image': 'url(' + background + ')'}">
+                    <div class="card-body text-center">
+                        <emui-avatar [src]="mentor.EmployeeId" [size]="110" [bordered]="true" borderColor="#fff">
+                        </emui-avatar>
+                        <br>
+                        <br>
+                        <nz-button-group>
+                            <button nz-button style="width: 150px;" (click)="onViewMentor(mentor.MentorId, mentor.Name)"><i nz-icon type="bars"
+                                    theme="outline"></i> View mentor</button>
+                            <button nz-button style="width: 150px;"
+                                (click)="onSelectMentor(mentor.MentorId, mentor.MenteeId, mentor.MatchTypeId, 0)"><i
+                                    nz-icon type="select" theme="outline"></i> Select mentor</button>
+                        </nz-button-group>
+                        <br>
+                     
+                        <p class="text-white mt-2">
+                            <emui-donut type="success" [name]="'Mentoring availability'"></emui-donut>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-3 text-black">
+                            <strong>Information</strong>
+                        </h5>
+                        <dl class="row">
+                            <dt class="col-xl-12 col-sm-4 col-md-4">Name:</dt>
+                            <dd class="col-xl-12 col-sm-8 col-md-8">{{mentor.Name}}</dd>
+
+                            <dt class="col-xl-12 col-sm-4 col-md-4">Division:</dt>
+                            <dd class="col-xl-12 col-sm-8 col-md-8">{{mentor.Division}}</dd>
+                        </dl>
+                        <div class="cui-profile-social-counts">
+                            <div class="text-center col-4">
+                                <h6><small>{{mentor.MaxCount - mentor.CurrentCount}}</small></h6>
+                                <p class="mb-0">Current</p>
+                            </div>
+                            <div class="text-center col-5">
+                                <h6><small>{{mentor.CurrentCount}}</small></h6>
+                                <p class="mb-0">Available</p>
+                            </div>
+                            <div class="text-center col-4">
+                                <h6><small>{{mentor.PercentageScore}}%</small></h6>
+                                <p class="mb-0">Score</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="py-3">
+            <div class="mt-3">&nbsp;&nbsp;&nbsp;&nbsp;
+                <span *ngIf="selectedActionMode == 'auto'"><button nz-button nzType="primary" style="width: 200px;"
+                        class="mr-2" (click)="onSave(autoMatchData[0].MenteeId)">
+                        <span class="lnr lnr-file-add"></span> Save
+                    </button>
+                </span>
+                <button nz-button nzType="de" style="width: 200px;" class="mr-2" (click)="showCancelConfirm()">
+                    <span class="lnr lnr-undo"></span> Cancel
+                </button>
+                <span *ngIf="selectedActionMode == 'saved'">
+                    <button nz-button nzType="danger" style="width: 200px;" class="mr-2" (click)="showDeleteConfirm(autoMatchData[0].MenteeId)">
+                        <span class="lnr lnr-trash"></span> Delete
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="errorMatch">
+        <div class="col-xl-12 col-md-12 col-xs-12 col-lg-12">
+            <div class="card card-body mb4">
+                <div>
+                    <p class="text-center">{{errorMatch}}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nz-spin>
+<br />

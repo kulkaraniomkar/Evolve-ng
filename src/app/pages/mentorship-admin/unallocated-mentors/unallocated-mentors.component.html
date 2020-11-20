@@ -1,0 +1,60 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <nz-table #pendingTable nzShowPagination [nzFrontPagination]=false nzShowSizeChanger [nzLoading]="loading"
+        [nzPageIndex]="pagingUnallocated.pageNumber" [nzPageSize]="pagingUnallocated.pageSize"
+        [nzTotal]="pagingUnallocated.totalItems" [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)"
+        [nzPageSizeOptions]="sizeChanger" (nzPageIndexChange)="onPageNumber($event)" [nzData]="unAllocatedMentors"
+        class="utils__scrollTable" [nzScroll]="{x: '100%'}">
+        <thead>
+            <tr>
+                <th>Mentor profile card</th>
+                <th>Mentor name</th>
+                <th>Terms and conditions</th>
+                <th>Mentee slot(s) available</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of unAllocatedMentors">
+                <td>
+                    <emui-avatar [src]="item.MentorEmpId" [size]="25"></emui-avatar>
+                </td>
+                <td>
+                    <a class="utils__link--underlined" href="javascript: void(0);"
+                        (click)="onMentorModal(item.MentorId, item.FullName)">
+                        {{item.FullName}}
+                    </a>
+                </td>
+                <td>
+                    <span
+                        [ngClass]="[item.ReadTerms ? 'badge badge-success font-size-12' : 'badge badge-danger font-size-12']">
+                        {{item.ReadTerms ? 'Accepted' : 'Not accepted'}}
+                    </span>
+                    <!-- <nz-badge [nzStatus]="item.ReadTerms ? 'success' : 'warning'" [nzText]="item.ReadTerms ? 'Yes': 'No'">
+                </nz-badge>  -->
+                </td>
+                <td>
+                    <span class="value"
+                        [style.color]="[item.CountLeft === 3 ? '#46be8a' : item.CountLeft === 2 ? '#007bff' : '#fb434a']">
+                        {{item.CountLeft ? item.CountLeft : item.CountLeft == 0 ? item.CountLeft : '&mdash;'}}
+                    </span>
+                    <!-- <span class="value"
+                    [style.color]="[item.CountLeft === 3 ? '#46be8a' : item.CountLeft === 2 ? '#007bff' : '#fb434a']">
+                    {{item.CountLeft ? item.CountLeft : item.MaxCount}}
+                  </span> -->
+                </td>
+                <td>
+                    <nz-badge [nzStatus]="item.Available ? 'success' : 'warning'"
+                        [nzText]="item.Available ? 'Yes': 'No'">
+                    </nz-badge>
+                </td>
+
+            </tr>
+        </tbody>
+        <ng-template #totalTemplate let-total>
+            <span class="page-total">Total {{total}} items </span>
+        </ng-template>
+        <ng-template #rangeTemplate let-range="range" let-total>
+            {{range[0]}}-{{range[1]}} of {{total}} items
+        </ng-template>
+    </nz-table>
+</div>

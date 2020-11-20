@@ -1,0 +1,96 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div *ngIf="!mentorData && signupStatus" class="text-center">
+        <nz-card nzType="inner" style="margin-top:16px;">
+            <i nz-icon nzType="info-circle" nzTheme="outline"></i>&nbsp;
+            <strong>Thank you for signing up to be a mentor!</strong> <br><br>
+            We are currently in the process of matching you to a suitable mentee and will be in contact with you over
+            the
+            next
+            few weeks.<br> Please feel free to contact the RMB mentoring should you have any queries regarding your
+            mentoring status via email - <a class="utils__link--underlined"
+                href="mailto:mentoring@rmb.co.za">mentoring@rmb.co.za</a>.
+            <br>
+            <span>
+                Please click
+                <a class="utils__link--underlined" href="javascript: void(0);" [routerLink]="['/mentor/signup']"
+                    routerLinkActive="router-link-active">
+                    here
+                </a>
+                to view or update your mentor profile
+            </span>
+        </nz-card>
+    </div>
+    <div *ngIf="signupStatus">
+        <br />
+        <button nz-button [nzType]="'primary'" [nzLoading]="loading" (click)="editMentor()"> <i nz-icon
+                nzType="edit"></i>
+            Edit my profile
+        </button>
+        &nbsp;&nbsp;
+        <button nz-button [nzType]="'default'" [nzLoading]="loading" (click)="onViewMentor(0)"> <i nz-icon
+                nzType="select"></i>View my profile
+        </button>
+
+    </div>
+    <nz-spin [nzSpinning]="loading">
+        <div *ngIf="mentorData">
+            <nz-table #subTable nzShowPagination [nzFrontPagination]=false nzShowSizeChanger
+                [nzPageIndex]="paging.pageNumber" [nzPageSize]="paging.pageSize" [nzTotal]="paging.totalItems"
+                [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)" [nzPageSizeOptions]="sizeChanger"
+                (nzPageIndexChange)="onPageNumber($event)" [nzData]="mentorData" class="utils__scrollTable"
+                [nzScroll]="{x: '100%'}">
+                <thead>
+                    <tr>
+                        <th>Mentee profile card</th>
+                        <th>Mentee name</th>
+                        <th>Mentee share profile</th>
+                        <th>Status</th>
+                        <th>Division</th>
+                        <th>Start - end date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mentorData">
+                        <td>
+                            <emui-avatar [src]="item.MenteeEmpId" [size]="50"></emui-avatar>
+                        </td>
+                        <td>
+                            <span *ngIf="item.ShareProfile; else notShared">
+                                <a class="utils__link--underlined" href="javascript: void(0);"
+                                    (click)="onMenteeModal(item.MenteeId, item.MenteeFullName)">
+                                    {{item.MenteeFullName}}
+                                </a>
+                            </span>
+                            <ng-template #notShared>
+                                {{item.MenteeFullName}}
+                            </ng-template>
+
+                        </td>
+                        <td>
+                            <span
+                                [ngClass]="[item.ShareProfile ?  'badge badge-success font-size-12' : 'badge badge-danger font-size-12']">
+                                {{item.ShareProfile ? 'Accepted' : 'Not accepted'}}
+                            </span>
+                        </td>
+                        <td>{{item.Status}}</td>
+                        <td>{{item.Division}}</td>
+                        <td>
+                            {{item.StartDate | date}} &mdash; {{item.EndDate | date}}
+                        </td>
+
+                    </tr>
+                </tbody>
+                <ng-template #totalTemplate let-total>
+                    <span class="page-total">Total {{total}} items </span>
+                </ng-template>
+                <ng-template #rangeTemplate let-range="range" let-total>
+                    {{range[0]}}-{{range[1]}} of {{total}} items
+                </ng-template>
+
+            </nz-table>
+        </div>
+
+    </nz-spin>
+
+</div>

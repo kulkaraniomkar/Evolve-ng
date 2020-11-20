@@ -1,0 +1,68 @@
+
+<div class="container-fluid">
+    <div class="wrapper">
+        <input #liveSearchInput class="searchInput" placeholder="Type to search a mentor..." autofocus />
+        <label>Press enter to search</label>
+    </div>  
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <span *ngIf="menteeEmployeeId">
+            <emui-profile-head-card [employeeId]="menteeEmployeeId" [employeeName]="menteeName"></emui-profile-head-card>
+        </span>
+    </div>
+    
+</div>
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <nz-table #pendingTable nzShowPagination [nzFrontPagination]=false  [nzLoading]="loading"
+        [nzPageIndex]="paging.pageNumber" [nzPageSize]="paging.pageSize" [nzTotal]="paging.totalItems"
+        [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)"  
+        (nzPageIndexChange)="onPageNumber($event)"   [nzData]="matchData" class="utils__scrollTable" [nzScroll]="{x: '100%'}">
+        <thead>
+            <tr>
+                <th>Mentor profile card</th>
+                <th>Mentor name</th>
+                <th>Read terms</th>
+                <th>Slot(s)</th>
+                <th>Availability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of matchData">
+                <td>
+                    <emui-avatar [src]="item.MentorEmpId" [size]="25"></emui-avatar>
+                </td>
+                <td>  
+                    <a class="utils__link--underlined" href="javascript: void(0);"
+                    (click)="onViewMentor(item.MentorId, item.FullName)">
+                    {{item.FullName}}
+                </a> 
+                </td> 
+                <td><nz-badge [nzStatus]="item.ReadTerms ? 'success' : 'warning'" [nzText]="item.ReadTerms ? 'Yes': 'No'">
+                </nz-badge> </td>     
+                <td> <span class="value"
+                    [style.color]="[item.CountLeft === 3 || item.CountLeft == null ? '#46be8a' : item.CountLeft === 2 ? '#007bff' : '#fb434a']">
+                    {{item.CountLeft ? item.CountLeft : item.MaxCount}}
+                  </span></td>     
+                <td>
+                    <nz-badge [nzStatus]="item.Available ? 'success' : 'warning'" [nzText]="item.Available ? 'Yes': 'No'">
+                    </nz-badge> 
+                </td>                   
+                <td>
+                    <button nz-button class="mr-1" nzSize="small"
+                    (click)="onSelectMentor(item.MentorId, item.MenteeId, item.MatchTypeId, 0)"><i nz-icon type="sync"
+                            theme="outline"></i>Assign mentor</button>
+                   
+                </td>
+            </tr>
+        </tbody>
+        <ng-template #totalTemplate let-total>
+            <span class="page-total">Total {{total}} items </span>
+        </ng-template>
+        <ng-template #rangeTemplate let-range="range" let-total>
+            {{range[0]}}-{{range[1]}} of {{total}} items
+          </ng-template>
+    </nz-table>
+</div>

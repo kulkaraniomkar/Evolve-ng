@@ -1,0 +1,58 @@
+<nz-spin [nzSpinning]="loading" [nzDelay]="500">
+    <!-- <div *ngIf="showTable"> -->
+      <nz-table #pendingTable nzShowPagination [nzFrontPagination]=false nzShowSizeChanger 
+        [nzPageIndex]="pagingMentee.pageNumber" [nzPageSize]="pagingMentee.pageSize" [nzTotal]="pagingMentee.totalItems"
+        [nzShowTotal]="rangeTemplate" (nzPageSizeChange)="onPageSize($event)"
+        (nzPageIndexChange)="onPageNumber($event)" 
+        [nzData]="menteeSearch" class="utils__scrollTable" [nzScroll]="{x: '100%'}">
+        <thead>
+          <tr>
+            <th>Financial year</th>
+            <th>Mentee name</th>
+            <th>Mentor name</th>
+            <th>Status</th>
+            <th>Start date</th>
+            <th>Finish date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of menteeSearch">
+            <td>{{item.FinYear}}</td>
+            <td>{{item.MenteeFullName}}</td>
+            <td>
+                {{item.MentorFullName}}
+            </td>
+            <td>
+                <span [ngClass]="[item.Status === 'In-Progress' ?  
+                'badge badge-success font-size-12' : item.Status === 'Exploratory' ? 
+                'badge badge-default font-size-12' :  item.Status === 'Closed' ? 
+                'badge badge-danger font-size-12' : 'badge badge-info font-size-12']">
+                {{item.Status === 'In-Progress' ? 'In progress' : item.Status === 'Exploratory' ? 'Exploratory' :  item.Status === 'Closed' ? 'Closed' : 'Open'}}</span>
+         
+            </td>
+            <td> {{item.StartDate | date}}</td>
+            <td> {{item.EndDate | date}}</td>
+            <td>
+              <span *ngIf="item.Status !== 'Closed'">
+              <button nz-button class="mr-1" nzSize="small"
+                (click)="onSelectMentor(item.MentorId, item.MenteeId, 0, item.MentorshipActivityId)"><i nz-icon type="edit"
+                  theme="outline"></i>Edit match
+                </button>
+                </span>
+              <!-- <nz-divider nzType="vertical"></nz-divider> -->
+
+
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #totalTemplate let-total>
+          <span class="page-total">Total {{total}} items </span>
+        </ng-template>
+        <ng-template #rangeTemplate let-range="range" let-total>
+          {{range[0]}}-{{range[1]}} of {{total}} items
+        </ng-template>
+      </nz-table>
+   
+    <!-- </div> -->
+  </nz-spin>
